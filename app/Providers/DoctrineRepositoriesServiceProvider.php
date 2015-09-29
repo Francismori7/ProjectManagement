@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Repositories\Contracts\ProjectRepository;
+use App\Repositories\DoctrineProjectRepository;
 use App\Repositories\DoctrineUserRepository;
 use App\Repositories\Contracts\UserRepository;
 use App\User;
@@ -29,6 +31,12 @@ class DoctrineRepositoriesServiceProvider extends ServiceProvider
     {
         $this->app->bind(UserRepository::class, function ($app) {
             return new DoctrineUserRepository(
+                $app['em'],
+                new ClassMetadata(User::class));
+        });
+
+        $this->app->bind(ProjectRepository::class, function ($app) {
+            return new DoctrineProjectRepository(
                 $app['em'],
                 new ClassMetadata(User::class));
         });
