@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use App\Repositories\DoctrineUserRepository;
-use App\Repositories\UserRepository;
+use App\Repositories\Contracts\UserRepository;
 use App\User;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Illuminate\Support\ServiceProvider;

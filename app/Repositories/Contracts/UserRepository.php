@@ -1,11 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: 1494770
- * Date: 2015-09-29
- * Time: 10:24
- */
-namespace App\Repositories;
+
+namespace App\Repositories\Contracts;
 
 use App\User;
 

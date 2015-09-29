@@ -30,7 +30,7 @@ class User implements Authenticatable, CanResetPasswordContract, AuthorizableCon
     /**
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="UUID")
-     * @ORM\Column(type="string", length=16)
+     * @ORM\Column(type="string", length=36)
      * @var string The identifier of the user.
      */
     protected $id;

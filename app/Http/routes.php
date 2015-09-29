@@ -11,7 +11,7 @@
 |
 */
 
-use App\Repositories\UserRepository;
+use App\Repositories\Contracts\UserRepository;
 use App\User;
 
 Route::get('/', function (UserRepository $users) {

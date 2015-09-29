@@ -2,8 +2,8 @@
 
 namespace App\Repositories;
 
+use App\Repositories\Contracts\UserRepository;
 use App\User;
-use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use LaravelDoctrine\ORM\Pagination\Paginatable;
 
@@ -60,7 +60,8 @@ class DoctrineUserRepository extends EntityRepository implements UserRepository
      * Soft-deletes/removes a User.
      * @param User $user The User to delete.
      */
-    public function delete(User $user) {
+    public function delete(User $user)
+    {
         $this->_em->remove($user);
     }
 }
