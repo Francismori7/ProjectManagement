@@ -22,6 +22,7 @@ use LaravelDoctrine\ORM\Contracts\Auth\Authenticatable;
  * @package App
  * @ORM\Entity(repositoryClass="App\Repositories\DoctrineUserRepository")
  * @ORM\Table(name="users")
+ * @ORM\HasLifecycleCallbacks
  */
 class User extends BaseEntity implements Authenticatable, CanResetPasswordContract, AuthorizableContract
 {
@@ -35,17 +36,17 @@ class User extends BaseEntity implements Authenticatable, CanResetPasswordContra
      */
     protected $id;
     /**
-     * @ORM\Column(name="username", type="string", length=30, unique=true)
+     * @ORM\Column(type="string", unique=true, length=30, name="username")
      * @var string
      */
     protected $userName;
     /**
-     * @ORM\Column(name="first_name", type="string", length=50)
+     * @ORM\Column(type="string", length=50, name="first_name")
      * @var string
      */
     protected $firstName;
     /**
-     * @ORM\Column(name="last_name", type="string", length=50)
+     * @ORM\Column(type="string", length=50, name="last_name")
      * @var string
      */
     protected $lastName;
@@ -150,87 +151,5 @@ class User extends BaseEntity implements Authenticatable, CanResetPasswordContra
     {
         $this->email = $email;
         return $this;
-    }
-
-    /**
-     * Get the unique identifier for the user.
-     *
-     * @return mixed
-     */
-    public function getAuthIdentifier()
-    {
-        // TODO: Implement getAuthIdentifier() method.
-    }
-
-    /**
-     * Get the password for the user.
-     *
-     * @return string
-     */
-    public function getAuthPassword()
-    {
-        // TODO: Implement getAuthPassword() method.
-    }
-
-    /**
-     * Get the token value for the "remember me" session.
-     *
-     * @return string
-     */
-    public function getRememberToken()
-    {
-        // TODO: Implement getRememberToken() method.
-    }
-
-    /**
-     * Set the token value for the "remember me" session.
-     *
-     * @param  string $value
-     * @return void
-     */
-    public function setRememberToken($value)
-    {
-        // TODO: Implement setRememberToken() method.
-    }
-
-    /**
-     * Get the column name for the "remember me" token.
-     *
-     * @return string
-     */
-    public function getRememberTokenName()
-    {
-        // TODO: Implement getRememberTokenName() method.
-    }
-
-    /**
-     * Get the column name for the primary key
-     * @return string
-     */
-    public function getAuthIdentifierName()
-    {
-        // TODO: Implement getAuthIdentifierName() method.
-    }
-
-    /**
-     * Determine if the entity has a given ability.
-     *
-     * @param  string $ability
-     * @param  array|mixed $arguments
-     * @return bool
-     */
-    public function can($ability, $arguments = [])
-    {
-        // TODO: Implement can() method.
-    }
-
-    /**
-     * Get the e-mail address where password reset links are sent.
-     *
-     * @return string
-     */
-    public function getEmailForPasswordReset()
-    {
-        // TODO: Implement getEmailForPasswordReset() method.
     }
 }

@@ -15,7 +15,7 @@ class IndexController extends Controller
      */
     public function index(UserRepository $users)
     {
-        return $users->findAll();
+        return view('welcome', ['users' => $users->findAll()]);
     }
 
     /**
