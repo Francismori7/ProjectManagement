@@ -11,6 +11,20 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+use App\Repositories\UserRepository;
+use App\User;
+
+Route::get('/', function (UserRepository $users) {
+    $faker = Faker\Factory::create();
+
+    $user = (new User)->setEmail($faker->email)
+        ->setPassword($faker->word)
+        ->setDisplayName($faker->boolean() ? $faker->name : $faker->userName);
+
+    $users->persist($user);
+    $users->flush();
+
+    return view('welcome', [
+        'users' => $users->findAll()
+    ]);
 });

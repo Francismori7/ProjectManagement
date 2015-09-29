@@ -13,7 +13,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        $debugStack = new \Doctrine\DBAL\Logging\DebugStack();
+        \EntityManager::getConnection()->getConfiguration()->setSQLLogger($debugStack);
+        $this->app['debugbar']->addCollector(new \DebugBar\Bridge\DoctrineCollector($debugStack));
     }
 
     /**
