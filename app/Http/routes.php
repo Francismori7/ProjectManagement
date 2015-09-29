@@ -19,7 +19,9 @@ Route::get('/', function (UserRepository $users) {
 
     $user = (new User)->setEmail($faker->email)
         ->setPassword($faker->word)
-        ->setDisplayName($faker->boolean() ? $faker->name : $faker->userName);
+        ->setUserName($faker->userName)
+        ->setFirstName($faker->firstName)
+        ->setLastName($faker->lastName);
 
     $users->persist($user);
     $users->flush();

@@ -4,8 +4,6 @@
         <title>Laravel</title>
     </head>
     <body>
-        @foreach($users as $user)
-            {{ $user->getId() }}<br />
-        @endforeach
+        {{ dd($users) }}
     </body>
 </html>

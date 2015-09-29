@@ -35,10 +35,20 @@ class User implements Authenticatable, CanResetPasswordContract, AuthorizableCon
      */
     protected $id;
     /**
-     * @ORM\Column(name="display_name", type="string", length=75)
+     * @ORM\Column(name="username", type="string", length=30, unique=true)
      * @var string
      */
-    protected $displayName;
+    protected $userName;
+    /**
+     * @ORM\Column(name="first_name", type="string", length=50)
+     * @var string
+     */
+    protected $firstName;
+    /**
+     * @ORM\Column(name="last_name", type="string", length=50, nullable=true)
+     * @var string
+     */
+    protected $lastName;
     /**
      * @ORM\Column(type="string", unique=true)
      * @var string
@@ -76,18 +86,54 @@ class User implements Authenticatable, CanResetPasswordContract, AuthorizableCon
     /**
      * @return string
      */
-    public function getDisplayName()
+    public function getUserName()
     {
-        return $this->displayName;
+        return $this->userName;
     }
 
     /**
-     * @param string $displayName
+     * @param string $userName
      * @return User
      */
-    public function setDisplayName($displayName)
+    public function setUserName($userName)
     {
-        $this->displayName = $displayName;
+        $this->userName = $userName;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFirstName()
+    {
+        return $this->firstName;
+    }
+
+    /**
+     * @param string $firstName
+     * @return User
+     */
+    public function setFirstName($firstName)
+    {
+        $this->firstName = $firstName;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLastName()
+    {
+        return $this->lastName;
+    }
+
+    /**
+     * @param mixed $lastName
+     * @return User
+     */
+    public function setLastName($lastName)
+    {
+        $this->lastName = $lastName;
         return $this;
     }
 
