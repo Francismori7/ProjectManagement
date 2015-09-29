@@ -6,7 +6,14 @@
     "type": "project",
     "require": {
         "php": ">=5.5.9",
-        "laravel/framework": "5.1.*"
+        "laravel/framework": "5.1.*",
+        "laravel-doctrine/extensions": "^1.0",
+        "gedmo/doctrine-extensions": "^2.4",
+        "laravel-doctrine/orm": "^1.0",
+        "laravel-doctrine/migrations": "^1.0",
+        "barryvdh/laravel-debugbar": "^2.0",
+        "nayjest/laravel-doctrine-dbal": "^1.0",
+        "laravel-doctrine/acl": "^1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

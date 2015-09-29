@@ -11,6 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+use App\Repositories\Contracts\UserRepository;
+use App\User;
+
+Route::get('/', ['as' => 'home', 'uses' => 'IndexController@index']);
+Route::get('/create', ['as' => 'create', 'uses' => 'IndexController@create']);
