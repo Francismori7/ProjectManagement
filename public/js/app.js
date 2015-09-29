@@ -1,0 +1,1 @@
+angular.module("app").controller("AppCtrl",["$scope",function(l){l.wish="Billion dollars."}]);var app=angular.module("app",[]);
