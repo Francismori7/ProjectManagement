@@ -14,6 +14,7 @@ var notifySuccess = function(type) {
     return notify({
         title: "Laravel Elixir",
         subtitle: "Bower " + type + " Files Compiled!",
+        message: ' ',
         icon: __dirname + "/../node_modules/laravel-elixir/icons/laravel.png"
     });
 };
