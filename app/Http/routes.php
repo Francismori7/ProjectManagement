@@ -14,19 +14,5 @@
 use App\Repositories\Contracts\UserRepository;
 use App\User;
 
-Route::get('/', function (UserRepository $users) {
-    $faker = Faker\Factory::create();
-
-    $user = (new User)->setEmail($faker->email)
-        ->setPassword($faker->word)
-        ->setUserName($faker->userName)
-        ->setFirstName($faker->firstName)
-        ->setLastName($faker->lastName);
-
-    $users->persist($user);
-    $users->flush();
-
-    return view('welcome', [
-        'users' => $users->findAll()
-    ]);
-});
+Route::get('/', ['as' => 'home', 'uses' => 'IndexController@index']);
+Route::get('/create', ['as' => 'create', 'uses' => 'IndexController@create']);

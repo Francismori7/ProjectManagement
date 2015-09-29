@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Jobs\Users\CreateNewUser;
 use App\User;
 use Validator;
 use App\Http\Controllers\Controller;
@@ -42,9 +43,11 @@ class AuthController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|confirmed|min:6',
+            'username' => 'required|unique:users|max:30',
+            'first_name' => 'required|max:50',
+            'last_name' => 'max:50',
+            'email'=> 'required|email|max:255|unique:users',
+            'password' => 'required|confirmed|min:8',
         ]);
     }
 
@@ -56,10 +59,6 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
+        return $this->dispatch(new CreateNewUser($data));
     }
 }

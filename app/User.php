@@ -20,10 +20,10 @@ use LaravelDoctrine\ORM\Contracts\Auth\Authenticatable;
 /**
  * Class User
  * @package App
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repositories\DoctrineUserRepository")
  * @ORM\Table(name="users")
  */
-class User implements Authenticatable, CanResetPasswordContract, AuthorizableContract
+class User extends BaseEntity implements Authenticatable, CanResetPasswordContract, AuthorizableContract
 {
     use Timestamps, SoftDeletes, AuthenticatesUsers, CanResetPassword, Authorizable;
 
@@ -45,7 +45,7 @@ class User implements Authenticatable, CanResetPasswordContract, AuthorizableCon
      */
     protected $firstName;
     /**
-     * @ORM\Column(name="last_name", type="string", length=50, nullable=true)
+     * @ORM\Column(name="last_name", type="string", length=50)
      * @var string
      */
     protected $lastName;
@@ -54,18 +54,10 @@ class User implements Authenticatable, CanResetPasswordContract, AuthorizableCon
      * @var string
      */
     protected $email;
-    /**
-     * @ORM\Column(type="string")
-     * @var string
-     */
-    protected $password;
-    /**
-     * @ORM\Column(name="remember_token", type="string", nullable=true)
-     * @var string
-     */
-    protected $rememberToken;
 
     /**
+     * Returns the User's identification number.
+     *
      * @return string
      */
     public function getId()
@@ -74,16 +66,8 @@ class User implements Authenticatable, CanResetPasswordContract, AuthorizableCon
     }
 
     /**
-     * @param string $id
-     * @return User
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-        return $this;
-    }
-
-    /**
+     * Returns the User's username.
+     *
      * @return string
      */
     public function getUserName()
@@ -92,6 +76,8 @@ class User implements Authenticatable, CanResetPasswordContract, AuthorizableCon
     }
 
     /**
+     * Overwrites the User's username.
+     *
      * @param string $userName
      * @return User
      */
@@ -102,6 +88,7 @@ class User implements Authenticatable, CanResetPasswordContract, AuthorizableCon
     }
 
     /**
+     * Returns the User's first name.
      * @return string
      */
     public function getFirstName()
@@ -110,6 +97,8 @@ class User implements Authenticatable, CanResetPasswordContract, AuthorizableCon
     }
 
     /**
+     * Overwrites the User's first name.
+     *
      * @param string $firstName
      * @return User
      */
@@ -120,7 +109,9 @@ class User implements Authenticatable, CanResetPasswordContract, AuthorizableCon
     }
 
     /**
-     * @return mixed
+     * Returns the User's last name.
+     *
+     * @return string
      */
     public function getLastName()
     {
@@ -128,6 +119,8 @@ class User implements Authenticatable, CanResetPasswordContract, AuthorizableCon
     }
 
     /**
+     * Overwrites the User's last name.
+     *
      * @param mixed $lastName
      * @return User
      */
@@ -138,6 +131,8 @@ class User implements Authenticatable, CanResetPasswordContract, AuthorizableCon
     }
 
     /**
+     * Returns the User's email address.
+     *
      * @return string
      */
     public function getEmail()
@@ -146,6 +141,8 @@ class User implements Authenticatable, CanResetPasswordContract, AuthorizableCon
     }
 
     /**
+     * Overwrites the User's email address.
+     *
      * @param string $email
      * @return User
      */
@@ -156,38 +153,84 @@ class User implements Authenticatable, CanResetPasswordContract, AuthorizableCon
     }
 
     /**
+     * Get the unique identifier for the user.
+     *
+     * @return mixed
+     */
+    public function getAuthIdentifier()
+    {
+        // TODO: Implement getAuthIdentifier() method.
+    }
+
+    /**
+     * Get the password for the user.
+     *
      * @return string
      */
-    public function getPassword()
+    public function getAuthPassword()
     {
-        return $this->password;
+        // TODO: Implement getAuthPassword() method.
     }
 
     /**
-     * @param string $password
-     * @return User
-     */
-    public function setPassword($password)
-    {
-        $this->password = $password;
-        return $this;
-    }
-
-    /**
+     * Get the token value for the "remember me" session.
+     *
      * @return string
      */
     public function getRememberToken()
     {
-        return $this->rememberToken;
+        // TODO: Implement getRememberToken() method.
     }
 
     /**
-     * @param string $rememberToken
-     * @return User
+     * Set the token value for the "remember me" session.
+     *
+     * @param  string $value
+     * @return void
      */
-    public function setRememberToken($rememberToken)
+    public function setRememberToken($value)
     {
-        $this->rememberToken = $rememberToken;
-        return $this;
+        // TODO: Implement setRememberToken() method.
+    }
+
+    /**
+     * Get the column name for the "remember me" token.
+     *
+     * @return string
+     */
+    public function getRememberTokenName()
+    {
+        // TODO: Implement getRememberTokenName() method.
+    }
+
+    /**
+     * Get the column name for the primary key
+     * @return string
+     */
+    public function getAuthIdentifierName()
+    {
+        // TODO: Implement getAuthIdentifierName() method.
+    }
+
+    /**
+     * Determine if the entity has a given ability.
+     *
+     * @param  string $ability
+     * @param  array|mixed $arguments
+     * @return bool
+     */
+    public function can($ability, $arguments = [])
+    {
+        // TODO: Implement can() method.
+    }
+
+    /**
+     * Get the e-mail address where password reset links are sent.
+     *
+     * @return string
+     */
+    public function getEmailForPasswordReset()
+    {
+        // TODO: Implement getEmailForPasswordReset() method.
     }
 }

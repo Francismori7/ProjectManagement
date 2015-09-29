@@ -3,8 +3,40 @@
 namespace App\ORM;
 
 
+use App\User;
+
 trait AuthenticatesUsers
 {
+    /**
+     * @ORM\Column(type="string")
+     * @var string
+     */
+    protected $password;
+
+    /**
+     * @ORM\Column(name="remember_token", type="string", nullable=true)
+     * @var string
+     */
+    protected $rememberToken;
+
+    /**
+     * @return string
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * @param string $password
+     * @return User
+     */
+    public function setPassword($password)
+    {
+        $this->password = bcrypt($password);
+        return $this;
+    }
+
     /**
      * Get the unique identifier for the user.
      *
