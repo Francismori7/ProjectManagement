@@ -11,7 +11,9 @@
 |
 */
 
-$factory->define(App\User::class, function (Faker\Generator $faker) {
+use App\Auth\Models\User;
+
+$factory->define(User::class, function (Faker\Generator $faker) {
     return [
         'username' => $faker->userName,
         'first_name' => $faker->firstName,
