@@ -1,0 +1,21 @@
+{
+  "name": "ProjectManagement",
+  "version": "0.0.1",
+  "homepage": "https://github.com/Francismori7/ProjectManagement",
+  "description": "A modern project management application",
+  "authors": [
+    "Maarten Flippo",
+    "Francis Morissette"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-material": "~0.11.1"
+  }
+}
