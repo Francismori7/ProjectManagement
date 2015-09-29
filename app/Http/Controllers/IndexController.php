@@ -15,7 +15,10 @@ class IndexController extends Controller
      */
     public function index(UserRepository $users)
     {
-        return view('welcome', ['users' => $users->findAll()]);
+        //$user = $users->findByUUID('d45fb359-66e0-11e5-befb-0800279114ca');
+        $user = $users->all();
+
+        return view('welcome', ['users' => $user]);
     }
 
     /**

@@ -3,9 +3,25 @@
 namespace App\Repositories\Contracts;
 
 use App\User;
+use Doctrine\Common\Collections\Collection;
 
 interface UserRepository
 {
+    /**
+     * Returns all the Users.
+     *
+     * @return Collection|User[] All users.
+     */
+    public function all();
+
+    /**
+     * Find a user entity by UUID.
+     *
+     * @param int $uuid The identifier to look for in the database.
+     * @return User The user.
+     */
+    public function find($uuid);
+
     /**
      * Find a user entity by UUID.
      *
@@ -13,6 +29,14 @@ interface UserRepository
      * @return User The user.
      */
     public function findByUUID($uuid);
+
+    /**
+     * Find a user entity by its username.
+     *
+     * @param string $username The username to look for in the database.
+     * @return User The user.
+     */
+    public function findByUsername($username);
 
     /**
      * Saves a User to the database.

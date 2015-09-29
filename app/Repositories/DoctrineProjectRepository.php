@@ -4,12 +4,39 @@ namespace App\Repositories;
 
 use App\Project;
 use App\Repositories\Contracts\ProjectRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityRepository;
 use LaravelDoctrine\ORM\Pagination\Paginatable;
 
 class DoctrineProjectRepository extends EntityRepository implements ProjectRepository
 {
     use Paginatable;
+
+    /**
+     * Returns all the Projects.
+     *
+     * @return Collection|Project[] All projects.
+     */
+    public function all()
+    {
+        $queryBuilder = $this->_em->createQueryBuilder();
+
+        return $queryBuilder->select('p')
+            ->from(Project::class, 'p')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * Find a project entity by UUID.
+     *
+     * @param int $uuid The identifier to look for in the database.
+     * @return Project The project.
+     */
+    public function find($uuid)
+    {
+        return $this->findByUUID($uuid);
+    }
 
     /**
      * Find a project entity by UUID.
@@ -19,7 +46,14 @@ class DoctrineProjectRepository extends EntityRepository implements ProjectRepos
      */
     public function findByUUID($uuid)
     {
-        return $this->_em->find(Project::class, $uuid);
+        $queryBuilder = $this->_em->createQueryBuilder();
+
+        return $queryBuilder->select('p')
+            ->from(Project::class, 'p')
+            ->where($queryBuilder->expr()->eq('p.id', ':uuid'))
+            ->setParameter('uuid', $uuid)
+            ->getQuery()
+            ->getSingleResult();
     }
 
     /**
@@ -30,7 +64,14 @@ class DoctrineProjectRepository extends EntityRepository implements ProjectRepos
      */
     public function findBySlug($slug)
     {
-        return $this->_em->findOneBySlug($slug);
+        $queryBuilder = $this->_em->createQueryBuilder();
+
+        return $queryBuilder->select('p')
+            ->from(Project::class, 'p')
+            ->where($queryBuilder->expr()->eq('p.slug', ':slug'))
+            ->setParameter('slug', $slug)
+            ->getQuery()
+            ->getSingleResult();
     }
 
     /**

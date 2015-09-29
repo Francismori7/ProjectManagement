@@ -3,9 +3,25 @@
 namespace App\Repositories\Contracts;
 
 use App\Project;
+use Doctrine\Common\Collections\Collection;
 
 interface ProjectRepository
 {
+    /**
+     * Returns all the Projects.
+     *
+     * @return Collection|Project[] All projects.
+     */
+    public function all();
+
+    /**
+     * Find a project entity by UUID.
+     *
+     * @param int $uuid The identifier to look for in the database.
+     * @return Project The project.
+     */
+    public function find($uuid);
+
     /**
      * Find a project entity by UUID.
      *

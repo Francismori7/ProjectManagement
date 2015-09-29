@@ -4,12 +4,39 @@ namespace App\Repositories;
 
 use App\Repositories\Contracts\UserRepository;
 use App\User;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityRepository;
 use LaravelDoctrine\ORM\Pagination\Paginatable;
 
 class DoctrineUserRepository extends EntityRepository implements UserRepository
 {
     use Paginatable;
+
+    /**
+     * Returns all the Users.
+     *
+     * @return Collection|User[] All users.
+     */
+    public function all()
+    {
+        $queryBuilder = $this->_em->createQueryBuilder();
+
+        return $queryBuilder->select('u')
+            ->from(User::class, 'u')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * Find a user entity by UUID.
+     *
+     * @param int $uuid The identifier to look for in the database.
+     * @return User The user.
+     */
+    public function find($uuid)
+    {
+        return $this->findByUUID($uuid);
+    }
 
     /**
      * Find a user entity by UUID.
@@ -19,7 +46,32 @@ class DoctrineUserRepository extends EntityRepository implements UserRepository
      */
     public function findByUUID($uuid)
     {
-        return $this->_em->find(User::class, $uuid);
+        $queryBuilder = $this->_em->createQueryBuilder();
+
+        return $queryBuilder->select('u')
+            ->from(User::class, 'u')
+            ->where($queryBuilder->expr()->eq('u.id', ':uuid'))
+            ->setParameter('uuid', $uuid)
+            ->getQuery()
+            ->getSingleResult();
+    }
+
+    /**
+     * Find a user entity by its username.
+     *
+     * @param string $username The username to look for in the database.
+     * @return User The user.
+     */
+    public function findByUsername($username)
+    {
+        $queryBuilder = $this->_em->createQueryBuilder();
+
+        return $queryBuilder->select('u')
+            ->from(User::class, 'u')
+            ->where($queryBuilder->expr()->eq('u.username', ':username'))
+            ->setParameter('username', $username)
+            ->getQuery()
+            ->getSingleResult();
     }
 
     /**
@@ -48,11 +100,6 @@ class DoctrineUserRepository extends EntityRepository implements UserRepository
      */
     public function flush(User $user = null)
     {
-        /*
-         * Here, the interface has no parameters, but the actual implementation has a
-         * $entity parameter that allows us to only save the data for the entity we
-         * wish to persist.
-         */
         $this->_em->flush($user);
     }
 
