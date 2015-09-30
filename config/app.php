@@ -149,6 +149,7 @@ return [
          * Packages
          */
         Barryvdh\Debugbar\ServiceProvider::class,
+        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Nayjest\LaravelDoctrineDBAL\ServiceProvider::class,
 
         /*

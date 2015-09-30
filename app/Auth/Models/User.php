@@ -5,6 +5,7 @@ namespace App\Auth\Models;
 use App\Auth\Traits\AuthenticatesUsers;
 use App\Core\Models\BaseEntity;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
@@ -16,7 +17,7 @@ use LaravelDoctrine\ORM\Contracts\Auth\Authenticatable;
 /**
  * Class User
  * @package App
- * @ORM\Entity(repositoryClass="App\Repositories\DoctrineUserRepository")
+ * @ORM\Entity(repositoryClass="App\Auth\Repositories\DoctrineUserRepository")
  * @ORM\Table(name="users")
  * @ORM\HasLifecycleCallbacks
  */
@@ -35,7 +36,7 @@ class User extends BaseEntity implements Authenticatable, CanResetPasswordContra
      * @ORM\Column(type="string", unique=true, length=30, name="username")
      * @var string
      */
-    protected $userName;
+    protected $username;
     /**
      * @ORM\Column(type="string", length=50, name="first_name")
      * @var string
@@ -67,20 +68,20 @@ class User extends BaseEntity implements Authenticatable, CanResetPasswordContra
      *
      * @return string
      */
-    public function getUserName()
+    public function getUsername()
     {
-        return $this->userName;
+        return $this->username;
     }
 
     /**
      * Overwrites the User's username.
      *
-     * @param string $userName
+     * @param string $username
      * @return User
      */
-    public function setUserName($userName)
+    public function setUsername($username)
     {
-        $this->userName = $userName;
+        $this->username = $username;
         return $this;
     }
 

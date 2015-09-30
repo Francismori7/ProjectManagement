@@ -3,7 +3,7 @@
 namespace App\Auth\Jobs;
 
 use App\Core\Jobs\Job;
-use App\Repositories\Contracts\UserRepository;
+use App\Contracts\Auth\UserRepository;
 use App\Auth\Models\User;
 use Illuminate\Contracts\Bus\SelfHandling;
 
@@ -34,7 +34,7 @@ class CreateNewUser extends Job implements SelfHandling
             $user = $this->data;
         }
         else {
-            $user = (new User)->setUserName($this->data['username'])
+            $user = (new User)->setUsername($this->data['username'])
                 ->setFirstName($this->data['first_name'])
                 ->setLastName($this->data['last_name'])
                 ->setEmail($this->data['email'])

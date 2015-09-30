@@ -3,12 +3,13 @@
 namespace App\Projects\Models;
 
 use App\Core\Models\BaseEntity;
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use LaravelDoctrine\Extensions\SoftDeletes\SoftDeletes;
 use LaravelDoctrine\Extensions\Timestamps\Timestamps;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repositories\DoctrineProjectRepository")
+ * @ORM\Entity(repositoryClass="App\Projects\Repositories\DoctrineProjectRepository")
  * @ORM\Table(name="projects", uniqueConstraints={@ORM\UniqueConstraint(name="slug", columns={"slug"})})
  * @ORM\HasLifecycleCallbacks
  */
