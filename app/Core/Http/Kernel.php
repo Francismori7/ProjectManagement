@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http;
+namespace App\Core\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
+use Illuminate\Contracts\Http\Kernel as HttpKernelContract;
 
-class Kernel extends HttpKernel
+class Kernel extends HttpKernel implements HttpKernelContract
 {
     /**
      * The application's global HTTP middleware stack.
@@ -13,11 +14,11 @@ class Kernel extends HttpKernel
      */
     protected $middleware = [
         \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
-        \App\Core\Middleware\EncryptCookies::class,
+        \App\Core\Http\Middleware\EncryptCookies::class,
         \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
         \Illuminate\Session\Middleware\StartSession::class,
         \Illuminate\View\Middleware\ShareErrorsFromSession::class,
-        \App\Core\Middleware\VerifyCsrfToken::class,
+        \App\Core\Http\Middleware\VerifyCsrfToken::class,
     ];
 
     /**
@@ -26,8 +27,8 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'auth' => \App\Core\Middleware\Authenticate::class,
+        'auth' => \App\Auth\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
-        'guest' => \App\Core\Middleware\RedirectIfAuthenticated::class,
+        'guest' => \App\Auth\Http\Middleware\RedirectIfAuthenticated::class,
     ];
 }

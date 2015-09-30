@@ -2,13 +2,15 @@
 
 namespace App\Auth\Controllers;
 
-use App\Auth\Jobs\CreateNewUser;
+use Validator;
+
 use App\Auth\Models\User;
-use App\Auth\Requests\RegisterUserRequest;
+use App\Auth\Jobs\CreateNewUser;
+use App\Core\Controllers\Controller;
+use App\Auth\Http\Requests\RegisterUserRequest;
+
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Foundation\Auth\RedirectsUsers;
-use Validator;
-use App\Core\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 

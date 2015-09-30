@@ -155,11 +155,9 @@ return [
         /*
          * Application
          */
-        App\Core\Providers\AppServiceProvider::class,
-        App\Auth\Providers\AuthServiceProvider::class,
-        App\Core\Providers\DoctrineRepositoriesServiceProvider::class,
-        App\Core\Providers\EventServiceProvider::class,
-        App\Core\Providers\RouteServiceProvider::class,
+        App\Core\CoreModule::class,
+        App\Auth\AuthModule::class,
+        App\Projects\ProjectModule::class,
 
     ],
 
