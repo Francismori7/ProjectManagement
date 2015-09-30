@@ -13,7 +13,8 @@
         "laravel-doctrine/migrations": "^1.0",
         "barryvdh/laravel-debugbar": "^2.0",
         "nayjest/laravel-doctrine-dbal": "^1.0",
-        "laravel-doctrine/acl": "^1.0"
+        "laravel-doctrine/acl": "^1.0",
+        "barryvdh/laravel-ide-helper": "^2.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
