@@ -2,17 +2,23 @@
 
 namespace App\Auth\Models;
 
-use App\Auth\Traits\AuthenticatesUsers;
+use App\Auth\Traits\HasRoles;
 use App\Core\Models\BaseEntity;
+use App\Auth\Traits\HasPermissions;
+use App\Auth\Traits\AuthenticatesUsers;
+use App\Contracts\ACL\HasRoles as HasRolesContract;
+use App\Contracts\ACL\HasPermissions as HasPermissionsContract;
+
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Illuminate\Auth\Passwords\CanResetPassword;
+use Doctrine\Common\Collections\ArrayCollection;
+use Illuminate\Foundation\Auth\Access\Authorizable;
+use LaravelDoctrine\Extensions\Timestamps\Timestamps;
+use LaravelDoctrine\Extensions\SoftDeletes\SoftDeletes;
+use LaravelDoctrine\ORM\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
-use Illuminate\Foundation\Auth\Access\Authorizable;
-use LaravelDoctrine\Extensions\SoftDeletes\SoftDeletes;
-use LaravelDoctrine\Extensions\Timestamps\Timestamps;
-use LaravelDoctrine\ORM\Contracts\Auth\Authenticatable;
 
 /**
  * Class User
@@ -21,9 +27,19 @@ use LaravelDoctrine\ORM\Contracts\Auth\Authenticatable;
  * @ORM\Table(name="users")
  * @ORM\HasLifecycleCallbacks
  */
-class User extends BaseEntity implements Authenticatable, CanResetPasswordContract, AuthorizableContract
+class User extends BaseEntity implements Authenticatable,
+                                         CanResetPasswordContract,
+                                         AuthorizableContract,
+                                         HasPermissionsContract,
+                                         HasRolesContract
 {
-    use Timestamps, SoftDeletes, AuthenticatesUsers, CanResetPassword, Authorizable;
+    use Timestamps,
+        SoftDeletes,
+        AuthenticatesUsers,
+        CanResetPassword,
+        Authorizable,
+        HasPermissions,
+        HasRoles;
 
     /**
      * @ORM\Id
@@ -52,6 +68,12 @@ class User extends BaseEntity implements Authenticatable, CanResetPasswordContra
      * @var string
      */
     protected $email;
+
+    public function __construct()
+    {
+        $this->roles = new ArrayCollection;
+        $this->permissions = new ArrayCollection;
+    }
 
     /**
      * Returns the User's identification number.
