@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Auth\Requests;
+namespace App\Auth\Http\Requests;
 
 use App\Auth\Controllers\AuthController;
 use App\Core\Requests\Request;
