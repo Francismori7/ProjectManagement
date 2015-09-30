@@ -4,6 +4,9 @@ namespace App\Auth\Controllers;
 
 use App\Auth\Jobs\CreateNewUser;
 use App\Auth\Models\User;
+use App\Auth\Requests\RegisterUserRequest;
+use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Foundation\Auth\RedirectsUsers;
 use Validator;
 use App\Core\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
@@ -24,6 +27,13 @@ class AuthController extends Controller
 
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
 
+    private static $validatorRules = [
+        'first_name' => 'required|max:50',
+        'last_name' => 'required|max:50',
+        'username' => 'required|max:30|unique:' . User::class,
+        'email' => 'required|email|max:255|unique:' . User::class,
+        'password' => 'required|min:8|confirmed',
+    ];
     protected $redirectAfterLogout = '/';
     protected $loginPath = '/auth/login';
     protected $username = 'username';
@@ -40,28 +50,46 @@ class AuthController extends Controller
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
+     * @return array
      */
-    protected function validator(array $data)
+    public static function getValidatorRules()
     {
-        return Validator::make($data, [
-            'first_name' => 'required|max:50',
-            'last_name' => 'required|max:50',
-            'username' => 'required|max:30|unique:' . User::class,
-            'email'=> 'required|email|max:255|unique:' . User::class,
-            'password' => 'required|min:8|confirmed',
-        ]);
+        return self::$validatorRules;
+    }
+
+    /**
+     * Handle a registration request for the application.
+     *
+     * @param  RegisterUserRequest $request
+     * @param Guard $auth
+     * @return \Illuminate\Http\Response
+     */
+    public function postRegister(RegisterUserRequest $request, Guard $auth)
+    {
+        $auth->login($this->create($request->all()));
+
+        return redirect($this->redirectPath());
     }
 
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return User
      */
     protected function create(array $data)
     {
         return $this->dispatch(new CreateNewUser($data));
+    }
+
+    /**
+     * Get a validator for an incoming registration request.
+     *
+     * @param  array $data
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    protected function validator(array $data)
+    {
+        return Validator::make($data, self::$validatorRules);
     }
 }
