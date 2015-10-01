@@ -7,7 +7,8 @@ elixir(function(mix) {
     mix.bowerCss()
         .bowerJs()
         .angular('./angular/')
-        .sass('./angular/**/*.scss', 'public/css')
+        .sass('**/*.scss', 'public/css')
+        .sass('./angular/**/*.scss', 'public/css/angular.css')
 		.copy('./angular/app/**/*.html', 'public/views/app/')
 		.copy('./angular/directives/**/*.html', 'public/views/directives/')
 		.copy('./angular/dialogs/**/*.html', 'public/views/dialogs/')
@@ -16,6 +17,7 @@ elixir(function(mix) {
 			'public/js/app.js',
 			'public/css/vendor.css',
 			'public/css/app.css',
+			'public/css/angular.css',
 			'public/views/**/*.html'
 		], {liveCSS: true});
 });

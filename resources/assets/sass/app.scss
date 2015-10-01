@@ -1,2 +1,8 @@
-// @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+@import "bower_components/bourbon/app/assets/stylesheets/bourbon";
+@import "bower_components/neat/app/assets/stylesheets/neat";
 
+$visual-grid: true;
+
+div.container {
+  @include outer-container();
+}
