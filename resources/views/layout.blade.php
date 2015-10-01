@@ -9,16 +9,15 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
 <body>
+    @include('partials.navigation')
+
     <div class="container">
-        <h1 class="page-header">@yield('page-title')
-            @if(Auth::user())
-                <span class="small">{{ Auth::user()->getFirstName() }} - <a href="{{ route('auth.logout') }}">Logout</a></span>
-            @else
-                <span class="small"><a href="{{ route('auth.login') }}">Login</a></span>
-            @endif
-        </h1>
+        <h1>@yield('page-title')</h1>
 
         @yield('page-content')
     </div>
+
+    <script type="text/javascript" src="{{ asset('js/vendor.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>

@@ -36,7 +36,7 @@ class CoreModule extends Module
      */
     public function map(Router $router)
     {
-        $router->group(['namespace' => 'App\Core\Controllers'], function (Router $router) {
+        $router->group(['as' => 'core.', 'namespace' => 'App\Core\Controllers'], function (Router $router) {
             $router->get('/', ['as' => 'home', 'uses' => 'IndexController@index']);
             $router->get('/create', ['as' => 'create', 'uses' => 'IndexController@create']);
         });

@@ -1,10 +1,1 @@
-{
-  "version": 3,
-  "file": "app.js",
-  "sources": [
-    "angular/app.controller.js",
-    "angular/main.js"
-  ],
-  "names": [],
-  "mappings": "AAAA;AACA;AACA;AACA;;ACHA;AACA"
-}
+{"version":3,"sources":["app.js"],"names":[],"mappings":"AAAA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA","file":"app.js","sourcesContent":["$(document).ready(function () {\r\n    var menuToggle = $('#js-navigation-mobile-menu').unbind();\r\n    $('#js-navigation-menu').removeClass(\"show\");\r\n\r\n    menuToggle.on('click', function (e) {\r\n        e.preventDefault();\r\n        $('#js-navigation-menu').slideToggle(function () {\r\n            var $jsNavigationMenu = $('#js-navigation-menu');\r\n\r\n            if ($jsNavigationMenu.is(':hidden')) {\r\n                $jsNavigationMenu.removeAttr('style');\r\n            }\r\n        });\r\n    });\r\n});\r\n"],"sourceRoot":"/source/"}
