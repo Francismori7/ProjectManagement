@@ -3,14 +3,22 @@
 namespace App\Contracts\Auth;
 
 use App\Auth\Models\User;
-use Doctrine\Common\Collections\Collection;
+use App\Contracts\Core\BaseRepository;
+use Illuminate\Database\Eloquent\Collection;
 
-interface UserRepository
+interface UserRepository extends BaseRepository
 {
     /**
      * Returns all the Users.
      *
-     * @return Collection|User[] All users.
+     * @return Collection All users.
+     */
+    public function findAll();
+
+    /**
+     * Returns all the Users.
+     *
+     * @return Collection All users.
      */
     public function all();
 
@@ -37,30 +45,4 @@ interface UserRepository
      * @return User The user.
      */
     public function findByUsername($username);
-
-    /**
-     * Saves a User to the database.
-     *
-     * @param User $user
-     */
-    public function save(User $user);
-
-    /**
-     * Sets the User entity to be persisted to the database on the next database transaction commit.
-     *
-     * @param User $user The User to save to the database.
-     */
-    public function persist(User $user);
-
-    /**
-     * Commits a database transaction.
-     * @param User $user
-     */
-    public function flush(User $user = null);
-
-    /**
-     * Soft-deletes/removes a User.
-     * @param User $user The User to delete.
-     */
-    public function delete(User $user);
 }

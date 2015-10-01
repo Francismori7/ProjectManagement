@@ -2,29 +2,39 @@
 
 namespace App\Projects\Repositories;
 
-use App\Projects\Models\Project;
 use App\Contracts\Projects\ProjectRepository;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\EntityRepository;
+use App\Core\Repositories\DoctrineBaseRepository;
+use App\Projects\Models\Project;
+use Illuminate\Database\Eloquent\Collection;
 use LaravelDoctrine\ORM\Pagination\Paginatable;
 
-class DoctrineProjectRepository extends EntityRepository implements ProjectRepository
+class DoctrineProjectRepository extends DoctrineBaseRepository implements ProjectRepository
 {
     use Paginatable;
 
     /**
      * Returns all the Projects.
      *
-     * @return Collection|Project[] All projects.
+     * @return Collection All projects.
+     */
+    public function findAll()
+    {
+        return $this->all();
+    }
+
+    /**
+     * Returns all the Projects.
+     *
+     * @return Collection All projects.
      */
     public function all()
     {
         $queryBuilder = $this->_em->createQueryBuilder();
 
-        return $queryBuilder->select('p')
+        return Collection::make($queryBuilder->select('p')
             ->from(Project::class, 'p')
             ->getQuery()
-            ->getResult();
+            ->getResult());
     }
 
     /**
@@ -72,45 +82,5 @@ class DoctrineProjectRepository extends EntityRepository implements ProjectRepos
             ->setParameter('slug', $slug)
             ->getQuery()
             ->getSingleResult();
-    }
-
-    /**
-     * Saves a Project to the database.
-     *
-     * @param Project $project
-     */
-    public function save(Project $project)
-    {
-        $this->persist($project);
-    }
-
-    /**
-     * Sets the Project entity to be persisted to the database on the next database transaction commit.
-     *
-     * @param Project $project The Project to save to the database.
-     */
-    public function persist(Project $project)
-    {
-        $this->_em->persist($project);
-    }
-
-    /**
-     * Commits a database transaction.
-     *
-     * @param Project $project
-     */
-    public function flush(Project $project = null)
-    {
-        $this->_em->flush($project);
-    }
-
-    /**
-     * Soft-deletes/removes a Project.
-     *
-     * @param Project $project The Project to delete.
-     */
-    public function delete(Project $project)
-    {
-        $this->_em->remove($project);
     }
 }
