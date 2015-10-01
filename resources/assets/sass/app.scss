@@ -1,9 +1,8 @@
 @import "bower_components/refills/source/stylesheets/vendor/normalize";
-
 @import "bower_components/bourbon/app/assets/stylesheets/bourbon";
 @import "bower_components/neat/app/assets/stylesheets/neat";
 
-@import url(https://fonts.googleapis.com/css?family=Roboto:400,700,300);
+@import url('//fonts.googleapis.com/css?family=Roboto:400,700,300');
 
 body {
   font-family: 'Roboto', Arial, sans-serif;
@@ -35,8 +34,6 @@ header.navigation {
   min-height: $navigation-height;
   width: 100%;
   z-index: 9999;
-
-  // Mobile view
 
   .mobile-logo {
     display: inline;
@@ -79,8 +76,6 @@ header.navigation {
     }
   }
 
-  // Nav menu
-
   .navigation-wrapper {
     @include outer-container();
     @include clearfix;
@@ -110,8 +105,6 @@ header.navigation {
       float: right;
     }
   }
-
-  // The nav items
 
   .nav-link:first-child {
     @include media($horizontal-bar-mode) {
@@ -170,8 +163,6 @@ header.navigation {
       opacity: 1;
     }
   }
-
-  // Sub menus
 
   li.more.nav-link {
     padding-right: 0;
