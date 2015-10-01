@@ -1,8 +1,13 @@
 @import "bower_components/bourbon/app/assets/stylesheets/bourbon";
 @import "bower_components/neat/app/assets/stylesheets/neat";
 
-$visual-grid: true;
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,700,300);
+
+body {
+  font-family: 'Roboto', Arial, sans-serif;
+}
 
 div.container {
   @include outer-container();
 }
+
