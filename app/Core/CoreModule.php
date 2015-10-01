@@ -2,6 +2,7 @@
 
 namespace App\Core;
 
+use DebugBar\DebugBar;
 use EntityManager;
 use App\Core\Module;
 use Illuminate\Routing\Router;
@@ -23,12 +24,11 @@ class CoreModule extends Module
     /**
      * Map all the routes needed by this module.
      *
-     * @param  Illuminate\Routing\Router
-     * @return void
+     * @param Router $router
      */
     public function map(Router $router)
     {
-        $router->group(['namespace' => 'App\Core\Controllers'], function($router) {
+        $router->group(['namespace' => 'App\Core\Controllers'], function(Router $router) {
             $router->get('/', ['as' => 'home', 'uses' => 'IndexController@index']);
             $router->get('/create', ['as' => 'create', 'uses' => 'IndexController@create']);
         });
@@ -46,6 +46,8 @@ class CoreModule extends Module
                      ->getConfiguration()
                      ->setSQLLogger($debugStack);
 
-        $this->app['debugbar']->addCollector(new DoctrineCollector($debugStack));
+        /** @var DebugBar $debugbar */
+        $debugbar = $this->app['debugbar'];
+        $debugbar->addCollector(new DoctrineCollector($debugStack));
     }
 }

@@ -17,7 +17,7 @@ abstract class Module extends ServiceProvider
     /**
      * Map all the routes needed by this module.
      *
-     * @param  Illuminate\Routing\Router $router
+     * @param  Router $router
      * @return void
      */
     abstract function map(Router $router);
@@ -46,8 +46,10 @@ abstract class Module extends ServiceProvider
      */
     public function boot()
     {
-        $router = $this->app->make('Illuminate\Routing\Router');
+        $router = $this->app->make(Router::class);
 
         $this->map($router);
+
+        $this->bootModule();
     }
 }

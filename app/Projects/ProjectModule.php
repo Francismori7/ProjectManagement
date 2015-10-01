@@ -2,6 +2,7 @@
 
 namespace App\Projects;
 
+use App\Auth\Models\User;
 use App\Core\Module;
 use Illuminate\Routing\Router;
 use Doctrine\ORM\Mapping\ClassMetadata;
@@ -28,7 +29,7 @@ class ProjectModule extends Module
     /**
      * Map all the routes needed by this module.
      *
-     * @param  Illuminate\Routing\Router $router
+     * @param  Router $router
      * @return void
      */
     public function map(Router $router)

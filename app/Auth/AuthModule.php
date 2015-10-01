@@ -2,6 +2,7 @@
 
 namespace App\Auth;
 
+use App\Auth\Models\User;
 use App\Core\Module;
 use Illuminate\Routing\Router;
 use App\Contracts\Auth\UserRepository;
@@ -27,12 +28,12 @@ class AuthModule extends Module
     /**
      * Map all the routes needed by this module.
      *
-     * @param  Illuminate\Routing\Router $router
+     * @param  Router $router
      * @return void
      */
     public function map(Router $router)
     {
-        $router->group(['prefix' => 'auth', 'as' => 'auth.', 'namespace' => 'App\Auth\Controllers'], function ($router) {
+        $router->group(['prefix' => 'auth', 'as' => 'auth.', 'namespace' => 'App\Auth\Controllers'], function (Router $router) {
             $router->get('login', ['as' => 'login', 'uses' => 'AuthController@getLogin']);
             $router->post('login', ['as' => 'login', 'uses' => 'AuthController@postLogin']);
             $router->get('logout', ['as' => 'logout', 'uses' => 'AuthController@getLogout']);
@@ -40,7 +41,7 @@ class AuthModule extends Module
             $router->get('register', ['as' => 'register', 'uses' => 'AuthController@getRegister']);
             $router->post('register', ['as' => 'register', 'uses' => 'AuthController@postRegister']);
 
-            $router->group(['prefix' => 'password', 'as' => 'password.'], function ($router) {
+            $router->group(['prefix' => 'password', 'as' => 'password.'], function (Router $router) {
                 $router->get('email', ['as' => 'email', 'uses' =>'PasswordController@getEmail']);
                 $router->post('email', ['as' => 'email', 'uses' => 'PasswordController@postEmail']);
 
