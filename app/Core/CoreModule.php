@@ -2,12 +2,15 @@
 
 namespace App\Core;
 
-use DebugBar\DebugBar;
-use EntityManager;
-use App\Core\Module;
-use Illuminate\Routing\Router;
-use Doctrine\DBAL\Logging\DebugStack;
+use App\Contracts\Core\BaseRepository;
+use App\Core\Models\BaseEntity;
+use App\Core\Repositories\DoctrineBaseRepository;
 use DebugBar\Bridge\DoctrineCollector;
+use DebugBar\DebugBar;
+use Doctrine\DBAL\Logging\DebugStack;
+use Doctrine\ORM\Mapping\ClassMetadata;
+use EntityManager;
+use Illuminate\Routing\Router;
 
 class CoreModule extends Module
 {
@@ -18,7 +21,12 @@ class CoreModule extends Module
      */
     public function registerContainerBindings()
     {
-        
+        $this->app->bind(BaseRepository::class, function ($app) {
+            return new DoctrineBaseRepository(
+                $app['em'],
+                new ClassMetadata(BaseEntity::class)
+            );
+        });
     }
 
     /**
@@ -28,7 +36,7 @@ class CoreModule extends Module
      */
     public function map(Router $router)
     {
-        $router->group(['namespace' => 'App\Core\Controllers'], function(Router $router) {
+        $router->group(['namespace' => 'App\Core\Controllers'], function (Router $router) {
             $router->get('/', ['as' => 'home', 'uses' => 'IndexController@index']);
             $router->get('/create', ['as' => 'create', 'uses' => 'IndexController@create']);
         });
@@ -43,8 +51,8 @@ class CoreModule extends Module
     {
         $debugStack = new DebugStack();
         EntityManager::getConnection()
-                     ->getConfiguration()
-                     ->setSQLLogger($debugStack);
+            ->getConfiguration()
+            ->setSQLLogger($debugStack);
 
         /** @var DebugBar $debugbar */
         $debugbar = $this->app['debugbar'];

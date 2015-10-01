@@ -8,4 +8,5 @@
             @endforeach
         </ul>
     </div>
+    <hr>
 @endif

@@ -17,6 +17,8 @@
                                value="{{ old('email') }}">
                     </div>
 
+                    <hr>
+
                     <button type="submit" class="btn btn-primary">Reset my password</button>
                     <a href="{{ route('auth.login') }}" class="btn btn-link">Go back</a>
                 </form>

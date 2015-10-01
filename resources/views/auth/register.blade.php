@@ -60,9 +60,10 @@
                         </div>
                     </div>
 
+                    <hr>
+
                     <button type="submit" class="btn btn-primary">Register my account</button>
                     <a href="{{ route('auth.login') }}" class="btn btn-link">Login to my account</a>
-
                 </form>
             </div>
         </div>
