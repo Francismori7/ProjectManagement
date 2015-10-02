@@ -14,6 +14,11 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         \App\Core\Console\Commands\Permissions\InstallPermissions::class,
+        \App\Core\Console\Commands\Permissions\ListPermissions::class,
+        \App\Core\Console\Commands\Permissions\ShowPermissions::class,
+        \App\Core\Console\Commands\Permissions\GivePermission::class,
+        \App\Core\Console\Commands\Permissions\RevokePermission::class,
+        \App\Core\Console\Commands\Permissions\HasPermission::class,
     ];
 
     /**

@@ -9,23 +9,24 @@ interface HasPermissions
     /**
      * Check if the object has a certain permission.
      *
-     * @param Permission $perm
-     *
+     * @param  mixed $perm
      * @return bool
      */
-    public function hasPermission(Permission $perm);
+    public function hasPermission($perm);
 
     /**
      * Add a permission to the object.
      *
-     * @param Permission $perm
+     * @param  Permission $perm
+     * @return void
      */
     public function addPermission(Permission $perm);
 
     /**
      * Remove a permission from the object.
      *
-     * @param Permission $perm
+     * @param  Permission $perm
+     * @return void
      */
     public function removePermission(Permission $perm);
 

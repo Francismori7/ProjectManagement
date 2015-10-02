@@ -16,12 +16,14 @@ trait HasPermissions
     /**
      * Check if the object has a certain permission.
      *
-     * @param Permission $perm
-     *
+     * @param  mixed $perm
      * @return bool
      */
-    public function hasPermission(Permission $perm)
+    public function hasPermission($perm)
     {
+        if ($perm instanceof Permission)
+            $perm = $perm->getPattern();
+        
         $pattern = $this->getPermissionRegex($perm);
 
         foreach ($this->getPermissions() as $permission) {
@@ -36,7 +38,8 @@ trait HasPermissions
     /**
      * Add a permission to the object.
      *
-     * @param Permission $perm
+     * @param  Permission $perm
+     * @return void
      */
     public function addPermission(Permission $perm)
     {
@@ -46,23 +49,23 @@ trait HasPermissions
     /**
      * Remove a permission from the object.
      *
-     * @param Permission $perm
+     * @param  Permission $perm
+     * @return void
      */
     public function removePermission(Permission $perm)
     {
-        $this->permissions->remove($perm);
+        $this->permissions->removeElement($perm);
     }
 
     /**
-     * Get the regex pattern for a given permission.
+     * Get the regex pattern for a given permission pattern.
      *
-     * @param Permission $permission
-     *
+     * @param  string $pattern
      * @return string
      */
-    private function getPermissionRegex(Permission $permission)
+    private function getPermissionRegex($pattern)
     {
-        $pattern = str_replace('.', "\.", $permission->getPattern());
+        $pattern = str_replace('.', "\.", $pattern);
         $pattern = str_replace('*', '.*', $pattern);
 
         return sprintf('/^%s$/', $pattern);
