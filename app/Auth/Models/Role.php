@@ -2,17 +2,15 @@
 
 namespace App\Auth\Models;
 
-use App\Auth\Models\User;
 use App\Core\Models\BaseEntity;
-use App\Auth\Traits\HasPermissions;
+use App\Core\ACL\Traits\HasPermissions;
 use App\Contracts\ACL\HasPermissions as HasPermissionsContract;
-
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * Class Role
- * @package App
+ * Class Role.
+ *
  * @ORM\Entity(repositoryClass="App\Auth\Repositories\DoctrineRoleRepository")
  * @ORM\Table(name="roles")
  * @ORM\HasLifecycleCallbacks
@@ -25,18 +23,21 @@ class Role extends BaseEntity implements HasPermissionsContract
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer")
+     *
      * @var int
      */
     protected $id;
 
     /**
      * @ORM\Column(type="string")
+     *
      * @var string
      */
     protected $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Auth\Models\User")
+     * @ORM\ManyToMany(targetEntity="App\Auth\Models\User", mappedBy="role_user")
+     *
      * @var Doctrine\Common\Collections\ArrayCollection|App\Auth\Models\User[]
      */
     protected $users;
@@ -53,8 +54,7 @@ class Role extends BaseEntity implements HasPermissionsContract
     /**
      * Add a user to the role.
      *
-     * @param  App\Auth\Models\User $user
-     * @return void
+     * @param App\Auth\Models\User $user
      */
     public function addUser(User $user)
     {

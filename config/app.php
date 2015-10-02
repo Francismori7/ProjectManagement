@@ -155,9 +155,7 @@ return [
         /*
          * Application
          */
-        App\Core\CoreModule::class,
-        App\Auth\AuthModule::class,
-        App\Projects\ProjectModule::class,
+        App\Core\ApplicationServiceProvider::class,
 
     ],
 

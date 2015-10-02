@@ -7,7 +7,8 @@ use App\Auth\Models\Role;
 trait HasRoles
 {
     /**
-     * @ORM\ManyToMany(targetEntity="App\Auth\Models\Role")
+     * @ORM\ManyToMany(targetEntity="App\Auth\Models\Role", inversedBy="role_user")
+     *
      * @var Doctrine\Common\Collections\ArrayCollection|App\Auth\Models\Role[]
      */
     protected $roles;
@@ -15,8 +16,9 @@ trait HasRoles
     /**
      * Check if the object has a given role.
      *
-     * @param  Role    $role
-     * @return boolean
+     * @param Role $role
+     *
+     * @return bool
      */
     public function hasRole(Role $role)
     {
@@ -26,8 +28,7 @@ trait HasRoles
     /**
      * Add a role to the object.
      *
-     * @param  Role $role
-     * @return void
+     * @param Role $role
      */
     public function addRole(Role $role)
     {
@@ -37,8 +38,7 @@ trait HasRoles
     /**
      * Remove a role from the object.
      *
-     * @param  Role   $role
-     * @return void
+     * @param Role $role
      */
     public function removeRole(Role $role)
     {

@@ -4,14 +4,11 @@ namespace App\Auth\Controllers;
 
 use Auth;
 use Validator;
-
 use App\Auth\Models\User;
 use App\Auth\Jobs\CreateNewUser;
 use App\Core\Controllers\Controller;
 use App\Auth\Http\Requests\RegisterUserRequest;
-
 use Illuminate\Contracts\Auth\Guard;
-use Illuminate\Foundation\Auth\RedirectsUsers;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
@@ -29,7 +26,6 @@ class AuthController extends Controller
     */
 
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
-
     protected $redirectAfterLogout = '/';
     protected $loginPath = '/auth/login';
     protected $username = 'username';
@@ -64,8 +60,9 @@ class AuthController extends Controller
     /**
      * Handle a registration request for the application.
      *
-     * @param  RegisterUserRequest $request
-     * @param Guard $auth
+     * @param RegisterUserRequest $request
+     * @param Guard               $auth
+     *
      * @return \Illuminate\Http\Response
      */
     public function postRegister(RegisterUserRequest $request, Guard $auth)
@@ -78,7 +75,8 @@ class AuthController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array $data
+     * @param array $data
+     *
      * @return User
      */
     protected function create(array $data)
@@ -89,7 +87,8 @@ class AuthController extends Controller
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array $data
+     * @param array $data
+     *
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)

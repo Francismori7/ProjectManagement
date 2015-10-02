@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Auth\Models;
+namespace App\Core\ACL\Models;
 
 use App\Core\Models\BaseEntity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class Permission
- * @package App
+ * Class Permission.
+ *
  * @ORM\Entity(repositoryClass="App\Auth\Repositories\DoctrinePermissionRepository")
  * @ORM\Table(name="permissions")
  * @ORM\HasLifecycleCallbacks
@@ -18,18 +18,21 @@ class Permission extends BaseEntity
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer")
+     *
      * @var int
      */
     protected $id;
 
     /**
      * @ORM\Column(type="string", unique=true, name="pattern")
+     *
      * @var string
      */
     protected $pattern;
 
     /**
      * @ORM\Column(type="string", name="name")
+     *
      * @var [type]
      */
     protected $name;
@@ -57,13 +60,15 @@ class Permission extends BaseEntity
     /**
      * Overwrites Permission's pattern.
      *
-     * @param  string $pattern
+     * @param string $pattern
+     *
      * @return Permission
      */
     public function setPattern($pattern)
     {
         $this->pattern = $pattern;
-        return $this->pattern;
+
+        return $this;
     }
 
     /**
@@ -79,12 +84,14 @@ class Permission extends BaseEntity
     /**
      * Overwrites the Permission's display name.
      *
-     * @param  string $name
+     * @param string $name
+     *
      * @return Permission
      */
     public function setName($name)
     {
         $this->name = $name;
-        return $this->name;
+
+        return $this;
     }
 }

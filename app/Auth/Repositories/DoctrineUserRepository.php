@@ -41,7 +41,7 @@ class DoctrineUserRepository extends DoctrineBaseRepository implements UserRepos
     /**
      * Find a user entity by UUID.
      *
-     * @param int $uuid The identifier to look for in the database.
+     * @param int $uuid The identifier to look for in the database.=
      * @return User|null The user.
      */
     public function find($uuid)

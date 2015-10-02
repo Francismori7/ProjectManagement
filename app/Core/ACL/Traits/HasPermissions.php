@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Auth\Traits;
+namespace App\Core\ACL\Traits;
 
-use App\Auth\Models\Permission;
+use App\Core\ACL\Models\Permission;
 
 trait HasPermissions
 {
     /**
-     * @ORM\ManyToMany(targetEntity="App\Auth\Models\Permission")
+     * @ORM\ManyToMany(targetEntity="App\Core\ACL\Models\Permission")
+     *
      * @var ArrayCollection|App\Auth\Models\Permission[]
      */
     protected $permissions;
@@ -15,17 +16,18 @@ trait HasPermissions
     /**
      * Check if the object has a certain permission.
      *
-     * @param  Permission $perm
-     * @return boolean
+     * @param Permission $perm
+     *
+     * @return bool
      */
     public function hasPermission(Permission $perm)
     {
         $pattern = $this->getPermissionRegex($perm);
 
-        foreach ($this->getPermissions() as $permission)
-        {
-            if (preg_match($pattern, $permission->getPattern()))
+        foreach ($this->getPermissions() as $permission) {
+            if (preg_match($pattern, $permission->getPattern())) {
                 return true;
+            }
         }
 
         return false;
@@ -34,8 +36,7 @@ trait HasPermissions
     /**
      * Add a permission to the object.
      *
-     * @param  Permission $perm
-     * @return void
+     * @param Permission $perm
      */
     public function addPermission(Permission $perm)
     {
@@ -45,8 +46,7 @@ trait HasPermissions
     /**
      * Remove a permission from the object.
      *
-     * @param  Permission $perm
-     * @return void
+     * @param Permission $perm
      */
     public function removePermission(Permission $perm)
     {
@@ -56,15 +56,16 @@ trait HasPermissions
     /**
      * Get the regex pattern for a given permission.
      *
-     * @param  Permission $permission
+     * @param Permission $permission
+     *
      * @return string
      */
     private function getPermissionRegex(Permission $permission)
     {
-        $pattern = str_replace(".", "\.", $permission->getPattern());
-        $pattern = str_replace("*", ".*", $pattern);
+        $pattern = str_replace('.', "\.", $permission->getPattern());
+        $pattern = str_replace('*', '.*', $pattern);
 
-        return sprintf("/^%s$/", $pattern);
+        return sprintf('/^%s$/', $pattern);
     }
 
     /**
