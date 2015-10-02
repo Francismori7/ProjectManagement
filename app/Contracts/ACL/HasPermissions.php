@@ -2,31 +2,30 @@
 
 namespace App\Contracts\ACL;
 
-use App\Auth\Models\Permission;
+use App\Core\ACL\Models\Permission;
 
 interface HasPermissions
 {
     /**
      * Check if the object has a certain permission.
      *
-     * @param  Permission $perm
-     * @return boolean
+     * @param Permission $perm
+     *
+     * @return bool
      */
     public function hasPermission(Permission $perm);
 
     /**
      * Add a permission to the object.
      *
-     * @param  Permission $perm
-     * @return void
+     * @param Permission $perm
      */
     public function addPermission(Permission $perm);
 
     /**
      * Remove a permission from the object.
      *
-     * @param  Permission $perm
-     * @return void
+     * @param Permission $perm
      */
     public function removePermission(Permission $perm);
 

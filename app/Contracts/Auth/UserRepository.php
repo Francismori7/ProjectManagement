@@ -18,6 +18,7 @@ interface UserRepository
      * Find a user entity by UUID.
      *
      * @param int $uuid The identifier to look for in the database.
+     *
      * @return User The user.
      */
     public function find($uuid);
@@ -26,6 +27,7 @@ interface UserRepository
      * Find a user entity by UUID.
      *
      * @param int $uuid The identifier to look for in the database.
+     *
      * @return User The user.
      */
     public function findByUUID($uuid);
@@ -34,6 +36,7 @@ interface UserRepository
      * Find a user entity by its username.
      *
      * @param string $username The username to look for in the database.
+     *
      * @return User The user.
      */
     public function findByUsername($username);
@@ -54,12 +57,14 @@ interface UserRepository
 
     /**
      * Commits a database transaction.
+     *
      * @param User $user
      */
     public function flush(User $user = null);
 
     /**
      * Soft-deletes/removes a User.
+     *
      * @param User $user The User to delete.
      */
     public function delete(User $user);

@@ -31,6 +31,7 @@ class DoctrineProjectRepository extends EntityRepository implements ProjectRepos
      * Find a project entity by UUID.
      *
      * @param int $uuid The identifier to look for in the database.
+     *
      * @return Project The project.
      */
     public function find($uuid)
@@ -42,6 +43,7 @@ class DoctrineProjectRepository extends EntityRepository implements ProjectRepos
      * Find a project entity by UUID.
      *
      * @param int $uuid The identifier to look for in the database.
+     *
      * @return Project The project.
      */
     public function findByUUID($uuid)
@@ -60,6 +62,7 @@ class DoctrineProjectRepository extends EntityRepository implements ProjectRepos
      * Find a project entity by its slug.
      *
      * @param string $slug The slug to look for in the database.
+     *
      * @return Project The project.
      */
     public function findBySlug($slug)

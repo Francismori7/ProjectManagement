@@ -12,8 +12,6 @@ class AuthModule extends Module
 {
     /**
      * Register all the bindings on the service container.
-     *
-     * @return void
      */
     public function registerContainerBindings()
     {
@@ -27,8 +25,7 @@ class AuthModule extends Module
     /**
      * Map all the routes needed by this module.
      *
-     * @param  Illuminate\Routing\Router $router
-     * @return void
+     * @param Illuminate\Routing\Router $router
      */
     public function map(Router $router)
     {
@@ -41,7 +38,7 @@ class AuthModule extends Module
             $router->post('register', ['as' => 'register', 'uses' => 'AuthController@postRegister']);
 
             $router->group(['prefix' => 'password', 'as' => 'password.'], function ($router) {
-                $router->get('email', ['as' => 'email', 'uses' =>'PasswordController@getEmail']);
+                $router->get('email', ['as' => 'email', 'uses' => 'PasswordController@getEmail']);
                 $router->post('email', ['as' => 'email', 'uses' => 'PasswordController@postEmail']);
 
                 $router->get('reset/{token}', ['as' => 'reset', 'uses' => 'PasswordController@getReset']);
@@ -50,13 +47,10 @@ class AuthModule extends Module
         });
     }
 
-    /**
-     * Bootstrap the module.
-     *
-     * @return void
-     */
-    public function bootModule()
+    public function getModulePermissions()
     {
-
+        return [
+            'user.manage' => 'Manage Users'
+        ];
     }
 }

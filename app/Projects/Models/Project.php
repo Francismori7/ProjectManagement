@@ -21,6 +21,7 @@ class Project extends BaseEntity
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="UUID")
      * @ORM\Column(type="string", length=36)
+     *
      * @var string
      */
     private $id;
@@ -28,18 +29,21 @@ class Project extends BaseEntity
     /**
      * @Gedmo\Slug(fields={"name"})
      * @ORM\Column(length=128, unique=true)
+     *
      * @var string
      */
     private $slug;
 
     /**
      * @ORM\Column(type="string", length=100)
+     *
      * @var string
      */
     private $name;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     *
      * @var string
      */
     private $description;
@@ -68,11 +72,13 @@ class Project extends BaseEntity
      * Overwrites the Project's slug.
      *
      * @param string $slug
+     *
      * @return Project
      */
     public function setSlug($slug)
     {
         $this->slug = $slug;
+
         return $this;
     }
 
@@ -90,11 +96,13 @@ class Project extends BaseEntity
      * Overwrite the Project's description.
      *
      * @param string $description
+     *
      * @return Project
      */
     public function setDescription($description)
     {
         $this->description = $description;
+
         return $this;
     }
 
@@ -122,11 +130,13 @@ class Project extends BaseEntity
      * Overwrites the name of the Project.
      *
      * @param string $name
+     *
      * @return Project
      */
     public function setName($name)
     {
         $this->name = $name;
+
         return $this;
     }
 }

@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Auth\Repositories;
+namespace App\Core\ACL\Repositories;
 
-use App\Auth\Models\Permission;
 use Doctrine\ORM\EntityRepository;
+use App\Core\ACL\Models\Permission;
 use App\Contracts\ACL\PermissionRepository;
 
 class DoctrinePermissionRepository extends EntityRepository implements PermissionRepository
@@ -26,7 +26,8 @@ class DoctrinePermissionRepository extends EntityRepository implements Permissio
     /**
      * Find a permission by it's id.
      *
-     * @param  int $id
+     * @param int $id
+     *
      * @return App\Auth\Models\Permission
      */
     public function findById($id)
@@ -37,7 +38,8 @@ class DoctrinePermissionRepository extends EntityRepository implements Permissio
     /**
      * Find a permission by a pattern.
      *
-     * @param  string $pattern
+     * @param string $pattern
+     *
      * @return App\Auth\Models\Permission
      */
     public function findByPattern($pattern)
@@ -56,8 +58,7 @@ class DoctrinePermissionRepository extends EntityRepository implements Permissio
      * Sets the permission entity to be persisted to the database on the next
      * database transaction commit.
      *
-     * @param  Permission $permission
-     * @return void
+     * @param Permission $permission
      */
     public function persist(Permission $permission)
     {
@@ -65,10 +66,9 @@ class DoctrinePermissionRepository extends EntityRepository implements Permissio
     }
 
     /**
-     * Commits a database transaction
+     * Commits a database transaction.
      *
-     * @param  Permission $permission
-     * @return void
+     * @param Permission $permission
      */
     public function flush(Permission $permission = null)
     {
@@ -78,8 +78,7 @@ class DoctrinePermissionRepository extends EntityRepository implements Permissio
     /**
      * Removes a permission.
      *
-     * @param  Permission $permission
-     * @return void
+     * @param Permission $permission
      */
     public function delete(Permission $permission)
     {

@@ -8,12 +8,14 @@ trait AuthenticatesUsers
 {
     /**
      * @ORM\Column(type="string")
+     *
      * @var string
      */
     protected $password;
 
     /**
      * @ORM\Column(name="remember_token", type="string", nullable=true)
+     *
      * @var string
      */
     protected $rememberToken;
@@ -28,11 +30,13 @@ trait AuthenticatesUsers
 
     /**
      * @param string $password
+     *
      * @return User
      */
     public function setPassword($password)
     {
         $this->password = bcrypt($password);
+
         return $this;
     }
 
@@ -69,8 +73,7 @@ trait AuthenticatesUsers
     /**
      * Set the token value for the "remember me" session.
      *
-     * @param  string $value
-     * @return void
+     * @param string $value
      */
     public function setRememberToken($value)
     {
@@ -88,7 +91,8 @@ trait AuthenticatesUsers
     }
 
     /**
-     * Get the column name for the primary key
+     * Get the column name for the primary key.
+     *
      * @return string
      */
     public function getAuthIdentifierName()

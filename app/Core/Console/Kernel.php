@@ -13,17 +13,15 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-
+        \App\Core\Console\Commands\Permissions\InstallPermissions::class,
     ];
 
     /**
      * Define the application's command schedule.
      *
-     * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
-     * @return void
+     * @param \Illuminate\Console\Scheduling\Schedule $schedule
      */
     protected function schedule(Schedule $schedule)
     {
-
     }
 }

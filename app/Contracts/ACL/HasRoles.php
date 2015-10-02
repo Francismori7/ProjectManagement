@@ -9,24 +9,23 @@ interface HasRoles
     /**
      * Check if the object has a given role.
      *
-     * @param  Role    $role
-     * @return boolean
+     * @param Role $role
+     *
+     * @return bool
      */
     public function hasRole(Role $role);
 
     /**
      * Add a role to the object.
      *
-     * @param  Role $role
-     * @return void
+     * @param Role $role
      */
     public function addRole(Role $role);
 
     /**
      * Remove a role from the object.
      *
-     * @param  Role   $role
-     * @return void
+     * @param Role $role
      */
     public function removeRole(Role $role);
 

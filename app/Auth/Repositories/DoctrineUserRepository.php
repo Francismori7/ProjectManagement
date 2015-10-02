@@ -31,6 +31,7 @@ class DoctrineUserRepository extends EntityRepository implements UserRepository
      * Find a user entity by UUID.
      *
      * @param int $uuid The identifier to look for in the database.
+     *
      * @return User The user.
      */
     public function find($uuid)
@@ -42,6 +43,7 @@ class DoctrineUserRepository extends EntityRepository implements UserRepository
      * Find a user entity by UUID.
      *
      * @param int $uuid The identifier to look for in the database.
+     *
      * @return User The user.
      */
     public function findByUUID($uuid)
@@ -60,6 +62,7 @@ class DoctrineUserRepository extends EntityRepository implements UserRepository
      * Find a user entity by its username.
      *
      * @param string $username The username to look for in the database.
+     *
      * @return User The user.
      */
     public function findByUsername($username)
@@ -96,6 +99,7 @@ class DoctrineUserRepository extends EntityRepository implements UserRepository
 
     /**
      * Commits a database transaction.
+     *
      * @param User $user
      */
     public function flush(User $user = null)
@@ -105,6 +109,7 @@ class DoctrineUserRepository extends EntityRepository implements UserRepository
 
     /**
      * Soft-deletes/removes a User.
+     *
      * @param User $user The User to delete.
      */
     public function delete(User $user)
