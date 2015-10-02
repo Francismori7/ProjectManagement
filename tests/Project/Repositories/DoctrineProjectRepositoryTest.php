@@ -32,7 +32,7 @@ class DoctrineProjectRepositoryTest extends TestCase
         parent::setUp();
         $this->projects = $this->app->make(ProjectRepository::class);
 
-        $this->overrides = ['name' => str_random(16)];
+        $this->overrides = ['name' => str_random(7) . ' ' . str_random(8)];
     }
 
     /**
