@@ -3,6 +3,7 @@
 namespace App\Core\Controllers;
 
 use App\Auth\Jobs\CreateNewUser;
+use App\Auth\Models\User;
 use App\Contracts\Auth\UserRepository;
 use Faker\Factory;
 
@@ -16,7 +17,7 @@ class IndexController extends Controller
     public function index(UserRepository $users)
     {
         //$user = $users->findByUUID('d45fb359-66e0-11e5-befb-0800279114ca');
-        $user = $users->all();
+        $user = $users->all(['p' => 'permissions']);
 
         return view('welcome', ['users' => $user]);
     }
