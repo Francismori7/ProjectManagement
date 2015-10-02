@@ -150,4 +150,14 @@ class DoctrineUserRepositoryTest extends TestCase
         $users = $this->users->all();
         $this->assertNotContains($this->overrides, $users);
     }
+
+    /**
+     * @test
+     */
+    public function find_methods_return_null_instead_of_throwing_exceptions_if_no_result_is_returned()
+    {
+        $user = $this->users->findByUsername(str_random(8));
+
+        $this->assertNull($user);
+    }
 }

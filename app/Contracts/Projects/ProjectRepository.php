@@ -26,7 +26,7 @@ interface ProjectRepository extends BaseRepository
      * Find a project entity by UUID.
      *
      * @param int $uuid The identifier to look for in the database.
-     * @return Project The project.
+     * @return Project|null The project.
      */
     public function find($uuid);
 
@@ -34,7 +34,7 @@ interface ProjectRepository extends BaseRepository
      * Find a project entity by UUID.
      *
      * @param int $uuid The identifier to look for in the database.
-     * @return Project The project.
+     * @return Project|null The project.
      */
     public function findByUUID($uuid);
 
@@ -42,7 +42,7 @@ interface ProjectRepository extends BaseRepository
      * Find a project entity by its slug.
      *
      * @param string $slug The slug to look for in the database.
-     * @return Project The project.
+     * @return Project|null The project.
      */
     public function findBySlug($slug);
 }

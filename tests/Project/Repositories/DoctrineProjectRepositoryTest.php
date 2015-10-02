@@ -145,4 +145,14 @@ class DoctrineProjectRepositoryTest extends TestCase
         $projects = $this->projects->all();
         $this->assertNotContains($this->overrides, $projects);
     }
+
+    /**
+     * @test
+     */
+    public function find_methods_return_null_instead_of_throwing_exceptions_if_no_result_is_returned()
+    {
+        $project = $this->projects->findBySlug(str_random(8));
+
+        $this->assertNull($project);
+    }
 }

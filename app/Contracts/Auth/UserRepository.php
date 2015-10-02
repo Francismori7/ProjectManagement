@@ -26,7 +26,7 @@ interface UserRepository extends BaseRepository
      * Find a user entity by UUID.
      *
      * @param int $uuid The identifier to look for in the database.
-     * @return User The user.
+     * @return User|null The user.
      */
     public function find($uuid);
 
@@ -34,7 +34,7 @@ interface UserRepository extends BaseRepository
      * Find a user entity by UUID.
      *
      * @param int $uuid The identifier to look for in the database.
-     * @return User The user.
+     * @return User|null The user.
      */
     public function findByUUID($uuid);
 
@@ -42,7 +42,7 @@ interface UserRepository extends BaseRepository
      * Find a user entity by its username.
      *
      * @param string $username The username to look for in the database.
-     * @return User The user.
+     * @return User|null The user.
      */
     public function findByUsername($username);
 
@@ -50,7 +50,7 @@ interface UserRepository extends BaseRepository
      * Find a user entity by its email.
      *
      * @param string $email The email to look for in the database.
-     * @return User The user.
+     * @return User|null The user.
      */
     public function findByEmail($email);
 }
