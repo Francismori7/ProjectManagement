@@ -83,4 +83,22 @@ class DoctrineUserRepository extends DoctrineBaseRepository implements UserRepos
             ->getQuery()
             ->getSingleResult();
     }
+
+    /**
+     * Find a user entity by its email.
+     *
+     * @param string $email The email to look for in the database.
+     * @return User The user.
+     */
+    public function findByEmail($email)
+    {
+        $queryBuilder = $this->_em->createQueryBuilder();
+
+        return $queryBuilder->select('u')
+            ->from(User::class, 'u')
+            ->where($queryBuilder->expr()->eq('u.email', ':email'))
+            ->setParameter('email', $email)
+            ->getQuery()
+            ->getSingleResult();
+    }
 }

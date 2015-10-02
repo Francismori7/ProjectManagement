@@ -9,6 +9,43 @@ use Doctrine\ORM\EntityRepository;
 class DoctrineBaseRepository extends EntityRepository implements BaseRepository
 {
     /**
+     * Commits a database transaction.
+     * @param BaseEntity $entity
+     */
+    public function flush(BaseEntity $entity = null)
+    {
+        $this->_em->flush($entity);
+    }
+
+    /**
+     * Soft-deletes/removes a User.
+     * @param BaseEntity $entity The BaseEntity to delete.
+     */
+    public function delete(BaseEntity $entity)
+    {
+        $this->remove($entity);
+    }
+
+    /**
+     * Soft-deletes/removes a User.
+     * @param BaseEntity $entity The BaseEntity to delete.
+     */
+    public function remove(BaseEntity $entity)
+    {
+        $this->_em->remove($entity);
+    }
+
+    /**
+     * Creates and saves an Entity to the database.
+     *
+     * @param BaseEntity $entity
+     */
+    public function create(BaseEntity $entity)
+    {
+        $this->save($entity);
+    }
+
+    /**
      * Saves a Entity to the database.
      *
      * @param BaseEntity $entity
@@ -26,23 +63,5 @@ class DoctrineBaseRepository extends EntityRepository implements BaseRepository
     public function persist(BaseEntity $entity)
     {
         $this->_em->persist($entity);
-    }
-
-    /**
-     * Commits a database transaction.
-     * @param BaseEntity $entity
-     */
-    public function flush(BaseEntity $entity = null)
-    {
-        $this->_em->flush($entity);
-    }
-
-    /**
-     * Soft-deletes/removes a User.
-     * @param BaseEntity $entity The BaseEntity to delete.
-     */
-    public function delete(BaseEntity $entity)
-    {
-        $this->_em->remove($entity);
     }
 }

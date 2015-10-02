@@ -45,4 +45,12 @@ interface UserRepository extends BaseRepository
      * @return User The user.
      */
     public function findByUsername($username);
+
+    /**
+     * Find a user entity by its email.
+     *
+     * @param string $email The email to look for in the database.
+     * @return User The user.
+     */
+    public function findByEmail($email);
 }

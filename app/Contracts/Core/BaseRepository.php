@@ -15,6 +15,13 @@ interface BaseRepository
     public function save(BaseEntity $entity);
 
     /**
+     * Creates and saves an Entity to the database.
+     *
+     * @param BaseEntity $entity
+     */
+    public function create(BaseEntity $entity);
+
+    /**
      * Sets the Entity entity to be persisted to the database on the next database transaction commit.
      *
      * @param BaseEntity $entity The Entity to save to the database.
@@ -32,4 +39,10 @@ interface BaseRepository
      * @param BaseEntity $entity The BaseEntity to delete.
      */
     public function delete(BaseEntity $entity);
+
+    /**
+     * Soft-deletes/removes a User.
+     * @param BaseEntity $entity The BaseEntity to delete.
+     */
+    public function remove(BaseEntity $entity);
 }
