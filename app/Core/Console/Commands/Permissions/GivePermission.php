@@ -2,8 +2,10 @@
 
 namespace App\Core\Console\Commands\Permissions;
 
+use App\Auth\Models\User;
 use App\Contracts\ACL\PermissionRepository;
 use App\Contracts\Auth\UserRepository;
+use App\Core\ACL\Models\Permission;
 use Illuminate\Console\Command;
 
 class GivePermission extends Command
@@ -23,17 +25,20 @@ class GivePermission extends Command
     protected $description = 'Give a user a permission.';
 
     /**
-     * @var App\Contracts\Auth\UserRepository
+     * @var UserRepository
      */
     protected $users;
 
     /**
-     * @var App\Contracts\ACL\PermissionRepository
+     * @var PermissionRepository
      */
     protected $permissions;
 
     /**
      * Create a new command instance.
+     *
+     * @param UserRepository $users
+     * @param PermissionRepository $permissions
      */
     public function __construct(UserRepository $users, PermissionRepository $permissions)
     {
@@ -52,13 +57,13 @@ class GivePermission extends Command
     {
         $user = $this->getUser();
         if ($user === null) {
-            $this->error("That user does not exist.");
+            $this->error('That user does not exist.');
             return;
         }
 
         $permission = $this->getPermission();
         if ($permission === null) {
-            $this->error("That permission does not exist.");
+            $this->error('That permission does not exist.');
             return;
         }
 
@@ -73,7 +78,7 @@ class GivePermission extends Command
     /**
      * Get a user from the command parameter.
      *
-     * @return App\Auth\Models\User
+     * @return User
      */
     private function getUser()
     {
@@ -83,7 +88,7 @@ class GivePermission extends Command
     /**
      * Get a permission from the command parameter.
      *
-     * @return App\Core\ACL\Models\Permission
+     * @return Permission
      */
     private function getPermission()
     {

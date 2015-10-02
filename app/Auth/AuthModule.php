@@ -52,7 +52,9 @@ class AuthModule extends Module
     public function getModulePermissions()
     {
         return [
-            'user.manage' => 'Manage Users'
+            'users.create' => 'Create Users',
+            'users.update' => 'Edit Users',
+            'users.destroy' => 'Remove Users',
         ];
     }
 }

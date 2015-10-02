@@ -2,6 +2,7 @@
 
 namespace App\Core\Console\Commands\Permissions;
 
+use App\Auth\Models\User;
 use App\Contracts\Auth\UserRepository;
 use Illuminate\Console\Command;
 
@@ -22,12 +23,13 @@ class HasPermission extends Command
     protected $description = 'Check if a user has a permission.';
 
     /**
-     * @var App\Contracts\Auth\UserRepository
+     * @var UserRepository
      */
     protected $users;
 
     /**
      * Create a new command instance.
+     * @param UserRepository $users
      */
     public function __construct(UserRepository $users)
     {
@@ -45,22 +47,22 @@ class HasPermission extends Command
     {
         $user = $this->getUser();
         if ($user === null) {
-            $this->error("That user does not exist.");
+            $this->error('That user does not exist.');
             return;
         }
 
         $pattern = $this->argument('pattern');
         if ($user->hasPermission($pattern)) {
-            $this->info("Yes");
+            $this->info('Yes');
         } else {
-            $this->info("No");
+            $this->info('No');
         }
     }
 
     /**
      * Get the user from the command parameter.
      *
-     * @return App\Auth\Models\User
+     * @return User
      */
     private function getUser()
     {

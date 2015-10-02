@@ -2,10 +2,11 @@
 
 namespace App\Contracts\ACL;
 
+use App\Contracts\Core\BaseRepository;
 use App\Core\ACL\Models\Permission;
 use Illuminate\Database\Eloquent\Collection;
 
-interface PermissionRepository
+interface PermissionRepository extends BaseRepository
 {
     /**
      * Returns all the Permissions.
