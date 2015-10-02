@@ -10,58 +10,70 @@ class DoctrineBaseRepository extends EntityRepository implements BaseRepository
 {
     /**
      * Commits a database transaction.
+     *
      * @param BaseEntity $entity
+     * @return $this
      */
     public function flush(BaseEntity $entity = null)
     {
         $this->_em->flush($entity);
+        return $this;
     }
 
     /**
      * Soft-deletes/removes a User.
+     *
      * @param BaseEntity $entity The BaseEntity to delete.
+     * @return $this
      */
     public function delete(BaseEntity $entity)
     {
-        $this->remove($entity);
+        return $this->remove($entity);
     }
 
     /**
      * Soft-deletes/removes a User.
+     *
      * @param BaseEntity $entity The BaseEntity to delete.
+     * @return $this
      */
     public function remove(BaseEntity $entity)
     {
         $this->_em->remove($entity);
+        return $this;
     }
 
     /**
      * Creates and saves an Entity to the database.
      *
      * @param BaseEntity $entity
+     * @return $this
      */
     public function create(BaseEntity $entity)
     {
-        $this->save($entity);
+        return $this->save($entity);
     }
 
     /**
      * Saves a Entity to the database.
      *
      * @param BaseEntity $entity
+     * @return $this
      */
     public function save(BaseEntity $entity)
     {
-        $this->persist($entity);
+        return $this->persist($entity);
     }
 
     /**
      * Sets the Entity entity to be persisted to the database on the next database transaction commit.
      *
      * @param BaseEntity $entity The Entity to save to the database.
+     * @return $this
      */
     public function persist(BaseEntity $entity)
     {
         $this->_em->persist($entity);
+        return $this;
     }
 }

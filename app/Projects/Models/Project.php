@@ -10,7 +10,7 @@ use LaravelDoctrine\Extensions\Timestamps\Timestamps;
 
 /**
  * @ORM\Entity(repositoryClass="App\Projects\Repositories\DoctrineProjectRepository")
- * @ORM\Table(name="projects", uniqueConstraints={@ORM\UniqueConstraint(name="slug", columns={"slug"})})
+ * @ORM\Table(name="projects")
  * @ORM\HasLifecycleCallbacks
  */
 class Project extends BaseEntity
