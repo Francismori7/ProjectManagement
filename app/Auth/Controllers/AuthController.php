@@ -2,6 +2,7 @@
 
 namespace App\Auth\Controllers;
 
+use Auth;
 use Validator;
 
 use App\Auth\Models\User;
@@ -29,13 +30,6 @@ class AuthController extends Controller
 
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
 
-    private static $validatorRules = [
-        'first_name' => 'required|max:50',
-        'last_name' => 'required|max:50',
-        'username' => 'required|max:30|unique:' . User::class,
-        'email' => 'required|email|max:255|unique:' . User::class,
-        'password' => 'required|min:8|confirmed',
-    ];
     protected $redirectAfterLogout = '/';
     protected $loginPath = '/auth/login';
     protected $username = 'username';
@@ -56,7 +50,15 @@ class AuthController extends Controller
      */
     public static function getValidatorRules()
     {
-        return self::$validatorRules;
+        $user = Auth::user() ?: new User;
+
+        return [
+            'first_name' => 'required|max:50',
+            'last_name' => 'required|max:50',
+            'username' => 'required|alpha_dash|max:30|unique:' . User::class . ',username,' . $user->getId(),
+            'email' => 'required|email|max:255|unique:' . User::class . ',email,' . $user->getId(),
+            'password' => 'required|min:8|confirmed',
+        ];
     }
 
     /**
@@ -92,6 +94,6 @@ class AuthController extends Controller
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, self::$validatorRules);
+        return Validator::make($data, self::getValidatorRules());
     }
 }

@@ -24,20 +24,17 @@ class Project extends BaseEntity
      * @var string
      */
     private $id;
-
     /**
      * @Gedmo\Slug(fields={"name"})
      * @ORM\Column(length=128, unique=true)
      * @var string
      */
     private $slug;
-
     /**
      * @ORM\Column(type="string", length=100)
      * @var string
      */
     private $name;
-
     /**
      * @ORM\Column(type="text", nullable=true)
      * @var string
@@ -96,16 +93,6 @@ class Project extends BaseEntity
     {
         $this->description = $description;
         return $this;
-    }
-
-    /**
-     * This method refreshes the slug based on the name of the Project.
-     *
-     * @ORM\PrePersist
-     */
-    public function refreshSlug()
-    {
-        $this->setSlug(str_slug($this->getName()));
     }
 
     /**

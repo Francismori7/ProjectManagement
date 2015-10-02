@@ -60,7 +60,6 @@ class DoctrineProjectRepositoryTest extends TestCase
     public function find_by_uuid_returns_the_proper_project()
     {
         $this->createFakeProject();
-        $this->seeInDatabase('projects', $this->overrides);
 
         $foundProject = $this->projects->findByUUID($this->fakeProject->getId());
 
@@ -89,6 +88,8 @@ class DoctrineProjectRepositoryTest extends TestCase
 
         $this->projects->create($this->fakeProject)->flush($this->fakeProject);
 
+        $this->seeInDatabase('projects', $this->overrides);
+
         return $this->fakeProject;
     }
 
@@ -107,7 +108,6 @@ class DoctrineProjectRepositoryTest extends TestCase
     public function find_by_slug_returns_the_proper_project()
     {
         $this->createFakeProject();
-        $this->seeInDatabase('projects', $this->overrides);
 
         $foundProject = $this->projects->findBySlug($this->fakeProject->getSlug());
 
@@ -120,10 +120,24 @@ class DoctrineProjectRepositoryTest extends TestCase
     /**
      * @test
      */
+    public function check_slug_is_properly_generated_upon_creation_of_project() {
+        $this->createFakeProject();
+
+        $expectedSlug = str_slug($this->fakeProject->getName());
+
+        $project = $this->projects->findByUUID($this->fakeProject->getId());
+
+        $this->assertEquals($expectedSlug, $project->getSlug());
+
+        $this->removeFakeProject();
+    }
+
+    /**
+     * @test
+     */
     public function it_properly_deletes_a_project()
     {
         $this->createFakeProject();
-        $this->seeInDatabase('projects', $this->overrides);
 
         $this->projects->delete($this->fakeProject)->flush($this->fakeProject);
         $this->fakeProject = null;

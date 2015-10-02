@@ -59,7 +59,6 @@ class DoctrineUserRepositoryTest extends TestCase
     public function find_by_uuid_returns_the_proper_user()
     {
         $this->createFakeUser();
-        $this->seeInDatabase('users', $this->overrides);
 
         $foundUser = $this->users->findByUUID($this->fakeUser->getId());
 
@@ -94,6 +93,8 @@ class DoctrineUserRepositoryTest extends TestCase
 
         $this->users->create($this->fakeUser)->flush($this->fakeUser);
 
+        $this->seeInDatabase('users', $this->overrides);
+
         return $this->fakeUser;
     }
 
@@ -112,7 +113,6 @@ class DoctrineUserRepositoryTest extends TestCase
     public function find_by_username_returns_the_proper_user()
     {
         $this->createFakeUser();
-        $this->seeInDatabase('users', $this->overrides);
 
         $foundUser = $this->users->findByUsername($this->fakeUser->getUsername());
 
@@ -128,7 +128,6 @@ class DoctrineUserRepositoryTest extends TestCase
     public function find_by_email_returns_the_proper_user()
     {
         $this->createFakeUser();
-        $this->seeInDatabase('users', $this->overrides);
 
         $foundUser = $this->users->findByEmail($this->fakeUser->getEmail());
 
@@ -144,7 +143,6 @@ class DoctrineUserRepositoryTest extends TestCase
     public function it_properly_deletes_an_user()
     {
         $this->createFakeUser();
-        $this->seeInDatabase('users', $this->overrides);
 
         $this->users->delete($this->fakeUser)->flush($this->fakeUser);
         $this->fakeUser = null;
