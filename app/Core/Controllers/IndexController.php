@@ -2,7 +2,6 @@
 
 namespace App\Core\Controllers;
 
-use App\Core\Requests;
 use App\Auth\Jobs\CreateNewUser;
 use App\Contracts\Auth\UserRepository;
 use Faker\Factory;
@@ -11,6 +10,7 @@ class IndexController extends Controller
 {
     /**
      * @param UserRepository $users
+     *
      * @return \Illuminate\Http\Response
      */
     public function index(UserRepository $users)
@@ -34,7 +34,7 @@ class IndexController extends Controller
                 'first_name' => $faker->firstName,
                 'last_name' => $faker->lastName,
                 'email' => $faker->email,
-                'password' => bcrypt(str_random(10))
+                'password' => bcrypt(str_random(10)),
             ]
         ));
 

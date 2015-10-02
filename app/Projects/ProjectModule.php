@@ -13,12 +13,9 @@ class ProjectModule extends Module
 {
     /**
      * Register all the bindings on the service container.
-     *
-     * @return void
      */
     public function registerContainerBindings()
     {
-
         $this->app->bind(ProjectRepository::class, function ($app) {
             return new DoctrineProjectRepository(
                 $app['em'],
@@ -34,16 +31,12 @@ class ProjectModule extends Module
      */
     public function map(Router $router)
     {
-        
     }
 
     /**
      * Bootstrap the module.
-     *
-     * @return void
      */
     public function bootModule()
     {
-
     }
 }

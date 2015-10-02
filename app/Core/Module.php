@@ -9,10 +9,8 @@ abstract class Module extends ServiceProvider
 {
     /**
      * Register all the bindings on the service container.
-     *
-     * @return void
      */
-    abstract function registerContainerBindings();
+    abstract public function registerContainerBindings();
 
     /**
      * Map all the routes needed by this module.
@@ -20,19 +18,26 @@ abstract class Module extends ServiceProvider
      * @param  Router $router
      * @return void
      */
-    abstract function map(Router $router);
+    abstract public function map(Router $router);
 
     /**
      * Bootstrap the module.
-     *
-     * @return void
      */
-    abstract function bootModule();
+    public function bootModule()
+    {}
+
+    /**
+     * Return all the permissions this module needs installed.
+     *
+     * @return array
+     */
+    public function getModulePermissions()
+    {
+        return [];
+    }
 
     /**
      * Register any container services.
-     *
-     * @return void
      */
     public function register()
     {
@@ -41,8 +46,6 @@ abstract class Module extends ServiceProvider
 
     /**
      * Bootstrap any application services.
-     *
-     * @return void
      */
     public function boot()
     {
