@@ -2,25 +2,27 @@
 
 namespace App\Core\ACL\Repositories;
 
-use Doctrine\ORM\EntityRepository;
+use App\Core\Repositories\DoctrineBaseRepository;
 use App\Core\ACL\Models\Permission;
 use App\Contracts\ACL\PermissionRepository;
+use Doctrine\ORM\NoResultException;
+use Illuminate\Database\Eloquent\Collection;
 
-class DoctrinePermissionRepository extends EntityRepository implements PermissionRepository
+class DoctrinePermissionRepository extends DoctrineBaseRepository implements PermissionRepository
 {
     /**
      * Returns all the Permissions.
      *
-     * @return Collection|Permission[]
+     * @return Collection
      */
     public function all()
     {
         $qb = $this->_em->createQueryBuilder();
 
-        return $qb->select('p')
+        return Collection::make($qb->select('p')
             ->from(Permission::class, 'p')
             ->getQuery()
-            ->getResult();
+            ->getResult());
     }
 
     /**
@@ -28,11 +30,22 @@ class DoctrinePermissionRepository extends EntityRepository implements Permissio
      *
      * @param int $id
      *
-     * @return App\Auth\Models\Permission
+     * @return Permission
      */
     public function findById($id)
     {
-        return $this->_em->find(Permission::class, $id);
+        $qb = $this->_em->createQueryBuilder();
+
+        try {
+            return $qb->select('p')
+                ->from(Permission::class, 'p')
+                ->where($qb->expr()->eq('p.id', ':id'))
+                ->setParameter(':id', $id)
+                ->getQuery()
+                ->getSingleResult();
+        } catch (NoResultException $e) {
+            return null;
+        }
     }
 
     /**
@@ -40,48 +53,21 @@ class DoctrinePermissionRepository extends EntityRepository implements Permissio
      *
      * @param string $pattern
      *
-     * @return App\Auth\Models\Permission
+     * @return Permission
      */
     public function findByPattern($pattern)
     {
         $qb = $this->_em->createQueryBuilder();
 
-        return $qb->select('p')
-            ->from(Permission::class, 'p')
-            ->where($qb->expr()->eq('p.pattern', ':pattern'))
-            ->setParameter(':pattern', $pattern)
-            ->getQuery()
-            ->getSingleResult();
-    }
-
-    /**
-     * Sets the permission entity to be persisted to the database on the next
-     * database transaction commit.
-     *
-     * @param Permission $permission
-     */
-    public function persist(Permission $permission)
-    {
-        $this->_em->persist($permission);
-    }
-
-    /**
-     * Commits a database transaction.
-     *
-     * @param Permission $permission
-     */
-    public function flush(Permission $permission = null)
-    {
-        $this->_em->flush($permission);
-    }
-
-    /**
-     * Removes a permission.
-     *
-     * @param Permission $permission
-     */
-    public function delete(Permission $permission)
-    {
-        $this->_em->remove($permission);
+        try {
+            return $qb->select('p')
+                ->from(Permission::class, 'p')
+                ->where($qb->expr()->eq('p.pattern', ':pattern'))
+                ->setParameter(':pattern', $pattern)
+                ->getQuery()
+                ->getSingleResult();
+        } catch (NoResultException $e) {
+            return null;
+        }
     }
 }

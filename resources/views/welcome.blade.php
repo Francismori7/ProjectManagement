@@ -3,7 +3,11 @@
 @section('page-title', 'Welcome')
 
 @section('page-content')
-    @foreach($users as $user)
-        {{ var_dump($user) }}
-    @endforeach
+    <ul>
+        @foreach($users as $user)
+            <pre>
+            {{ var_dump($user->getPermissions()) }}
+            </pre>
+        @endforeach
+    </ul>
 @endsection
