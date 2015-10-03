@@ -47,6 +47,11 @@ class AuthModule extends Module
                 $router->post('reset', ['as' => 'reset', 'uses' => 'PasswordController@postReset']);
             });
         });
+
+        $router->group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'App\Auth\Controllers'], function (Router $router) {
+           $router->get('edit', ['as' => 'edit', 'uses'=>'ProfileController@edit']);
+           $router->patch('/', ['as' => 'update', 'uses'=>'ProfileController@update']);
+        });
     }
 
     public function getModulePermissions()
