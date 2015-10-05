@@ -16,12 +16,10 @@
     "tests"
   ],
   "dependencies": {
-    "bitters": "~1.1.0",
-    "bourbon": "~4.2.5",
     "jquery": "~2.1.4",
-    "neat": "~1.7.2",
-    "refills": "~0.1.0",
     "angular": "~1.4.7",
+    "bootstrap-sass": "~3.3.0",
+    "bootswatch": "~3.3.0",
     "angular-ui-router": "~0.2.15"
   }
 }
