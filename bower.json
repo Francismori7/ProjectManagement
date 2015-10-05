@@ -16,11 +16,11 @@
     "tests"
   ],
   "dependencies": {
-    "angular-material": "~0.11.2",
     "bitters": "~1.1.0",
     "bourbon": "~4.2.5",
     "jquery": "~2.1.4",
     "neat": "~1.7.2",
-    "refills": "~0.1.0"
+    "refills": "~0.1.0",
+    "angular": "~1.4.7"
   }
 }
