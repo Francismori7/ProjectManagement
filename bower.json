@@ -20,7 +20,7 @@
     "angular": "~1.4.7",
     "bourbon": "~4.2.5",
     "neat": "~1.7.2",
-    "bitters:": "~1.1.0",
-    "angular-ui-router": "~0.2.15"
+    "angular-ui-router": "~0.2.15",
+    "bitters": "~1.1.0"
   }
 }
