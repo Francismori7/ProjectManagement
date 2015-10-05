@@ -2,7 +2,9 @@
 
 namespace App\Core\Console\Commands\Permissions;
 
+use App\Auth\Models\User;
 use App\Contracts\Auth\UserRepository;
+use App\Core\ACL\Models\Permission;
 use Illuminate\Console\Command;
 
 class ShowPermissions extends Command
@@ -22,12 +24,13 @@ class ShowPermissions extends Command
     protected $description = 'Show all the permissions for a user.';
 
     /**
-     * @var App\Contracts\Auth\UserRepository
+     * @var UserRepository
      */
     protected $users;
 
     /**
      * Create a new command instance.
+     * @param UserRepository $users
      */
     public function __construct(UserRepository $users)
     {
@@ -45,7 +48,7 @@ class ShowPermissions extends Command
     {
         $user = $this->getUser();
         if ($user === null) {
-            $this->error("That user does not exist.");
+            $this->error('That user does not exist.');
             return;
         }
 
@@ -57,15 +60,16 @@ class ShowPermissions extends Command
         }
 
         $this->info(sprintf("'%s' has the following permissions: ", $user->getUsername()));
+        /** @var Permission $permission */
         foreach ($permissions as $permission) {
-            $this->info(sprintf(" - %s => %s", $permission->getPattern(), $permission->getName()));
+            $this->info(sprintf(' - %s => %s', $permission->getPattern(), $permission->getName()));
         }
     }
 
     /**
      * Get the user from the command parameter.
      *
-     * @return App\Auth\Models\User
+     * @return User
      */
     private function getUser()
     {

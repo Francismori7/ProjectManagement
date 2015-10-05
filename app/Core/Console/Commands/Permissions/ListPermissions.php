@@ -22,13 +22,15 @@ class ListPermissions extends Command
     protected $description = 'View installed permissions.';
 
     /**
-     * @var App\Contracts\ACL\PermissionRepository
+     * @var PermissionRepository
      */
     protected $permissions;
 
-   /**
-    * Create a new command instance.
-    */
+    /**
+     * Create a new command instance.
+     *
+     * @param PermissionRepository $permissions
+     */
    public function __construct(PermissionRepository $permissions)
    {
        parent::__construct();
@@ -51,7 +53,7 @@ class ListPermissions extends Command
         }
 
         foreach ($permissions as $permission) {
-            $this->info(sprintf(" - %s => %s", $permission->getPattern(), $permission->getName()));
+            $this->info(sprintf(' - %s => %s', $permission->getPattern(), $permission->getName()));
         }
     }
 }

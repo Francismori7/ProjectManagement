@@ -5,6 +5,7 @@ namespace App\Core\Console\Commands\Permissions;
 use App\Core\ACL\Models\Permission;
 use App\Contracts\ACL\PermissionRepository;
 use Illuminate\Console\Command;
+use Illuminate\Support\Collection;
 
 class InstallPermissions extends Command
 {
@@ -23,19 +24,21 @@ class InstallPermissions extends Command
     protected $description = 'Collect and install the permissions from all the modules.';
 
     /**
-     * @var App\Contracts\ACL\PermissionRepository
+     * @var PermissionRepository
      */
     protected $permissions;
 
-   /**
-    * Create a new command instance.
-    */
-   public function __construct(PermissionRepository $permissions)
-   {
-       parent::__construct();
+    /**
+     * Create a new command instance.
+     *
+     * @param PermissionRepository $permissions
+     */
+    public function __construct(PermissionRepository $permissions)
+    {
+        parent::__construct();
 
-       $this->permissions = $permissions;
-   }
+        $this->permissions = $permissions;
+    }
 
     /**
      * Execute the console command.
@@ -44,26 +47,13 @@ class InstallPermissions extends Command
      */
     public function handle()
     {
-        $needed = app('permissions');
+        $needed = collect(app('permissions'));
         $installed = $this->parsePermissionObjects($this->permissions->all());
 
-        $toinstall = array_diff($needed, $installed);
-        $toremove = array_diff($installed, $needed);
+        $toInstall = $needed->diff($installed);
+        $toRemove = $installed->diff($needed);
 
-        foreach ($toinstall as $pattern => $name) {
-            $permission = (new Permission())->setPattern($pattern)
-                                        ->setName($name);
-
-            $this->permissions->persist($permission);
-
-            $this->info(
-                sprintf('Stored permission: %s => %s', $permission->getPattern(), $permission->getName())
-            );
-        }
-
-        $this->permissions->flush();
-
-        foreach ($toremove as $pattern => $name) {
+        foreach ($toRemove as $pattern => $name) {
             $permission = $this->permissions->findByPattern($pattern);
 
             $this->permissions->remove($permission);
@@ -72,24 +62,39 @@ class InstallPermissions extends Command
                 sprintf('Deleted permission: %s => %s', $permission->getPattern(), $permission->getName())
             );
         }
+
+        $this->permissions->flush();
+
+        foreach ($toInstall as $pattern => $name) {
+            $permission = (new Permission())->setPattern($pattern)
+                ->setName($name);
+
+            $this->permissions->create($permission);
+
+            $this->info(
+                sprintf('Stored permission: %s => %s', $permission->getPattern(), $permission->getName())
+            );
+        }
+
+        $this->permissions->flush();
     }
 
-   /**
-    * Turn a permission object array to an array where the permission patterns
-    * are the keys, and the names are the values.
-    *
-    * @param  array  $permissions
-    *
-    * @return array
-    */
-   private function parsePermissionObjects(array $permissions)
-   {
-       $parsed = [];
+    /**
+     * Turn a permission object array to an array where the permission patterns
+     * are the keys, and the names are the values.
+     *
+     * @param  Collection $permissions
+     *
+     * @return Collection
+     */
+    private function parsePermissionObjects(Collection $permissions)
+    {
+        $parsed = new Collection();
 
-       foreach ($permissions as $permission) {
-           $parsed[$permission->getPattern()] = $permission->getName();
-       }
+        $permissions->each(function (Permission $permission) use ($parsed) {
+            $parsed->put($permission->getPattern(), $permission->getName());
+        });
 
-       return $parsed;
-   }
+        return $parsed->sort();
+    }
 }

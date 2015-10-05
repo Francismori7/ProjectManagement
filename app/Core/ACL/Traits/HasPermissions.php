@@ -11,7 +11,7 @@ trait HasPermissions
      *
      * @var ArrayCollection|App\Auth\Models\Permission[]
      */
-    protected $permissions;
+    public $permissions;
 
     /**
      * Check if the object has a certain permission.

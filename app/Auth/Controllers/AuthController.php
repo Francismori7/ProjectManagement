@@ -51,9 +51,9 @@ class AuthController extends Controller
         return [
             'first_name' => 'required|max:50',
             'last_name' => 'required|max:50',
-            'username' => 'required|alpha_dash|max:30|unique:' . User::class . ',username,' . $user->getId(),
-            'email' => 'required|email|max:255|unique:' . User::class . ',email,' . $user->getId(),
-            'password' => 'required|min:8|confirmed',
+            'username' => 'sometimes|required|alpha_dash|max:30|unique:' . User::class . ',username,' . $user->getId(),
+            'email' => 'sometimes|required|email|max:255|unique:' . User::class . ',email,' . $user->getId(),
+            'password' => 'sometimes|required|min:8|confirmed',
         ];
     }
 
