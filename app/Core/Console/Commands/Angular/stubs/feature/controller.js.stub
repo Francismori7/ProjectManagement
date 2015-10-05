@@ -1,0 +1,14 @@
+(function(angular) {
+
+    'use strict';
+
+    angular
+        .module('app.controllers')
+        .controller('{{Stubname}}Ctrl', {{Stubname}}Ctrl);
+
+    /* @ngInject */
+    function {{Stubname}}Ctrl() {
+        var vm = this;
+    }
+
+})(window.angular);
