@@ -18,8 +18,9 @@
   "dependencies": {
     "jquery": "~2.1.4",
     "angular": "~1.4.7",
-    "bootstrap-sass": "~3.3.0",
-    "bootswatch": "~3.3.0",
+    "bourbon": "~4.2.5",
+    "neat": "~1.7.2",
+    "bitters:": "~1.1.0",
     "angular-ui-router": "~0.2.15"
   }
 }
