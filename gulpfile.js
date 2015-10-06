@@ -7,7 +7,11 @@ elixir(function (mix) {
     mix.bowerCss()
         .bowerJs()
         .angular('./angular/', 'angular.js', 'public/js')
-        .sass('./angular/main.scss', 'public/css')
+        .sass('./angular/main.scss', 'public/css', {
+            includePaths: [
+                './bower_components'
+            ]
+        })
         .copy('./angular/app/**/*.html', 'public/views/app/')
         .copy('./angular/directives/**/*.html', 'public/views/directives/')
         .copy('./angular/dialogs/**/*.html', 'public/views/dialogs/')
