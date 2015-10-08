@@ -15,6 +15,16 @@ class DoctrinePermissionRepository extends DoctrineBaseRepository implements Per
      *
      * @return Collection
      */
+    public function findAll()
+    {
+        return $this->all();
+    }
+
+    /**
+     * Returns all the Permissions.
+     *
+     * @return Collection
+     */
     public function all()
     {
         $qb = $this->_em->createQueryBuilder();

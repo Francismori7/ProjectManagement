@@ -2,7 +2,6 @@
 
 namespace Tests\Auth\Repositories;
 
-use App\Auth\Models\User;
 use App\Contracts\Projects\ProjectRepository;
 use App\Projects\Models\Project;
 use DB;
@@ -78,13 +77,13 @@ class DoctrineProjectRepositoryTest extends TestCase
     {
         $faker = Factory::create();
 
-        $userAttributes = $this->overrides + [
-                'name'=>$faker->sentence(2),
+        $projectAttributes = $this->overrides + [
+                'name' => $faker->sentence(2),
                 'description' => $faker->paragraph(3),
             ];
 
-        $this->fakeProject = (new Project)->setName($userAttributes['name'])
-            ->setDescription($userAttributes['description']);
+        $this->fakeProject = (new Project)->setName($projectAttributes['name'])
+            ->setDescription($projectAttributes['description']);
 
         $this->projects->create($this->fakeProject)->flush($this->fakeProject);
 
@@ -120,7 +119,8 @@ class DoctrineProjectRepositoryTest extends TestCase
     /**
      * @test
      */
-    public function check_slug_is_properly_generated_upon_creation_of_project() {
+    public function check_slug_is_properly_generated_upon_creation_of_project()
+    {
         $this->createFakeProject();
 
         $expectedSlug = str_slug($this->fakeProject->getName());

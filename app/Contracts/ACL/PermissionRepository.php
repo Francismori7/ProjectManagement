@@ -11,6 +11,13 @@ interface PermissionRepository extends BaseRepository
     /**
      * Returns all the Permissions.
      *
+     * @return Collection All users.
+     */
+    public function findAll();
+
+    /**
+     * Returns all the Permissions.
+     *
      * @return Collection
      */
     public function all();
