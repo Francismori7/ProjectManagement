@@ -31,27 +31,37 @@ class AuthModule extends Module
      */
     public function map(Router $router)
     {
-        $router->group(['prefix' => 'auth', 'as' => 'auth.', 'namespace' => 'App\Auth\Controllers'], function (Router $router) {
-            $router->get('login', ['as' => 'login', 'uses' => 'AuthController@getLogin']);
-            $router->post('login', ['as' => 'login', 'uses' => 'AuthController@postLogin']);
-            $router->get('logout', ['as' => 'logout', 'uses' => 'AuthController@getLogout']);
+        /*
+        $router->group(['prefix' => 'auth', 'as' => 'auth.', 'namespace' => 'App\Auth\Controllers'],
+            function (Router $router) {
+                $router->get('login', ['as' => 'login', 'uses' => 'AuthController@getLogin']);
+                $router->post('login', ['as' => 'login', 'uses' => 'AuthController@postLogin']);
+                $router->get('logout', ['as' => 'logout', 'uses' => 'AuthController@getLogout']);
 
-            $router->get('register', ['as' => 'register', 'uses' => 'AuthController@getRegister']);
-            $router->post('register', ['as' => 'register', 'uses' => 'AuthController@postRegister']);
+                $router->get('register', ['as' => 'register', 'uses' => 'AuthController@getRegister']);
+                $router->post('register', ['as' => 'register', 'uses' => 'AuthController@postRegister']);
 
-            $router->group(['prefix' => 'password', 'as' => 'password.'], function (Router $router) {
-                $router->get('email', ['as' => 'email', 'uses' => 'PasswordController@getEmail']);
-                $router->post('email', ['as' => 'email', 'uses' => 'PasswordController@postEmail']);
+                $router->group(['prefix' => 'password', 'as' => 'password.'], function (Router $router) {
+                    $router->get('email', ['as' => 'email', 'uses' => 'PasswordController@getEmail']);
+                    $router->post('email', ['as' => 'email', 'uses' => 'PasswordController@postEmail']);
 
-                $router->get('reset/{token}', ['as' => 'reset', 'uses' => 'PasswordController@getReset']);
-                $router->post('reset', ['as' => 'reset', 'uses' => 'PasswordController@postReset']);
+                    $router->get('reset/{token}', ['as' => 'reset', 'uses' => 'PasswordController@getReset']);
+                    $router->post('reset', ['as' => 'reset', 'uses' => 'PasswordController@postReset']);
+                });
             });
-        });
+        */
 
-        $router->group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'App\Auth\Controllers'], function (Router $router) {
-           $router->get('edit', ['as' => 'edit', 'uses'=>'ProfileController@edit']);
-           $router->patch('/', ['as' => 'update', 'uses'=>'ProfileController@update']);
-        });
+        $router->group(['prefix' => 'api', 'as' => 'api.', 'namespace' => 'App\Auth\Controllers'],
+            function (Router $router) {
+                $router->group(['prefix' => 'auth', 'as' => 'auth.'],
+                    function (Router $router) {
+                        $router->post('login', ['as' => 'login', 'uses' => 'AuthenticationController@login']);
+                        $router->post('register', ['as' => 'register', 'uses' => 'AuthenticationController@register']);
+
+                        $router->get('logout', ['as' => 'logout', 'uses' => 'AuthenticationController@logout']);
+                        $router->get('me', ['as' => 'me', 'uses' => 'AuthenticationController@me']);
+                    });
+            });
     }
 
     public function getModulePermissions()
