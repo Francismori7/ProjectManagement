@@ -4,21 +4,13 @@ namespace App\Auth\Controllers;
 
 
 use App\Auth\Http\Requests\UpdateProfileRequest;
-use App\Contracts\Auth\UserRepository;
+use App\Auth\Jobs\UpdateUser;
 use App\Core\Controllers\Controller;
 use Auth;
 use Illuminate\Http\Response;
 
 class ProfileController extends Controller
 {
-    /**
-     * ProfileController constructor.
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * @return Response
      */
@@ -27,15 +19,18 @@ class ProfileController extends Controller
         return view('auth.profile.edit')->with(['user' => Auth::user()]);
     }
 
-    public function update(UpdateProfileRequest $request, UserRepository $users)
+    public function update(UpdateProfileRequest $request)
     {
-        $user = Auth::user();
-        $user->setFirstName($request->input('first_name'))
-            ->setLastName($request->input('last_name'))
-            ->setUsername($request->get('username'))
-            ->setEmail($request->get('email'));
+        $this->dispatch(new UpdateUser($request->user(), $request->all()));
 
-        $users->save($user)->flush();
         return redirect()->back();
+    }
+
+    /**
+     * ProfileController constructor.
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
     }
 }

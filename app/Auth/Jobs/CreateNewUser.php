@@ -36,7 +36,7 @@ class CreateNewUser extends Job implements SelfHandling
         if ($this->data instanceof User) {
             $user = $this->data;
         } else {
-            $user = (new User())->setUsername($this->data['username'])
+            $user = (new User)->setUsername($this->data['username'])
                 ->setFirstName($this->data['first_name'])
                 ->setLastName($this->data['last_name'])
                 ->setEmail($this->data['email'])
