@@ -3,14 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1">
-    <title>Creapario</title>
+    <title>Creaperio</title>
 
-    <link rel="stylesheet" href="/css/vendor.css">
-    <link rel="stylesheet" href="/css/app.css">
+    <link rel="icon" type="image/png" href="{{ asset('images/icon.png') }}" />
+
+    <link rel="stylesheet" href="{{ asset('css/vendor.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
 <body>
 
-    <script src="/js/vendor.js" charset="utf-8"></script>
-    <script src="/js/app.js" charset="utf-8"></script>
+    <script src="{{ asset('js/vendor.js') }}" charset="utf-8"></script>
+    <script src="{{ asset('js/app.js') }}" charset="utf-8"></script>
 </body>
 </html>
