@@ -24,7 +24,8 @@ abstract class Module extends ServiceProvider
      * Bootstrap the module.
      */
     public function bootModule()
-    {}
+    {
+    }
 
     /**
      * Return all the permissions this module needs installed.

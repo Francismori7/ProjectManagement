@@ -2,7 +2,6 @@
 
 namespace App\Auth\Controllers;
 
-
 use App\Auth\Http\Requests\UpdateProfileRequest;
 use App\Auth\Jobs\UpdateUser;
 use App\Core\Controllers\Controller;

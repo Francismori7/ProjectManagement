@@ -44,8 +44,6 @@ class DoctrineUserRepository extends DoctrineBaseRepository implements UserRepos
         $this->eagerLoadRelationships($eagerLoads, $queryBuilder);
 
         return Collection::make($queryBuilder->getQuery()->getResult());
-
-
     }
 
     /**

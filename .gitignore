@@ -175,3 +175,4 @@ bower_components
 /storage/app
 /storage/debugbar
 /storage/framework
+/.php_cs.cache
