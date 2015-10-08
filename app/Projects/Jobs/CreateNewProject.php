@@ -23,12 +23,10 @@ class CreateNewProject extends Job implements SelfHandling
      */
     public function handle(ProjectRepository $projects)
     {
-        if ($this->data instanceof Project) {
-            $project = $this->data;
-        } else {
-            $project = (new Project)->setName($this->data['name'])
+        $project = $this->data instanceof Project ?
+            $this->data :
+            (new Project)->setName($this->data['name'])
                 ->setDescription($this->data['description']);
-        }
 
         $projects->save($project);
         $projects->flush();
