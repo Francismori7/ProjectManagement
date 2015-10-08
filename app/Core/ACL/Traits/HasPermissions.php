@@ -21,8 +21,9 @@ trait HasPermissions
      */
     public function hasPermission($perm)
     {
-        if ($perm instanceof Permission)
+        if ($perm instanceof Permission) {
             $perm = $perm->getPattern();
+        }
         
         $pattern = $this->getPermissionRegex($perm);
 
