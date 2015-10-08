@@ -1,0 +1,13 @@
+(function(angular) {
+    'use strict';
+
+    angular
+        .module('app.{{Modulename}}')
+        .factory('{{Stubname}}Service', {{Stubname}}Service);
+
+    /* @ngInject */
+    function {{Stubname}}Service() {
+
+    }
+
+})(window.angular);

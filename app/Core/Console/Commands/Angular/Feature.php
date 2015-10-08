@@ -3,39 +3,30 @@
 namespace App\Core\Console\Commands\Angular;
 
 use Illuminate\Contracts\Filesystem\Filesystem;
-use Illuminate\Console\Command;
+use App\Core\Console\Commands\Angular\AngularCommand;
 
-class Feature extends Command
+class Feature extends AngularCommand
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'ng:feature {name}';
+    protected $signature = 'ng:module {module}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Add a new angular feature.';
-
-    /**
-     * The filesystem instance.
-     *
-     * @var Illuminate\Contracts\Filesystem\Filesystem
-     */
-    protected $fs;
+    protected $description = 'Add a new angular module.';
 
     /**
      * Create a new command instance.
      */
     public function __construct(Filesystem $fs)
     {
-        parent::__construct();
-
-        $this->fs = $fs;
+        parent::__construct($fs);
     }
 
     /**
@@ -45,29 +36,16 @@ class Feature extends Command
      */
     public function handle()
     {
-        $name = mb_strtolower($this->argument('name'));
+        $name = $this->getModuleName();
         $outputFolder = base_path('angular/app/' . $name);
 
         $stubController = $this->fs->get(__DIR__ . '/stubs/feature/controller.js.stub');
         $stubModule = $this->fs->get(__DIR__ . '/stubs/feature/module.js.stub');
 
-        $controllerContent = str_replace(
-            "{{Stubname}}",
-            studly_case($name),
-            $stubController
-        );
+        $controllerContent = $this->parseStubname($stubController, $name);
+        $controllerContent = $this->parseModulename($controllerContent, $name);
 
-        $controllerContent = str_replace(
-            "{{Modulename}}",
-            camel_case($name),
-            $controllerContent
-        );
-
-        $moduleContent = str_replace(
-            "{{Modulename}}",
-            camel_case($name),
-            $stubModule
-        );
+        $moduleContent = $this->parseModulename($stubModule, $name);
 
         // Create the feature directory
         $this->fs->makeDirectory($outputFolder);
