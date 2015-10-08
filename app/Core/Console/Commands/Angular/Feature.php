@@ -46,15 +46,27 @@ class Feature extends Command
     public function handle()
     {
         $name = mb_strtolower($this->argument('name'));
-        $outputFolder = 'angular/app/' . $name;
+        $outputFolder = base_path('angular/app/' . $name);
 
-        $stubController = $this->fs->get('app/Core/Console/Commands/Angular/stubs/feature/controller.js.stub');
-        // $stubController = file_get_contents(__DIR__ . '/stubs/feature/controller.js.stub');
+        $stubController = $this->fs->get(__DIR__ . '/stubs/feature/controller.js.stub');
+        $stubModule = $this->fs->get(__DIR__ . '/stubs/feature/module.js.stub');
 
         $controllerContent = str_replace(
             "{{Stubname}}",
             studly_case($name),
             $stubController
+        );
+
+        $controllerContent = str_replace(
+            "{{Modulename}}",
+            camel_case($name),
+            $controllerContent
+        );
+
+        $moduleContent = str_replace(
+            "{{Modulename}}",
+            camel_case($name),
+            $stubModule
         );
 
         // Create the feature directory
@@ -64,6 +76,11 @@ class Feature extends Command
         $this->fs->put(
             sprintf("%s/%s.controller.js", $outputFolder, $name),
             $controllerContent
+        );
+
+        $this->fs->put(
+            sprintf("%s/%s.module.js", $outputFolder, $name),
+            $moduleContent
         );
 
         // Save the feature html view
@@ -84,7 +101,7 @@ class Feature extends Command
      */
     private function appendStylesheet($name)
     {
-        $mainStyles = 'angular/main.scss';
+        $mainStyles = base_path('angular/main.scss');
 
         $import = sprintf('@import "app/%s/%s";', $name, $name) . PHP_EOL;
 

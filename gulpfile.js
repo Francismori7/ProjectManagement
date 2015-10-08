@@ -6,7 +6,7 @@ require('laravel-elixir-livereload');
 elixir(function (mix) {
     mix.bowerCss()
         .bowerJs()
-        .angular('./angular/', 'angular.js', 'public/js')
+        .angular('./angular/', 'app.js', 'public/js')
         .sass('./angular/main.scss', 'public/css', {
             includePaths: [
                 './bower_components'

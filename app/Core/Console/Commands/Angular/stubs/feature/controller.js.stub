@@ -3,7 +3,7 @@
     'use strict';
 
     angular
-        .module('app.controllers')
+        .module('app.{{Modulename}}')
         .controller('{{Stubname}}Ctrl', {{Stubname}}Ctrl);
 
     /* @ngInject */

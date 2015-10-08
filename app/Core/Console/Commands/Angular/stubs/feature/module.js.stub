@@ -1,0 +1,10 @@
+(function(angular) {
+
+    'use strict';
+
+    angular
+        .module('app.{{Modulename}}', [
+            // Dependencies
+        ]);
+
+})(window.angular);
