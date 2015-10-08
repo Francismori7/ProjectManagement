@@ -22,6 +22,7 @@
     "neat": "~1.7.2",
     "angular-ui-router": "~0.2.15",
     "bitters": "~1.1.0",
-    "ngstorage": "~0.3.9"
+    "ngstorage": "~0.3.9",
+    "satellizer": "~0.12.5"
   }
 }

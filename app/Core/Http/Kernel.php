@@ -18,7 +18,8 @@ class Kernel extends HttpKernel implements HttpKernelContract
         \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
         \Illuminate\Session\Middleware\StartSession::class,
         \Illuminate\View\Middleware\ShareErrorsFromSession::class,
-        \App\Core\Http\Middleware\VerifyCsrfToken::class,
+        // No longer needed with JSON web tokens.
+        // \App\Core\Http\Middleware\VerifyCsrfToken::class,
     ];
 
     /**
@@ -30,5 +31,7 @@ class Kernel extends HttpKernel implements HttpKernelContract
         'auth' => \App\Auth\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'guest' => \App\Auth\Http\Middleware\RedirectIfAuthenticated::class,
+        'jwt.auth' => \Tymon\JWTAuth\Middleware\GetUserFromToken::class,
+        'jwt.refresh' => \Tymon\JWTAuth\Middleware\RefreshToken::class,
     ];
 }
