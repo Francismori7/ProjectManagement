@@ -10,35 +10,12 @@ use Faker\Factory;
 class IndexController extends Controller
 {
     /**
-     * @param UserRepository $users
+     * Load up the angular application.
      *
-     * @return \Illuminate\Http\Response
+     * @return Illuminate\Http\Response
      */
-    public function index(UserRepository $users)
+    public function angular()
     {
-        //$user = $users->findByUUID('d45fb359-66e0-11e5-befb-0800279114ca');
-        $user = $users->all(['p' => 'permissions']);
-
-        return view('welcome', ['users' => $user]);
-    }
-
-    /**
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function create()
-    {
-        $faker = Factory::create();
-
-        $this->dispatch(new CreateNewUser(
-            [
-                'username' => $faker->userName,
-                'first_name' => $faker->firstName,
-                'last_name' => $faker->lastName,
-                'email' => $faker->email,
-                'password' => bcrypt(str_random(10)),
-            ]
-        ));
-
-        return redirect()->route('home');
+        return view('index');
     }
 }
