@@ -15,7 +15,7 @@
         "nayjest/laravel-doctrine-dbal": "^1.0",
         "laravel-doctrine/acl": "^1.0",
         "barryvdh/laravel-ide-helper": "^2.1",
-        "tymon/jwt-auth": "^0.5.5"
+        "tymon/jwt-auth": "dev-master"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
