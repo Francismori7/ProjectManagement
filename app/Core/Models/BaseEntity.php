@@ -26,12 +26,12 @@ abstract class BaseEntity implements JsonableContract, ArrayableContract
     /**
      * Magic method that defers to the getters.
      *
-     * @param $propterty
+     * @param $property
      * @return mixed
      */
-    public function __get($propterty)
+    public function __get($property)
     {
-        $methodName = 'get' . ucfirst($propterty);
+        $methodName = 'get' . ucfirst($property);
         return call_user_func([$this, $methodName]);
     }
 
