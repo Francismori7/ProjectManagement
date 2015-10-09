@@ -46,7 +46,7 @@ class User extends BaseEntity implements Authenticatable,
      *
      * @var string The identifier of the user.
      */
-    protected $id;
+    public $id;
     /**
      * @ORM\Column(type="string", unique=true, length=30, name="username")
      *

@@ -5,12 +5,11 @@ namespace App\Auth\Controllers;
 use App\Auth\Jobs\CreateNewUser;
 use App\Auth\Models\User;
 use App\Core\Controllers\Controller;
-use App\Core\Requests\Request;
+use Illuminate\Http\Request;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Exceptions\TokenInvalidException;
-use Validator;
 
 class AuthenticationController extends Controller
 {
@@ -67,7 +66,10 @@ class AuthenticationController extends Controller
     public static function getValidatorRules()
     {
         /** @var User $user */
-        $user = JWTAuth::parseToken()->authenticate() ?: new User;
+        $user = new User;
+        if (JWTAuth::getToken()) {
+            $user = JWTAuth::parseToken()->authenticate();
+        }
 
         return [
             'first_name' => 'required|max:50',
