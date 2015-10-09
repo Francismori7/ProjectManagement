@@ -10,4 +10,10 @@ use LaravelDoctrine\ORM\Serializers\Jsonable;
 class BaseEntity implements JsonableContract, ArrayableContract
 {
     use Jsonable, Arrayable;
+
+    public function __get($value)
+    {
+        $methodName = 'get' . ucfirst($value);
+        return call_user_func([$this, $methodName]);
+    }
 }

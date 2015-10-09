@@ -46,31 +46,31 @@ class User extends BaseEntity implements Authenticatable,
      *
      * @var string The identifier of the user.
      */
-    public $id;
+    protected $id;
     /**
      * @ORM\Column(type="string", unique=true, length=30, name="username")
      *
      * @var string
      */
-    public $username;
+    protected $username;
     /**
      * @ORM\Column(type="string", length=50, name="first_name")
      *
      * @var string
      */
-    public $firstName;
+    protected $firstName;
     /**
      * @ORM\Column(type="string", length=50, name="last_name")
      *
      * @var string
      */
-    public $lastName;
+    protected $lastName;
     /**
      * @ORM\Column(type="string", unique=true)
      *
      * @var string
      */
-    public $email;
+    protected $email;
 
     public function __construct()
     {
