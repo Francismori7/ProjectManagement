@@ -99,11 +99,13 @@ class AuthenticationController extends Controller
      */
     public function me()
     {
+        /** @var User $user */
         if (!$user = JWTAuth::parseToken()->authenticate()) {
             return response()->json(['user_not_found'], 404);
         }
 
-        return response()->json(compact('user'));
+
+        return response()->json($user);
     }
 
     public function logout()

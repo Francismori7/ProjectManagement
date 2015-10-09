@@ -147,7 +147,8 @@ return [
         */
 
         'auth' => function ($app) {
-            return new Tymon\JWTAuth\Providers\Auth\IlluminateAuthAdapter($app['auth']);
+            return new App\Auth\Providers\JWT\DoctrineAuthAdapter($app['auth']);
+            //return new Tymon\JWTAuth\Providers\Auth\IlluminateAuthAdapter($app['auth']);
         },
 
         /*
