@@ -2,6 +2,7 @@
 
 namespace App\Core\Models;
 
+use Carbon\Carbon;
 use Illuminate\Contracts\Support\Arrayable as ArrayableContract;
 use Illuminate\Contracts\Support\Jsonable as JsonableContract;
 use LaravelDoctrine\ORM\Serializers\ArrayEncoder;
@@ -41,7 +42,8 @@ abstract class BaseEntity implements JsonableContract, ArrayableContract
      * @param $value
      * @return mixed
      */
-    public function __set($property, $value) {
+    public function __set($property, $value)
+    {
         $methodName = 'set' . ucfirst($property);
         return call_user_func([$this, $methodName], $value);
     }
@@ -65,8 +67,24 @@ abstract class BaseEntity implements JsonableContract, ArrayableContract
      */
     private function getNormalizer()
     {
+        $dateTimeCallback = function ($dateTime) {
+            return $dateTime instanceof \DateTime ?
+                Carbon::instance($dateTime)->toDateTimeString() :
+                null;
+        };
+
+        $dateTimeProperties = ['createdAt', 'updatedAt', 'deletedAt'];
+        $callbacks = [];
+
+        foreach ($dateTimeProperties as $dateTimeProperty) {
+            if (property_exists($this, $dateTimeProperty)) {
+                $callbacks[$dateTimeProperty] = $dateTimeCallback;
+            }
+        }
+
         $normalizer = new GetSetMethodNormalizer;
         $normalizer->setIgnoredAttributes($this->ignoredAttributes);
+        $normalizer->setCallbacks($callbacks);
         return $normalizer;
     }
 

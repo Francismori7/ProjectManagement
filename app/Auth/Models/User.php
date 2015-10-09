@@ -17,9 +17,6 @@ use LaravelDoctrine\Extensions\SoftDeletes\SoftDeletes;
 use LaravelDoctrine\ORM\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
-use Symfony\Component\Serializer\Serializer;
 
 /**
  * Class User.
@@ -42,10 +39,16 @@ class User extends BaseEntity implements Authenticatable,
         HasPermissions,
         HasRoles;
 
+    /**
+     * These attributes will not be included in the serialized Json or array.
+     *
+     * @var array
+     */
     protected $ignoredAttributes = [
         'authIdentifier',
         'authIdentifierName',
         'authPassword',
+        'rememberToken',
         'rememberTokenName',
         'emailForPasswordReset',
         'password',
@@ -125,6 +128,30 @@ class User extends BaseEntity implements Authenticatable,
     }
 
     /**
+     * Returns the User's email address.
+     *
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Overwrites the User's email address.
+     *
+     * @param string $email
+     *
+     * @return User
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
      * Returns the User's first name.
      *
      * @return string
@@ -168,30 +195,6 @@ class User extends BaseEntity implements Authenticatable,
     public function setLastName($lastName)
     {
         $this->lastName = $lastName;
-
-        return $this;
-    }
-
-    /**
-     * Returns the User's email address.
-     *
-     * @return string
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    /**
-     * Overwrites the User's email address.
-     *
-     * @param string $email
-     *
-     * @return User
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
 
         return $this;
     }

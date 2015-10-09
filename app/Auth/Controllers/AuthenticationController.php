@@ -5,6 +5,7 @@ namespace App\Auth\Controllers;
 use App\Auth\Jobs\CreateNewUser;
 use App\Auth\Models\User;
 use App\Core\Controllers\Controller;
+use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
@@ -19,6 +20,7 @@ class AuthenticationController extends Controller
     public function __construct()
     {
         $this->middleware('guest', ['only' => ['login', 'register']]);
+        $this->middleware('jwt.refresh', ['only' => ['logout', 'me']]);
         $this->middleware('jwt.auth', ['only' => ['logout', 'me']]);
     }
 
@@ -95,17 +97,12 @@ class AuthenticationController extends Controller
     /**
      * Returns the user's details.
      *
+     * @param Guard $auth
      * @return \Illuminate\Http\JsonResponse
      */
-    public function me()
+    public function me(Guard $auth)
     {
-        /** @var User $user */
-        if (!$user = JWTAuth::parseToken()->authenticate()) {
-            return response()->json(['user_not_found'], 404);
-        }
-
-
-        return response()->json($user);
+        return response()->json($auth->user());
     }
 
     public function logout()
