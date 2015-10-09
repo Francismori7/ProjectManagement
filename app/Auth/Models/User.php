@@ -17,6 +17,9 @@ use LaravelDoctrine\Extensions\SoftDeletes\SoftDeletes;
 use LaravelDoctrine\ORM\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
+use Symfony\Component\Serializer\Serializer;
 
 /**
  * Class User.
@@ -26,10 +29,10 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
  * @ORM\HasLifecycleCallbacks
  */
 class User extends BaseEntity implements Authenticatable,
-                                         CanResetPasswordContract,
-                                         AuthorizableContract,
-                                         HasPermissionsContract,
-                                         HasRolesContract
+    CanResetPasswordContract,
+    AuthorizableContract,
+    HasPermissionsContract,
+    HasRolesContract
 {
     use Timestamps,
         SoftDeletes,
@@ -38,6 +41,15 @@ class User extends BaseEntity implements Authenticatable,
         Authorizable,
         HasPermissions,
         HasRoles;
+
+    protected $ignoredAttributes = [
+        'authIdentifier',
+        'authIdentifierName',
+        'authPassword',
+        'rememberTokenName',
+        'emailForPasswordReset',
+        'password',
+    ];
 
     /**
      * @ORM\Id
