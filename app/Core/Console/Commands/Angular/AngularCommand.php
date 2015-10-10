@@ -67,4 +67,51 @@ abstract class AngularCommand extends Command
     {
         return mb_strtolower($this->argument('module'));
     }
+
+    /**
+     * Check if a module exists.
+     *
+     * @param  string $name
+     * @return boolean
+     */
+    protected function moduleExists($name)
+    {
+        $modules = $this->fs->get(base_path('angular/app/app.module.js'));
+        $name = str_replace(".", "\.", $name);
+        $pattern = "/angular\.module\(\'app\.$name\'\, \[.*\]\);/";
+
+        return preg_match($pattern, $modules);
+    }
+
+    /**
+     * Register a new module in the app.module.js file.
+     *
+     * @param  string $name
+     * @return void
+     */
+    protected function registerModule($name)
+    {
+        $modules = $this->fs->get(base_path('angular/app/app.module.js'));
+        $modulename = "'app.$name'";
+        $moduleDef = "angular.module($modulename, []);" . PHP_EOL;
+
+        $addedDef = substr_replace(
+            $modules,
+            "\t" . $moduleDef,
+            strpos($modules, '/* @defineNgModule */'),
+            0
+        );
+
+        $addedAsDep = substr_replace(
+            $addedDef,
+            "\t\t" . $modulename . ',' . PHP_EOL,
+            strpos($addedDef, '/* @registerNgModule */'),
+            0
+        );
+
+        $this->fs->put(
+            base_path('angular/app/app.module.js'),
+            $addedAsDep
+        );
+    }
 }

@@ -37,15 +37,19 @@ class Feature extends AngularCommand
     public function handle()
     {
         $name = $this->getModuleName();
+
+        if ($this->moduleExists($name))
+        {
+            $this->error("That module already exists.");
+            return;
+        }
+
         $outputFolder = base_path('angular/app/' . $name);
 
         $stubController = $this->fs->get(__DIR__ . '/stubs/feature/controller.js.stub');
-        $stubModule = $this->fs->get(__DIR__ . '/stubs/feature/module.js.stub');
 
         $controllerContent = $this->parseStubname($stubController, $name);
         $controllerContent = $this->parseModulename($controllerContent, $name);
-
-        $moduleContent = $this->parseModulename($stubModule, $name);
 
         // Create the feature directory
         $this->fs->makeDirectory($outputFolder);
@@ -56,11 +60,6 @@ class Feature extends AngularCommand
             $controllerContent
         );
 
-        $this->fs->put(
-            sprintf("%s/%s.module.js", $outputFolder, $name),
-            $moduleContent
-        );
-
         // Save the feature html view
         $this->createEmptyFile($outputFolder, $name . ".html");
 
@@ -69,6 +68,9 @@ class Feature extends AngularCommand
 
         // Update the main style sheet.
         $this->appendStylesheet($name);
+
+        // Register the module
+        $this->registerModule($name);
     }
 
     /**

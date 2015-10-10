@@ -40,6 +40,9 @@ class Service extends AngularCommand
         $name   = $this->argument('name');
         $outputFolder = base_path('angular/app/' . $module);
 
+        if (!$this->moduleExists($module))
+            $this->registerModule($module);
+            
         $this->fs->makeDirectory($outputFolder);
 
         $serviceStub = $this->fs->get(__DIR__ . '/stubs/service/service.js.stub');
