@@ -26,10 +26,10 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
  * @ORM\HasLifecycleCallbacks
  */
 class User extends BaseEntity implements Authenticatable,
-                                         CanResetPasswordContract,
-                                         AuthorizableContract,
-                                         HasPermissionsContract,
-                                         HasRolesContract
+    CanResetPasswordContract,
+    AuthorizableContract,
+    HasPermissionsContract,
+    HasRolesContract
 {
     use Timestamps,
         SoftDeletes,
@@ -38,6 +38,21 @@ class User extends BaseEntity implements Authenticatable,
         Authorizable,
         HasPermissions,
         HasRoles;
+
+    /**
+     * These attributes will not be included in the serialized Json or array.
+     *
+     * @var array
+     */
+    protected $ignoredAttributes = [
+        'authIdentifier',
+        'authIdentifierName',
+        'authPassword',
+        'rememberToken',
+        'rememberTokenName',
+        'emailForPasswordReset',
+        'password',
+    ];
 
     /**
      * @ORM\Id
@@ -113,6 +128,30 @@ class User extends BaseEntity implements Authenticatable,
     }
 
     /**
+     * Returns the User's email address.
+     *
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Overwrites the User's email address.
+     *
+     * @param string $email
+     *
+     * @return User
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
      * Returns the User's first name.
      *
      * @return string
@@ -156,30 +195,6 @@ class User extends BaseEntity implements Authenticatable,
     public function setLastName($lastName)
     {
         $this->lastName = $lastName;
-
-        return $this;
-    }
-
-    /**
-     * Returns the User's email address.
-     *
-     * @return string
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    /**
-     * Overwrites the User's email address.
-     *
-     * @param string $email
-     *
-     * @return User
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
 
         return $this;
     }

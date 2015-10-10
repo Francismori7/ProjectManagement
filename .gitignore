@@ -176,3 +176,4 @@ bower_components
 /storage/debugbar
 /storage/framework
 /.php_cs.cache
+/public/fonts/
