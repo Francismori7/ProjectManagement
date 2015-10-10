@@ -6,6 +6,9 @@
 @import "font-awesome/scss/font-awesome";
 
 @import "styles/site";
-@import "styles/components/top-navigation";
+@import "styles/components/auth-form";
+@import "styles/components/forms";
+@import "styles/components/buttons";
 
 @import "app/login/login";
+@import "app/navigation/navigation";

@@ -1,0 +1,27 @@
+.form-group {
+    margin-bottom: 15px;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+
+    .form-control {
+        background: transparent;
+        border: none;
+        border-bottom: 2px solid white;
+        box-shadow: none;
+        border-radius: 0;
+        padding: 5px 0 15px 0;
+        transition: border-bottom-color .3s ease-in-out;
+
+        &:focus {
+            outline: none;
+            box-shadow: none;
+            border-bottom-color: $light-color;
+        }
+    }
+
+    label {
+        font-weight: normal;
+    }
+}

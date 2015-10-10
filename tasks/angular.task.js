@@ -42,7 +42,7 @@ Elixir.extend('angular', function(angularDir, jsFile, outputDirectory) {
 
     new Task('angular', function() {
 
-        gulp.src([src + '**/*.js'])
+        gulp.src(src + '**/*.js')
             .on('error', onError)
             .pipe(jshint())
             .pipe(jshint.reporter(stylish))

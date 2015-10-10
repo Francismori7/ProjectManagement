@@ -2,13 +2,17 @@
     'use strict';
 
     angular.module('creaperio', [
+        'ui.router',
+
         'app.login',
 		'app.common',
-		/* @registerNgModule */
+				'app.navigation',
+/* @registerNgModule */
     ]);
 
     angular.module('app.login', []);
 	angular.module('app.common', []);
-	/* @defineNgModule */
+		angular.module('app.navigation', []);
+/* @defineNgModule */
 
 })(window.angular);
