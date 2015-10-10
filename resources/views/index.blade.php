@@ -26,10 +26,10 @@
         </div>
         <div class="user-navigation">
             <ul>
-                <li><a href="#"><span class="fa fa-search fa-fw"></span></a></li>
-                <li><a href="#"><span class="fa fa-cog fa-fw"></span></a></li>
-                <li><a href="#"><span class="fa fa-refresh fa-fw"></span></a></li>
-                <li><a href="#"><span class="fa fa-sign-out fa-fw"></span></a></li>
+                <li><a href="#"><span class="fa fa-search fa-lg fa-fw"></span></a></li>
+                <li><a href="#"><span class="fa fa-cog fa-lg fa-fw"></span></a></li>
+                <li><a href="#"><span class="fa fa-refresh fa-lg fa-fw"></span></a></li>
+                <li><a href="#"><span class="fa fa-sign-out fa-lg fa-fw"></span></a></li>
             </ul>
         </div>
     </header>

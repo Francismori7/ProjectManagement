@@ -73,21 +73,21 @@ header.top-nav {
             justify-content: space-between;
 
             li {
-                padding: 0 ($nav-link-space-between/2);
+                padding: 0 ($user-nav-link-space-between);
                 display: flex;
                 align-items: flex-end;
                 list-style: none;
                 line-height: 1.2;
 
                 a {
-                    color: $nav-link;
+                    color: $user-nav-link;
                     
                     &:active, &.active {
-                        color: $nav-link-active;
+                        color: $user-nav-link-active;
                     }
 
                     &:hover {
-                        color: $nav-link-hover;
+                        color: $user-nav-link-hover;
                     }
                 }
             }
