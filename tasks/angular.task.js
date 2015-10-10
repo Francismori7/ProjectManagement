@@ -27,6 +27,8 @@ var onError = function(err) {
         message: "Error: <%= error.message %>",
         icon: __dirname + "/../node_modules/laravel-elixir/icons/fail.png"
     })(err);
+
+    this.emit('end');
 };
 
 Elixir.extend('angular', function(angularDir, jsFile, outputDirectory) {
@@ -39,7 +41,7 @@ Elixir.extend('angular', function(angularDir, jsFile, outputDirectory) {
         concat = concatsm;
 
     new Task('angular', function() {
-        
+
         gulp.src([src + '**/*.js'])
             .on('error', onError)
             .pipe(jshint())
