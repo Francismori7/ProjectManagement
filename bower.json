@@ -23,5 +23,10 @@
     "angular-ui-router": "~0.2.15",
     "bitters": "~1.1.0",
     "ngstorage": "~0.3.9"
-  }
+},
+"overrides": {
+    "bitters": {
+        "ignore": true
+    }
+}
 }
