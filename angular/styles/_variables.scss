@@ -1,0 +1,25 @@
+/*
+ * Base
+ */
+
+$light-color: #4baed0;
+$dark-color: #343f4b;
+
+/*
+ * Top Navigation
+ */
+
+$nav-height: 70px;
+$logo-width: $nav-height;
+
+$logo-background: darken($dark-color, 10%);
+
+$nav-link: #8fa2ad;
+$nav-link-active: #e1e2e3;
+$nav-link-hover: $nav-link-active;
+$nav-link-space-between: 30px;
+
+$user-nav-link: $nav-link;
+$user-nav-link-active: $nav-link-active;
+$user-nav-link-hover: $nav-link-hover;
+$user-nav-link-space-between: $nav-link-space-between/2;

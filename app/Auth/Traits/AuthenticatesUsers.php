@@ -14,13 +14,6 @@ trait AuthenticatesUsers
     protected $password;
 
     /**
-     * @ORM\Column(name="remember_token", type="string", nullable=true)
-     *
-     * @var string
-     */
-    protected $rememberToken;
-
-    /**
      * @return string
      */
     public function getPassword()

@@ -22,6 +22,7 @@
     "neat": "~1.7.2",
     "angular-ui-router": "~0.2.15",
     "bitters": "~1.1.0",
+<<<<<<< HEAD
     "ngstorage": "~0.3.9"
 },
 "overrides": {
@@ -29,4 +30,10 @@
         "ignore": true
     }
 }
+=======
+    "ngstorage": "~0.3.9",
+    "satellizer": "~0.12.5",
+    "font-awesome": "~4.4.0"
+  }
+>>>>>>> 422ec2bfb1d08789dee7023b2adfd700c18dae91
 }
