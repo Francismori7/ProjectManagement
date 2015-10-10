@@ -19,8 +19,7 @@ elixir(function (mix) {
             'public/js/vendor.js',
             'public/js/app.js',
             'public/css/vendor.css',
-            'public/css/app.css',
-            'public/css/angular.css',
+            'public/css/main.css',
             'public/views/**/*.html'
         ], {liveCSS: true});
 });
