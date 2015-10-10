@@ -12,6 +12,7 @@ elixir(function (mix) {
                 './bower_components'
             ]
         })
+        .copy('./bower_components/font-awesome/fonts', 'public/fonts')
         .copy('./angular/app/**/*.html', 'public/views/app/')
         .copy('./angular/directives/**/*.html', 'public/views/directives/')
         .copy('./angular/dialogs/**/*.html', 'public/views/dialogs/')
