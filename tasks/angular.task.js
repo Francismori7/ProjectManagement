@@ -8,6 +8,8 @@ var concatsm = require('gulp-concat-sourcemap');
 var notify = require('gulp-notify');
 var stylish = require('jshint-stylish');
 var gulpIf = require('gulp-if');
+var file = require('file');
+var path = require('path');
 
 var Task = Elixir.Task;
 
@@ -27,7 +29,6 @@ var onError = function(err) {
     })(err);
 };
 
-
 Elixir.extend('angular', function(angularDir, jsFile, outputDirectory) {
 
     var src = angularDir || Elixir.config.assetsPath + '/angular/';
@@ -38,8 +39,8 @@ Elixir.extend('angular', function(angularDir, jsFile, outputDirectory) {
         concat = concatsm;
 
     new Task('angular', function() {
-
-        gulp.src(src + '**/*.js')
+        
+        gulp.src([src + '**/*.js'])
             .on('error', onError)
             .pipe(jshint())
             .pipe(jshint.reporter(stylish))
