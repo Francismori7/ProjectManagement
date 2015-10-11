@@ -177,3 +177,4 @@ bower_components
 /storage/framework
 /.php_cs.cache
 /public/fonts/
+/public/views
