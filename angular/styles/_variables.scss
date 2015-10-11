@@ -23,3 +23,14 @@ $user-nav-link: $nav-link;
 $user-nav-link-active: $nav-link-active;
 $user-nav-link-hover: $nav-link-hover;
 $user-nav-link-space-between: $nav-link-space-between/2;
+
+/*
+ * Sidebar Navigation
+ */
+
+$sidebar-width: $logo-width;
+$sidebar-link-height: $nav-height;
+
+$sidebar-nav-link: #8fa2ad;
+$sidebar-nav-link-active: #e1e2e3;
+$sidebar-nav-link-hover: $sidebar-nav-link-active;

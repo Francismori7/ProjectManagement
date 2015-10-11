@@ -22,7 +22,8 @@
             .state('app.login', {
                 url: '/',
                 views: {
-                    'navigation@': {},
+                    //'navigation@': {},
+                    'sidebar@': {},
                     'main@': {
                         templateUrl: getView('login'),
                         controller: 'LoginCtrl',
