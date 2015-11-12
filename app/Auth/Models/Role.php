@@ -38,7 +38,7 @@ class Role extends BaseEntity implements HasPermissionsContract
     /**
      * @ORM\ManyToMany(targetEntity="App\Auth\Models\User", mappedBy="role_user")
      *
-     * @var Doctrine\Common\Collections\ArrayCollection|App\Auth\Models\User[]
+     * @var ArrayCollection|User[]
      */
     protected $users;
 
@@ -47,14 +47,14 @@ class Role extends BaseEntity implements HasPermissionsContract
      */
     public function __construct()
     {
-        $this->users = ArrayCollection;
-        $this->permissions = ArrayCollection;
+        $this->users = new ArrayCollection;
+        $this->permissions = new ArrayCollection;
     }
 
     /**
      * Add a user to the role.
      *
-     * @param App\Auth\Models\User $user
+     * @param User $user
      */
     public function addUser(User $user)
     {
@@ -64,7 +64,7 @@ class Role extends BaseEntity implements HasPermissionsContract
     /**
      * Returns the role's users.
      *
-     * @return Doctrine\Common\Collections\ArrayCollection|App\Auth\Models\User[]
+     * @return ArrayCollection|User[]
      */
     public function getUsers()
     {
