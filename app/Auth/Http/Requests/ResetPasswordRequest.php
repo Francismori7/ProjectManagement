@@ -2,10 +2,10 @@
 
 namespace App\Auth\Http\Requests;
 
-use App\Auth\Controllers\Api\v1\AuthenticationController;
+use App\Auth\Controllers\AuthController;
 use App\Core\Requests\Request;
 
-class UpdateProfileRequest extends Request
+class ResetPasswordRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,7 +14,7 @@ class UpdateProfileRequest extends Request
      */
     public function authorize()
     {
-        return $this->user();
+        return !$this->user();
     }
 
     /**
@@ -24,6 +24,8 @@ class UpdateProfileRequest extends Request
      */
     public function rules()
     {
-        return AuthenticationController::getValidatorRules();
+        return [
+            'email' => 'required|email',
+        ];
     }
 }
