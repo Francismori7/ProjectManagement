@@ -38,8 +38,7 @@ class Feature extends AngularCommand
     {
         $name = $this->getModuleName();
 
-        if ($this->moduleExists($name))
-        {
+        if ($this->moduleExists($name)) {
             $this->error("That module already exists.");
             return;
         }

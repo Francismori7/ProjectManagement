@@ -102,5 +102,4 @@ abstract class BaseEntity implements JsonableContract, ArrayableContract
 
         return $serializer->serialize($this, 'json', ['json_encode_options' => $options]);
     }
-
 }

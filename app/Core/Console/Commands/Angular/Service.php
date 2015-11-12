@@ -40,8 +40,9 @@ class Service extends AngularCommand
         $name   = $this->argument('name');
         $outputFolder = base_path('angular/app/' . $module);
 
-        if (!$this->moduleExists($module))
+        if (!$this->moduleExists($module)) {
             $this->registerModule($module);
+        }
             
         $this->fs->makeDirectory($outputFolder);
 
