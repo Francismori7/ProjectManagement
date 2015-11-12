@@ -100,9 +100,9 @@ class AuthenticationController extends Controller
              * Not always required, because update profile does not need it.
              *
              * Query looks like this...
-             * SELECT id FROM invitations WHERE id = 'invitation' AND used = 0;
+             * SELECT id FROM invitations WHERE id = 'invitation-string'
              */
-            'invitation' => 'sometimes|required|exists:invitations,id,used,0',
+            'invitation' => 'sometimes|required|exists:invitations,id',
         ];
     }
 

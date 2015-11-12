@@ -11,8 +11,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * Class Invitation.
  *
- * @ORM\Entity(repositoryClass="App\Auth\Repositories\DoctrineRoleRepository")
- * @ORM\Table(name="roles")
+ * @ORM\Entity(repositoryClass="App\Auth\Repositories\DoctrineInvitationRepository")
+ * @ORM\Table(name="invitations")
  * @ORM\HasLifecycleCallbacks
  */
 class Invitation extends BaseEntity
@@ -39,13 +39,6 @@ class Invitation extends BaseEntity
      * @var string
      */
     protected $email;
-
-    /**
-     * @ORM\Column(type="boolean")
-     *
-     * @var string
-     */
-    protected $used;
 
     /**
      * Create a new role.
@@ -97,24 +90,6 @@ class Invitation extends BaseEntity
     public function setEmail($email)
     {
         $this->email = $email;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getUsed()
-    {
-        return $this->used;
-    }
-
-    /**
-     * @param string $used
-     * @return Invitation
-     */
-    public function setUsed($used)
-    {
-        $this->used = $used;
         return $this;
     }
 }

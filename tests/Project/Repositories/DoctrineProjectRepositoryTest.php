@@ -104,37 +104,6 @@ class DoctrineProjectRepositoryTest extends TestCase
     /**
      * @test
      */
-    public function find_by_slug_returns_the_proper_project()
-    {
-        $this->createFakeProject();
-
-        $foundProject = $this->projects->findBySlug($this->fakeProject->getSlug());
-
-        $this->assertEquals($this->fakeProject, $foundProject);
-        $this->assertNotNull($foundProject);
-
-        $this->removeFakeProject();
-    }
-
-    /**
-     * @test
-     */
-    public function check_slug_is_properly_generated_upon_creation_of_project()
-    {
-        $this->createFakeProject();
-
-        $expectedSlug = str_slug($this->fakeProject->getName());
-
-        $project = $this->projects->findByUUID($this->fakeProject->getId());
-
-        $this->assertEquals($expectedSlug, $project->getSlug());
-
-        $this->removeFakeProject();
-    }
-
-    /**
-     * @test
-     */
     public function it_properly_deletes_a_project()
     {
         $this->createFakeProject();
@@ -151,7 +120,7 @@ class DoctrineProjectRepositoryTest extends TestCase
      */
     public function find_methods_return_null_instead_of_throwing_exceptions_if_no_result_is_returned()
     {
-        $project = $this->projects->findBySlug(str_random(8));
+        $project = $this->projects->find(str_random(36));
 
         $this->assertNull($project);
     }

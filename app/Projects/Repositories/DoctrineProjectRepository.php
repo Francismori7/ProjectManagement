@@ -41,7 +41,7 @@ class DoctrineProjectRepository extends DoctrineBaseRepository implements Projec
     /**
      * Find a project entity by UUID.
      *
-     * @param int $uuid The identifier to look for in the database.
+     * @param string $uuid The identifier to look for in the database.
      * @return Project|null The project.
      */
     public function find($uuid)
@@ -52,7 +52,7 @@ class DoctrineProjectRepository extends DoctrineBaseRepository implements Projec
     /**
      * Find a project entity by UUID.
      *
-     * @param int $uuid The identifier to look for in the database.
+     * @param string $uuid The identifier to look for in the database.
      * @return Project|null The project.
      */
     public function findByUUID($uuid)
@@ -64,28 +64,6 @@ class DoctrineProjectRepository extends DoctrineBaseRepository implements Projec
                 ->from(Project::class, 'p')
                 ->where($queryBuilder->expr()->eq('p.id', ':uuid'))
                 ->setParameter('uuid', $uuid)
-                ->getQuery()
-                ->getSingleResult();
-        } catch (NoResultException $e) {
-            return null;
-        }
-    }
-
-    /**
-     * Find a project entity by its slug.
-     *
-     * @param string $slug The slug to look for in the database.
-     * @return Project|null The project.
-     */
-    public function findBySlug($slug)
-    {
-        $queryBuilder = $this->_em->createQueryBuilder();
-
-        try {
-            return $queryBuilder->select('p')
-                ->from(Project::class, 'p')
-                ->where($queryBuilder->expr()->eq('p.slug', ':slug'))
-                ->setParameter('slug', $slug)
                 ->getQuery()
                 ->getSingleResult();
         } catch (NoResultException $e) {

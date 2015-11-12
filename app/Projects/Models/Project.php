@@ -25,19 +25,14 @@ class Project extends BaseEntity
      * @var string
      */
     private $id;
-    /**
-     * @Gedmo\Slug(fields={"name"})
-     * @ORM\Column(length=128, unique=true)
-     *
-     * @var string
-     */
-    private $slug;
+
     /**
      * @ORM\Column(type="string", length=100)
      *
      * @var string
      */
     private $name;
+
     /**
      * @ORM\Column(type="text", nullable=true)
      *
@@ -53,30 +48,6 @@ class Project extends BaseEntity
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Returns the Project's slug. Mainly used for URLs.
-     *
-     * @return string
-     */
-    public function getSlug()
-    {
-        return $this->slug;
-    }
-
-    /**
-     * Overwrites the Project's slug.
-     *
-     * @param string $slug
-     *
-     * @return Project
-     */
-    public function setSlug($slug)
-    {
-        $this->slug = $slug;
-
-        return $this;
     }
 
     /**
