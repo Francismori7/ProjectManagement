@@ -3,7 +3,9 @@
 namespace App\Projects;
 
 use App\Auth\Models\User;
+use App\Contracts\Projects\InvitationRepository;
 use App\Core\Module;
+use App\Projects\Repositories\DoctrineInvitationRepository;
 use Illuminate\Routing\Router;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use App\Contracts\Projects\ProjectRepository;
@@ -19,7 +21,12 @@ class ProjectModule extends Module
         $this->app->bind(ProjectRepository::class, function ($app) {
             return new DoctrineProjectRepository(
                 $app['em'],
-                new ClassMetadata(User::class));
+                new ClassMetadata(Project::class));
+        });
+        $this->app->bind(InvitationRepository::class, function ($app) {
+            return new DoctrineInvitationRepository(
+                $app['em'],
+                new ClassMetadata(Invitation::class));
         });
     }
 

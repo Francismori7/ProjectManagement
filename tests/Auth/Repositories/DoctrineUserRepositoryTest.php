@@ -35,6 +35,27 @@ class DoctrineUserRepositoryTest extends TestCase
     }
 
     /**
+     * Clean up test data.
+     */
+    public function tearDown()
+    {
+        $this->removeFakeUser();
+
+        parent::tearDown();
+    }
+
+    /**
+     * Removes the fake User.
+     */
+    protected function removeFakeUser()
+    {
+        if ($this->fakeUser) {
+            $this->users->delete($this->fakeUser)->flush();
+            $this->fakeUser = null;
+        }
+    }
+
+    /**
      * @test
      */
     public function it_instantiates_itself_properly()
@@ -96,15 +117,6 @@ class DoctrineUserRepositoryTest extends TestCase
         $this->seeInDatabase('users', $this->overrides);
 
         return $this->fakeUser;
-    }
-
-    /**
-     * Removes the fake User.
-     */
-    protected function removeFakeUser()
-    {
-        $this->users->delete($this->fakeUser)->flush($this->fakeUser);
-        $this->fakeUser = null;
     }
 
     /**

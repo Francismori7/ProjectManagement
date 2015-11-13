@@ -35,6 +35,27 @@ class DoctrineProjectRepositoryTest extends TestCase
     }
 
     /**
+     * Clean up test data.
+     */
+    public function tearDown()
+    {
+        $this->removeFakeProject();
+
+        parent::tearDown();
+    }
+
+    /**
+     * Removes the fake Project.
+     */
+    protected function removeFakeProject()
+    {
+        if ($this->fakeProject) {
+            $this->projects->delete($this->fakeProject)->flush();
+            $this->fakeProject = null;
+        }
+    }
+
+    /**
      * @test
      */
     public function it_instantiates_itself_properly()
@@ -64,8 +85,6 @@ class DoctrineProjectRepositoryTest extends TestCase
 
         $this->assertEquals($this->fakeProject, $foundProject);
         $this->assertNotNull($foundProject);
-
-        $this->removeFakeProject();
     }
 
     /**
@@ -90,15 +109,6 @@ class DoctrineProjectRepositoryTest extends TestCase
         $this->seeInDatabase('projects', $this->overrides);
 
         return $this->fakeProject;
-    }
-
-    /**
-     * Removes the fake Project.
-     */
-    protected function removeFakeProject()
-    {
-        $this->projects->delete($this->fakeProject)->flush($this->fakeProject);
-        $this->fakeProject = null;
     }
 
     /**

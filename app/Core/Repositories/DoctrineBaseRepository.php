@@ -4,6 +4,7 @@ namespace App\Core\Repositories;
 
 use App\Contracts\Core\BaseRepository;
 use App\Core\Models\BaseEntity;
+use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityRepository;
 
 class DoctrineBaseRepository extends EntityRepository implements BaseRepository
@@ -21,7 +22,7 @@ class DoctrineBaseRepository extends EntityRepository implements BaseRepository
     }
 
     /**
-     * Soft-deletes/removes a User.
+     * Soft-deletes/removes an entity.
      *
      * @param BaseEntity $entity The BaseEntity to delete.
      * @return $this
@@ -32,7 +33,7 @@ class DoctrineBaseRepository extends EntityRepository implements BaseRepository
     }
 
     /**
-     * Soft-deletes/removes a User.
+     * Soft-deletes/removes an entity.
      *
      * @param BaseEntity $entity The BaseEntity to delete.
      * @return $this

@@ -3,15 +3,12 @@
 namespace App\Projects\Models;
 
 use App\Core\Models\BaseEntity;
-use App\Core\ACL\Traits\HasPermissions;
-use App\Contracts\ACL\HasPermissions as HasPermissionsContract;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Class Invitation.
  *
- * @ORM\Entity(repositoryClass="App\Auth\Repositories\DoctrineInvitationRepository")
+ * @ORM\Entity(repositoryClass="App\Projects\Repositories\DoctrineInvitationRepository")
  * @ORM\Table(name="invitations")
  * @ORM\HasLifecycleCallbacks
  */
@@ -27,9 +24,9 @@ class Invitation extends BaseEntity
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Project", cascade={"all"}, fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="Project", cascade={"remove"}, fetch="EAGER")
      *
-     * @var string
+     * @var Project
      */
     protected $project;
 
@@ -46,7 +43,6 @@ class Invitation extends BaseEntity
     public function __construct()
     {
         $this->project = new Project;
-        $this->used = 0;
     }
 
     /**
@@ -58,7 +54,7 @@ class Invitation extends BaseEntity
     }
 
     /**
-     * @return string
+     * @return Project
      */
     public function getProject()
     {
@@ -66,10 +62,10 @@ class Invitation extends BaseEntity
     }
 
     /**
-     * @param string $project
+     * @param Project $project
      * @return Invitation
      */
-    public function setProject($project)
+    public function setProject(Project $project)
     {
         $this->project = $project;
         return $this;

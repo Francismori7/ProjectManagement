@@ -3,6 +3,7 @@
 namespace App\Projects\Models;
 
 use App\Core\Models\BaseEntity;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use LaravelDoctrine\Extensions\SoftDeletes\SoftDeletes;
@@ -39,6 +40,16 @@ class Project extends BaseEntity
      * @var string
      */
     private $description;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Invitation", mappedBy="project", cascade={"remove"}, orphanRemoval=true)
+     */
+    private $invitations;
+
+    public function __construct()
+    {
+        $this->invitations = new ArrayCollection;
+    }
 
     /**
      * Returns the Project's identification number.
@@ -96,5 +107,13 @@ class Project extends BaseEntity
         $this->name = $name;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getInvitations()
+    {
+        return $this->invitations;
     }
 }

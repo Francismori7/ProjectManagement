@@ -3,9 +3,9 @@
 namespace App\Contracts\Core;
 
 use App\Core\Models\BaseEntity;
-use Doctrine\ORM\EntityRepository;
+use Doctrine\Common\Persistence\ObjectRepository;
 
-interface BaseRepository
+interface BaseRepository extends ObjectRepository
 {
     /**
      * Saves a Entity to the database.
