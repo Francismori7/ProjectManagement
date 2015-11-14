@@ -34,10 +34,15 @@ class ProjectModule extends Module
         /*
          * No need for 'as' => 'api.v1.' here because resource does it automatically.
          */
-        $router->group(['prefix' => 'api/v1', 'namespace' => 'App\Projects\Controllers\Api\v1'],
+        $router->group(['prefix' => 'api/v1', 'as' => 'api.v1.', 'namespace' => 'App\Projects\Controllers\Api\v1'],
             function (Router $router) {
-                $router->get('projects', ['as' => 'index', 'uses' => 'ProjectController@index']);
-                $router->get('projects/{id}', ['as' => 'show', 'uses' => 'ProjectController@show']);
+                $router->group(['prefix' => 'projects', 'as' => 'projects.'], function (Router $router) {
+                    $router->get('/', ['as' => 'index', 'uses' => 'ProjectController@index']);
+                    $router->get('{id}', ['as' => 'show', 'uses' => 'ProjectController@show']);
+                    $router->post('/', ['as' => 'store', 'uses' => 'ProjectController@store']);
+                    $router->delete('{id}', ['as' => 'destroy', 'uses' => 'ProjectController@destroy']);
+                    $router->get('{id}/restore', ['as' => 'restore', 'uses' => 'ProjectController@restore']);
+                });
             });
     }
 
@@ -52,6 +57,7 @@ class ProjectModule extends Module
             'projects.project.create' => 'Create projects',
             'projects.project.update' => 'Update projects',
             'projects.project.destroy' => 'Remove projects',
+            'projects.project.restore' => 'Restore projects',
             'projects.project.invite' => 'Invite users',
             'projects.project.promote_user' => 'Promote users',
         ];
