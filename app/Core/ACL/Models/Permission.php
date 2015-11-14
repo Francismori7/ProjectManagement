@@ -8,10 +8,24 @@ use App\Core\Models\BaseEntity;
 
 /**
  * Class Permission.
+ *
+ * @property integer $id
+ * @property string $pattern
+ * @property string $name
+ * @property-read \Illuminate\Database\Eloquent\Collection|Role[] $roles
+ * @property-read \Illuminate\Database\Eloquent\Collection|User[] $users
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\ACL\Models\Permission whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\ACL\Models\Permission wherePattern($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\ACL\Models\Permission whereName($value)
  */
 class Permission extends BaseEntity
 {
     public $timestamps = false;
+
+    protected $fillable = [
+        'pattern',
+        'name',
+    ];
 
     /**
      * A Permission can belong to many roles.

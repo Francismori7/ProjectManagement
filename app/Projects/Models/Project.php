@@ -28,6 +28,11 @@ class Project extends UUIDBaseEntity
 {
     use SoftDeletes;
 
+    protected $fillable = [
+        'name',
+        'description',
+    ];
+
     /**
      * A Project can have many invitations.
      *

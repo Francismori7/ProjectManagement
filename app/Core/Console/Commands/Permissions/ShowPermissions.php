@@ -55,14 +55,14 @@ class ShowPermissions extends Command
         $permissions = $user->permissions;
 
         if (count($permissions) === 0) {
-            $this->info(sprintf("'%s' doesn't have any permissions.", $user->getUsername()));
+            $this->info(sprintf("'%s' doesn't have any permissions.", $user->username));
             return;
         }
 
-        $this->info(sprintf("'%s' has the following permissions: ", $user->getUsername()));
+        $this->info(sprintf("'%s' has the following permissions: ", $user->username));
         /** @var Permission $permission */
         foreach ($permissions as $permission) {
-            $this->info(sprintf(' - %s => %s', $permission->getPattern(), $permission->getName()));
+            $this->info(sprintf(' - %s => %s', $permission->pattern, $permission->name));
         }
     }
 

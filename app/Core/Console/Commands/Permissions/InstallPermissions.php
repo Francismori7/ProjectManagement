@@ -59,24 +59,19 @@ class InstallPermissions extends Command
             $this->permissions->remove($permission);
 
             $this->error(
-                sprintf('Deleted permission: %s => %s', $permission->getPattern(), $permission->getName())
+                sprintf('Deleted permission: %s => %s', $permission->pattern, $permission->name)
             );
         }
 
-        $this->permissions->flush();
-
         foreach ($toInstall as $pattern => $name) {
-            $permission = (new Permission())->setPattern($pattern)
-                ->setName($name);
+            $permission = new Permission(['pattern' => $pattern, 'name' => $name]);
 
             $this->permissions->create($permission);
 
             $this->info(
-                sprintf('Stored permission: %s => %s', $permission->getPattern(), $permission->getName())
+                sprintf('Stored permission: %s => %s', $permission->pattern, $permission->name)
             );
         }
-
-        $this->permissions->flush();
     }
 
     /**
@@ -92,7 +87,7 @@ class InstallPermissions extends Command
         $parsed = new Collection();
 
         $permissions->each(function (Permission $permission) use ($parsed) {
-            $parsed->put($permission->getPattern(), $permission->getName());
+            $parsed->put($permission->pattern, $permission->name);
         });
 
         return $parsed->sort();

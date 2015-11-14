@@ -28,6 +28,10 @@ class ProjectModule extends Module
      */
     public function map(Router $router)
     {
+        $router->group(['prefix' => 'api/v1', 'as' => 'api.v1.', 'namespace' => 'App\Projects\Controllers\Api\v1'],
+            function (Router $router) {
+                $router->resource('projects', 'ProjectController');
+            });
     }
 
     /**

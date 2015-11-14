@@ -23,6 +23,10 @@ class Role extends BaseEntity implements HasPermissionsContract
 
     public $timestamps = false;
 
+    protected $fillable = [
+        'name',
+    ];
+
     /**
      * A Role can have many users.
      *

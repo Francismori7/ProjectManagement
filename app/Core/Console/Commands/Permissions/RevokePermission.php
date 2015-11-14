@@ -69,10 +69,9 @@ class RevokePermission extends Command
 
         $user->removePermission($permission);
 
-        $this->users->persist($user);
-        $this->users->flush();
+        $this->users->save($user);
 
-        $this->info(sprintf("'%s' no longer has the ability to '%s'", $user->getUsername(), $permission->getName()));
+        $this->info(sprintf("'%s' no longer has the ability to '%s'", $user->username, $permission->name));
     }
 
     /**

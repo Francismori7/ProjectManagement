@@ -53,7 +53,7 @@ class ListPermissions extends Command
         }
 
         foreach ($permissions as $permission) {
-            $this->info(sprintf(' - %s => %s', $permission->getPattern(), $permission->getName()));
+            $this->info(sprintf(' - %s => %s', $permission->pattern, $permission->name));
         }
     }
 }

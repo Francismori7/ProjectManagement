@@ -24,7 +24,6 @@ class DeleteProject extends Job implements SelfHandling
     public function handle(ProjectRepository $projects)
     {
         $projects->delete($this->project);
-        $projects->flush();
     }
 
     /**
