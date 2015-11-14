@@ -1,3 +1,5 @@
+sudo: false
+
 language: php
 
 php:
@@ -8,6 +10,7 @@ php:
 cache:
   directories:
   - vendor
+  - $HOME/.composer/cache
 
 before_script:
   - composer install
