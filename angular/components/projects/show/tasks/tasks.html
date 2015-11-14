@@ -1,0 +1,16 @@
+<md-card layout="column">
+    <div class="md-header" layout="row">
+        <h2 class="md-title">Tasks</h2>
+        <span flex></span>
+        <md-button class="md-icon-button"><md-icon>add</md-icon></md-button>
+    </div>
+    <md-list>
+        <md-list-item ng-repeat="task in vm.project.tasks" class="md-2-line">
+            <md-checkbox ng-model="task.complete"></md-checkbox>
+            <div class="md-list-item-text">
+                <h3>{{ task.title }}</h3>
+                <p>Assignee: {{ vm.getAssigneeFromId(task.assignee).name }}</p>
+            </div>
+        </md-list-item>
+    </md-list>
+</md-card>

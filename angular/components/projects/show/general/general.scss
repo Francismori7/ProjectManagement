@@ -1,0 +1,19 @@
+.activity-feed {
+
+    md-list-item {
+        &:not(:last-child) {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+        }
+
+        .md-list-item-text {
+            .activity-title {
+                font-weight: bold;
+                color: rgba(0, 0, 0, 0.7);
+            }
+
+            .activity-message {
+                color: black;
+            }
+        }
+    }
+}

@@ -1,0 +1,18 @@
+md-toolbar:not(.md-menu-toolbar) {
+    background-color: white;
+
+    md-icon, div, a, span, h1, h2, h3, h4, h5, h6 {
+        color: rgba(0, 0, 0, .7);
+    }
+
+    .md-button {
+        height: 64px;
+        width: 64px;
+        margin: 0;
+        border-radius: 0;
+
+        &:not(.no-right-border) {
+            border-right: 1px solid rgba(0, 0, 0, .12);
+        }
+    }
+}

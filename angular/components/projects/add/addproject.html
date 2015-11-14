@@ -1,0 +1,43 @@
+<md-dialog flex="80" layout="column">
+    <md-toolbar class="md-toolbar-tools" flex>
+        <h2>Create Project</h2>
+        <span flex></span>
+        <md-button class="md-icon-button no-right-border" ng-click="vm.cancel()" type="button">
+            <md-icon>close</md-icon>
+        </md-button>
+    </md-toolbar>
+    <form ng-submit="vm.addProject()" name="projectForm">
+        <md-dialog-content>
+            <div class="md-padding" layout="column">
+                <md-input-container>
+                    <label>Title</label>
+                    <input type="text" ng-model="vm.project.title" name="title" required>
+                    <div ng-messages="projectForm.title.$error">
+                        <div ng-message="required">Please enter a title.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container>
+                    <label>Description</label>
+                    <textarea ng-model="vm.project.description" rows="2" name="description" required></textarea>
+                    <div ng-messages="projectForm.description.$error">
+                        <div ng-message="required">Please enter a description.</div>
+                    </div>
+                </md-input-container>
+                <div layout="row">
+                    <div layout="row" layout-align="start center" flex="50" flex-sm="100">
+                        <div>Due Date:</div>
+                        <md-datepicker ng-model="vm.project.dueDate" md-placeholder="Due Date"></md-datepicker>
+                    </div>
+                </div>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row" layout-align="end center">
+            <md-button type="button" ng-click="vm.cancel()">
+                Cancel
+            </md-button>
+            <md-button class="md-primary md-raised">
+                Save
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

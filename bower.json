@@ -16,18 +16,24 @@
     "tests"
   ],
   "dependencies": {
-    "jquery": "~2.1.4",
-    "angular": "~1.4.7",
-    "bourbon": "~4.2.5",
-    "neat": "~1.7.2",
+    "angular-animate": "~1.4.7",
+    "angular-cookies": "~1.4.7",
+    "angular-touch": "~1.4.7",
+    "angular-sanitize": "~1.4.7",
+    "angular-messages": "~1.4.7",
+    "angular-aria": "~1.4.7",
+    "jquery": "~1.11.3",
     "angular-ui-router": "~0.2.15",
-    "bitters": "~1.1.0",
-    "ngstorage": "~0.3.9",
-    "font-awesome": "~4.4.0"
-},
-"overrides": {
-    "bitters": {
-        "ignore": true
-    }
-}
+    "angular-material": "~1.0.0-RC3",
+    "material-design-iconfont": "~0.0.2",
+    "angular-toastr": "~1.5.0",
+    "moment": "~2.10.6",
+    "animate.css": "~3.4.0",
+    "angular": "~1.4.2",
+    "angular-material-data-table": "~0.8.14",
+    "perfect-scrollbar": "~0.6.7"
+  },
+  "devDependencies": {
+    "angular-mocks": "~1.4.2"
+  }
 }

@@ -1,0 +1,24 @@
+md-card {
+    .md-header {
+        padding: 16px;
+        margin: 0;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+
+        .md-title {
+            margin: 0;
+        }
+
+        .md-icon-button, .md-button {
+            height: 24px;
+            min-height: 24px;
+            line-height: 24px;
+        }
+    }
+
+    &.quick-stat {
+        .quick-stat-info {
+            margin: 3px;
+            font-size: 16px;
+        }
+    }
+}

@@ -1,0 +1,9 @@
+md-dialog {
+    md-toolbar.md-toolbar-tools:not(.md-menu-toolbar) {
+        background-color: $active-color;
+
+        h1, h2, h3, h4, h5, h6, span, md-icon {
+            color: white;
+        }
+    }
+}

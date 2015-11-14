@@ -1,0 +1,104 @@
+<div layout="column">
+    <div layout="row">
+        <md-card class="quick-stat">
+            <md-card-content layout="row" layout-align="center center">
+                <md-icon>person</md-icon>
+                <h4 class="quick-stat-info">5 Assigned Users</h4>
+            </md-card-content>
+        </md-card>
+        <md-card class="quick-stat">
+            <md-card-content layout="row" layout-align="start center">
+                <md-progress-circular md-mode="determinate" md-diameter="40" value="60"></md-progress-circular>
+                <h4 class="quick-stat-info">60% complete</h4>
+            </md-card-content>
+        </md-card>
+    </div>
+    <md-card>
+        <div class="md-header">
+            <h2 class="md-title">General Information</h2>
+        </div>
+        <form ng-submit="vm.updateInfo()" layout="column">
+            <textarea ng-model="vm.project.description" class="status-text" placeholder="Write something..."></textarea>
+            <div layout="row" layout-align="end center">
+                <md-button class="md-primary md-raised">
+                    Update
+                </md-button>
+            </div>
+        </form>
+    </md-card>
+    <div layout="row" layout-sm="column">
+        <md-card flex>
+            <div class="md-header">
+                <h2 class="md-title">Comments</h2>
+            </div>
+            <md-list>
+                <md-list-item class="md-2-line">
+                    <div class="md-list-item-text" layout="column">
+                        <div layout="row">
+                            <h3>Maarten Flippo</h3>
+                            <span flex></span>
+                            <h4>3 hours ago</h4>
+                        </div>
+                        <p>I need everybody to push themselves for this project.</p>
+                    </div>
+                </md-list-item>
+                <md-list-item class="md-2-line">
+                    <div class="md-list-item-text" layout="column">
+                        <div layout="row">
+                            <h3>Maarten Flippo</h3>
+                            <span flex></span>
+                            <h4>3 hours ago</h4>
+                        </div>
+                        <p>I need everybody to push themselves for this project.</p>
+                    </div>
+                </md-list-item>
+                <md-list-item class="md-2-line">
+                    <div class="md-list-item-text" layout="column">
+                        <div layout="row">
+                            <h3>Maarten Flippo</h3>
+                            <span flex></span>
+                            <h4>3 hours ago</h4>
+                        </div>
+                        <p>I need everybody to push themselves for this project.</p>
+                    </div>
+                </md-list-item>
+            </md-list>
+            <md-divider></md-divider>
+            <form ng-submit="vm.addComment(newComment)" layout="column">
+                <textarea ng-model="newComment" class="status-text" placeholder="Comment..." style="height:50px;"></textarea>
+                <div layout="row" layout-align="end center">
+                    <md-button class="md-primary md-raised">
+                        Save
+                    </md-button>
+                </div>
+            </form>
+        </md-card>
+        <md-card flex>
+            <div class="md-header">
+                <h2 class="md-title">Activity Log</h2>
+            </div>
+            <md-list class="activity-feed">
+                <md-list-item class="md-2-line">
+                    <div class="md-list-item-text" layout="column">
+                        <div layout="row" class="activity-title">
+                            <span>Maarten Flippo</span>
+                            <span flex></span>
+                            <span>2h</span>
+                        </div>
+                        <p class="activity-message">Task 'Create Frontend' created and assigned to 'Tim'.</p>
+                    </div>
+                </md-list-item>
+                <md-list-item class="md-2-line">
+                    <div class="md-list-item-text" layout="column">
+                        <div layout="row" class="activity-title">
+                            <span>Maarten Flippo</span>
+                            <span flex></span>
+                            <span>3h</span>
+                        </div>
+                        <p class="activity-message">Project created!</p>
+                    </div>
+                </md-list-item>
+            </md-list>
+        </md-card>
+    </div>
+</div>

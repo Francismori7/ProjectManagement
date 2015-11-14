@@ -1,0 +1,37 @@
+<div ng-controller="SidebarCtrl as vm" layout="column" flex>
+    <md-sidenav ng-class="{minimized: !vm.isMaximized}" md-is-locked-open="$mdMedia('gt-md')" md-component-id="navigation" flex id="navigation">
+        <md-toolbar>
+            <h1 class="md-toolbar-tools">
+                <span class="logo">
+                    <img src="assets/images/nav-logo.png" alt="">
+                </span>
+                <span class="hide-on-minimized">Creaperio</span>
+            </h1>
+        </md-toolbar>
+        <md-list>
+            <md-subheader class="hide-on-minimized">Creaperio</md-subheader>
+            <menu-item title="Projects" icon="assignment" link="app.projects"></menu-item>
+            <menu-item title="Billing" icon="attach_money" link="app.billing"></menu-item>
+            <menu-item title="Clients" icon="group" link="app.clients"></menu-item>
+
+            <md-subheader class="hide-on-minimized">Administration</md-subheader>
+            <menu-item title="Dashboard" icon="dashboard" link="app.dashboard"></menu-item>
+            <menu-item title="Employees" icon="person" link="app.users"></menu-item>
+            <menu-item title="Settings" icon="settings" link="app.settings"></menu-item>
+
+            <!-- <md-subheader class="hide-on-minimized">Account</md-subheader>
+            <md-list-item md-ink-ripple-container>
+                <a ui-sref="app.settings" md-ink-ripple>
+                    <md-icon>account_box</md-icon>
+                    <span class="hide-on-minimized">Account Settings</span>
+                </a>
+            </md-list-item>
+            <md-list-item md-ink-ripple-container>
+                <a ui-sref="app.settings" md-ink-ripple>
+                    <md-icon>exit_to_app</md-icon>
+                    <span class="hide-on-minimized">Logout</span>
+                </a>
+            </md-list-item> -->
+        </md-list>
+    </md-sidenav>
+</div>

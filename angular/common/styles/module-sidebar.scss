@@ -1,0 +1,24 @@
+md-sidenav.module-sidebar {
+    background-color: transparent;
+    box-shadow: none;
+    min-width: 200px;
+    width: 200px;
+    z-index: 1;
+
+    @media only screen and (max-width: 600px) {
+        z-index: 998;
+        background: black;
+    }
+
+    md-list {
+        md-list-item {
+            a {
+                color: rgba(0, 0, 0, 0.7);
+
+                md-icon {
+                    color: rgba(0, 0, 0, 0.7);
+                }
+            }
+        }
+    }
+}
