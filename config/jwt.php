@@ -12,7 +12,7 @@ return [
     |
     */
 
-    'secret' => env('JWT_SECRET', 'KkRWOP6CjVfTh4TjgCgeaSv1rbGHD7ik'),
+    'secret' => env('JWT_SECRET', 'JoI8JUztKVvyXz3vBcmxfrkla3EaW6ZD'),
 
     /*
     |--------------------------------------------------------------------------
@@ -124,7 +124,7 @@ return [
         |
         */
 
-        'user' => 'App\Auth\Providers\JWT\DoctrineUserAdapter',
+        'user' => Tymon\JWTAuth\Providers\User\EloquentUserAdapter::class,
 
         /*
         |--------------------------------------------------------------------------
@@ -135,7 +135,7 @@ return [
         |
         */
 
-        'jwt' => 'Tymon\JWTAuth\Providers\JWT\NamshiAdapter',
+        'jwt' => Tymon\JWTAuth\Providers\JWT\NamshiAdapter::class,
 
         /*
         |--------------------------------------------------------------------------
@@ -147,8 +147,7 @@ return [
         */
 
         'auth' => function ($app) {
-            return new App\Auth\Providers\JWT\DoctrineAuthAdapter($app['auth']);
-            //return new Tymon\JWTAuth\Providers\Auth\IlluminateAuthAdapter($app['auth']);
+            return new Tymon\JWTAuth\Providers\Auth\IlluminateAuthAdapter($app['auth']);
         },
 
         /*

@@ -52,7 +52,7 @@ class ShowPermissions extends Command
             return;
         }
 
-        $permissions = $user->getPermissions();
+        $permissions = $user->permissions;
 
         if (count($permissions) === 0) {
             $this->info(sprintf("'%s' doesn't have any permissions.", $user->getUsername()));

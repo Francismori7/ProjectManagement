@@ -2,90 +2,46 @@
 
 namespace App\Projects\Models;
 
-use App\Core\Models\BaseEntity;
-use Doctrine\ORM\Mapping as ORM;
+use App\Auth\Models\User;
+use App\Core\Models\UUIDBaseEntity;
 
 /**
  * Class Invitation.
  *
- * @ORM\Entity(repositoryClass="App\Projects\Repositories\DoctrineInvitationRepository")
- * @ORM\Table(name="invitations")
- * @ORM\HasLifecycleCallbacks
+ * @property string $id
+ * @property string $project_id
+ * @property string $host_id
+ * @property string $email
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property-read Project $project
+ * @property-read User $host
+ * @method static \Illuminate\Database\Query\Builder|\App\Projects\Models\Invitation whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Projects\Models\Invitation whereProjectId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Projects\Models\Invitation whereHostId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Projects\Models\Invitation whereEmail($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Projects\Models\Invitation whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Projects\Models\Invitation whereUpdatedAt($value)
  */
-class Invitation extends BaseEntity
+class Invitation extends UUIDBaseEntity
 {
     /**
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="UUID")
-     * @ORM\Column(type="string", length=36)
+     * An invitation belongs to a project.
      *
-     * @var string
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    protected $id;
+    public function project()
+    {
+        return $this->belongsTo(Project::class);
+    }
 
     /**
-     * @ORM\ManyToOne(targetEntity="Project", cascade={"remove"}, fetch="EAGER")
+     * An invitation was created by a specific user.
      *
-     * @var Project
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    protected $project;
-
-    /**
-     * @ORM\Column(type="string")
-     *
-     * @var string
-     */
-    protected $email;
-
-    /**
-     * Create a new role.
-     */
-    public function __construct()
+    public function host()
     {
-        $this->project = new Project;
-    }
-
-    /**
-     * @return string
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * @return Project
-     */
-    public function getProject()
-    {
-        return $this->project;
-    }
-
-    /**
-     * @param Project $project
-     * @return Invitation
-     */
-    public function setProject(Project $project)
-    {
-        $this->project = $project;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    /**
-     * @param string $email
-     * @return Invitation
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-        return $this;
+        return $this->belongsTo(User::class);
     }
 }

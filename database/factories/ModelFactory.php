@@ -11,14 +11,51 @@
 |
 */
 
-use App\Auth\Models\User;
 
-$factory->define(User::class, function (Faker\Generator $faker) {
+use App\Auth\Models\Role;
+use App\Auth\Models\User;
+use App\Core\ACL\Models\Permission;
+use App\Projects\Models\Invitation;
+use App\Projects\Models\Project;
+use Faker\Generator;
+
+/** @var $factory \Illuminate\Database\Eloquent\Factory */
+$factory->define(User::class, function (Generator $faker) {
     return [
         'username' => $faker->userName,
         'first_name' => $faker->firstName,
         'last_name' => $faker->lastName,
         'email' => $faker->email,
-        'password' => bcrypt(str_random(10)),
+        'password' => bcrypt($faker->password(8)),
+    ];
+});
+
+$factory->define(Permission::class, function (Generator $faker) {
+    return [
+        'name' => $faker->sentence(3),
+        'pattern' => $faker->word . '.' . $faker->word . '.' . $faker->word,
+    ];
+});
+
+$factory->define(Role::class, function (Generator $faker) {
+    return [
+        'name' => $faker->sentence(3),
+    ];
+});
+
+$factory->define(Project::class, function (Generator $faker) {
+    return [
+        'name' => $faker->sentence(3),
+        'description' => $faker->text,
+    ];
+});
+
+$factory->define(Invitation::class, function (Generator $faker) {
+    $project = factory(Project::class)->create();
+    $host = factory(User::class)->create();
+    return [
+        'project_id' => $project->id,
+        'host_id' => $host->id,
+        'email' => $faker->email,
     ];
 });

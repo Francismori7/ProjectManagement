@@ -6,10 +6,13 @@ use App\Auth\Models\User;
 use App\Contracts\Auth\UserRepository;
 use DB;
 use Faker\Factory;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
-class DoctrineUserRepositoryTest extends TestCase
+class UserRepositoryTest extends TestCase
 {
+    use DatabaseTransactions;
+
     /**
      * @var array
      */
@@ -50,7 +53,7 @@ class DoctrineUserRepositoryTest extends TestCase
     protected function removeFakeUser()
     {
         if ($this->fakeUser) {
-            $this->users->delete($this->fakeUser)->flush();
+            $this->users->delete($this->fakeUser);
             $this->fakeUser = null;
         }
     }
@@ -68,9 +71,13 @@ class DoctrineUserRepositoryTest extends TestCase
      */
     public function all_method_returns_all_users_in_the_database()
     {
+        factory(User::class)->times(10)->create();
+
         $userCount = DB::table('users')->count();
 
         $users = $this->users->findAll();
+
+        $this->assertEquals(10, $userCount);
         $this->assertCount($userCount, $users);
     }
 
@@ -81,12 +88,10 @@ class DoctrineUserRepositoryTest extends TestCase
     {
         $this->createFakeUser();
 
-        $foundUser = $this->users->findByUUID($this->fakeUser->getId());
+        $foundUser = $this->users->findByUUID($this->fakeUser->id);
 
-        $this->assertEquals($this->fakeUser, $foundUser);
+        $this->assertEquals($this->fakeUser->fresh(), $foundUser);
         $this->assertNotNull($foundUser);
-
-        $this->removeFakeUser();
     }
 
     /**
@@ -96,23 +101,9 @@ class DoctrineUserRepositoryTest extends TestCase
      */
     protected function createFakeUser()
     {
-        $faker = Factory::create();
-
-        $userAttributes = $this->overrides + [
-                'username' => $faker->userName,
-                'firstName' => $faker->firstName,
-                'lastName' => $faker->lastName,
-                'email' => $faker->email,
-                'password' => $faker->password(8),
-            ];
-
-        $this->fakeUser = (new User)->setUsername($userAttributes['username'])
-            ->setFirstName($userAttributes['firstName'])
-            ->setLastName($userAttributes['lastName'])
-            ->setEmail($userAttributes['email'])
-            ->setPassword($userAttributes['password']);
-
-        $this->users->create($this->fakeUser)->flush($this->fakeUser);
+        $this->fakeUser = $this->users->create(
+            factory(User::class)->make($this->overrides)
+        );
 
         $this->seeInDatabase('users', $this->overrides);
 
@@ -126,12 +117,10 @@ class DoctrineUserRepositoryTest extends TestCase
     {
         $this->createFakeUser();
 
-        $foundUser = $this->users->findByUsername($this->fakeUser->getUsername());
+        $foundUser = $this->users->findByUsername($this->fakeUser->username);
 
-        $this->assertEquals($this->fakeUser, $foundUser);
+        $this->assertEquals($this->fakeUser->fresh(), $foundUser);
         $this->assertNotNull($foundUser);
-
-        $this->removeFakeUser();
     }
 
     /**
@@ -141,12 +130,10 @@ class DoctrineUserRepositoryTest extends TestCase
     {
         $this->createFakeUser();
 
-        $foundUser = $this->users->findByEmail($this->fakeUser->getEmail());
+        $foundUser = $this->users->findByEmail($this->fakeUser->email);
 
-        $this->assertEquals($this->fakeUser, $foundUser);
+        $this->assertEquals($this->fakeUser->fresh(), $foundUser);
         $this->assertNotNull($foundUser);
-
-        $this->removeFakeUser();
     }
 
     /**
@@ -156,11 +143,10 @@ class DoctrineUserRepositoryTest extends TestCase
     {
         $this->createFakeUser();
 
-        $this->users->delete($this->fakeUser)->flush($this->fakeUser);
+        $this->users->delete($this->fakeUser);
         $this->fakeUser = null;
 
-        $users = $this->users->all();
-        $this->assertNotContains($this->overrides, $users);
+        $this->notSeeInDatabase('users', $this->overrides + ['deleted_at' => null]);
     }
 
     /**

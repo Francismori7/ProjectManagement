@@ -2,12 +2,12 @@
 
 namespace App\Auth;
 
-use App\Auth\Models\User;
+use App\Auth\Repositories\EloquentRoleRepository;
+use App\Auth\Repositories\EloquentUserRepository;
+use App\Contracts\Auth\RoleRepository;
 use App\Core\Module;
 use Illuminate\Routing\Router;
 use App\Contracts\Auth\UserRepository;
-use Doctrine\ORM\Mapping\ClassMetadata;
-use App\Auth\Repositories\DoctrineUserRepository;
 
 class AuthModule extends Module
 {
@@ -16,11 +16,8 @@ class AuthModule extends Module
      */
     public function registerContainerBindings()
     {
-        $this->app->bind(UserRepository::class, function ($app) {
-            return new DoctrineUserRepository(
-                $app['em'],
-                new ClassMetadata(User::class));
-        });
+        $this->app->bind(UserRepository::class, EloquentUserRepository::class);
+        $this->app->bind(RoleRepository::class, EloquentRoleRepository::class);
     }
 
     /**
@@ -62,9 +59,9 @@ class AuthModule extends Module
     public function getModulePermissions()
     {
         return [
-            'users.create' => 'Create Users',
-            'users.update' => 'Edit Users',
-            'users.destroy' => 'Remove Users',
+            'auth.users.create' => 'Create Users',
+            'auth.users.update' => 'Edit Users',
+            'auth.users.destroy' => 'Remove Users',
         ];
     }
 }

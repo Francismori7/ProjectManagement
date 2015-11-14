@@ -10,9 +10,9 @@ use Faker\Factory;
 class IndexController extends Controller
 {
     /**
-     * Load up the angular application.
+     * Load up the angular app.
      *
-     * @return Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function angular()
     {

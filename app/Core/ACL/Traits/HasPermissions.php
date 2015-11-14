@@ -3,59 +3,31 @@
 namespace App\Core\ACL\Traits;
 
 use App\Core\ACL\Models\Permission;
+use Illuminate\Database\Eloquent\Collection;
 
 trait HasPermissions
 {
     /**
-     * @ORM\ManyToMany(targetEntity="App\Core\ACL\Models\Permission")
-     *
-     * @var ArrayCollection|App\Auth\Models\Permission[]
-     */
-    public $permissions;
-
-    /**
      * Check if the object has a certain permission.
      *
-     * @param  mixed $perm
+     * @param  Permission|string $perm
      * @return bool
      */
     public function hasPermission($perm)
     {
         if ($perm instanceof Permission) {
-            $perm = $perm->getPattern();
+            $perm = $perm->pattern;
         }
-        
+
         $pattern = $this->getPermissionRegex($perm);
 
-        foreach ($this->getPermissions() as $permission) {
-            if (preg_match($pattern, $permission->getPattern())) {
+        foreach ($this->permissions as $permission) {
+            if (preg_match($pattern, $permission->pattern)) {
                 return true;
             }
         }
 
         return false;
-    }
-
-    /**
-     * Add a permission to the object.
-     *
-     * @param  Permission $perm
-     * @return void
-     */
-    public function addPermission(Permission $perm)
-    {
-        $this->permissions->add($perm);
-    }
-
-    /**
-     * Remove a permission from the object.
-     *
-     * @param  Permission $perm
-     * @return void
-     */
-    public function removePermission(Permission $perm)
-    {
-        $this->permissions->removeElement($perm);
     }
 
     /**
@@ -66,16 +38,47 @@ trait HasPermissions
      */
     private function getPermissionRegex($pattern)
     {
-        $pattern = str_replace('.', "\.", $pattern);
-        $pattern = str_replace('*', '.*', $pattern);
+        $pattern = str_replace(['.', '*'], ["\.", '.*'], $pattern);
 
         return sprintf('/^%s$/', $pattern);
     }
 
     /**
+     * Add a permission to the object.
+     *
+     * @param  Permission $perm
+     * @return void
+     */
+    public function addPermission(Permission $perm)
+    {
+        $this->permissions()->attach($perm);
+    }
+
+    /**
+     * This entity can have many permissions.
+     *
+     * @return mixed
+     */
+    public function permissions()
+    {
+        return $this->hasMany(Permission::class);
+    }
+
+    /**
+     * Remove a permission from the object.
+     *
+     * @param  Permission $perm
+     * @return void
+     */
+    public function removePermission(Permission $perm)
+    {
+        $this->permissions()->detach($perm);
+    }
+
+    /**
      * Returns all the permissions of the object.
      *
-     * @return ArrayCollection|App\Auth\Models\Permission[]
+     * @return Collection
      */
     public function getPermissions()
     {
