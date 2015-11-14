@@ -17,6 +17,7 @@ use App\Auth\Models\User;
 use App\Core\ACL\Models\Permission;
 use App\Projects\Models\Invitation;
 use App\Projects\Models\Project;
+use App\Projects\Models\Task;
 use Faker\Generator;
 
 /** @var $factory \Illuminate\Database\Eloquent\Factory */
@@ -57,5 +58,20 @@ $factory->define(Invitation::class, function (Generator $faker) {
         'project_id' => $project->id,
         'host_id' => $host->id,
         'email' => $faker->email,
+    ];
+});
+
+$factory->define(Task::class, function (Generator $faker) {
+    $project = factory(Project::class)->create();
+    $employee = factory(User::class)->create();
+    $host = factory(User::class)->create();
+
+    return [
+        'task' => $faker->sentence(),
+        'project_id' => $project->id,
+        'employee_id' => $employee->id,
+        'host_id' => $host->id,
+        'completed' => $faker->boolean(),
+        'due_at' => $faker->dateTimeBetween('+1 day', '+ 1 month'),
     ];
 });

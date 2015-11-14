@@ -33,14 +33,37 @@ class Project extends UUIDBaseEntity
         'description',
     ];
 
+    protected $dates = ['deleted_at'];
+
+    protected $appends = ['leaders', 'completedTasks'];
+
     /**
-     * A Project can have many invitations.
+     * A Project can have many tasks.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function invitations()
+    public function tasks()
     {
-        return $this->hasMany(Invitation::class);
+        return $this->hasMany(Task::class);
+    }
+
+    /**
+     * Returns a list of completed tasks.
+     *
+     * @return mixed
+     */
+    public function getCompletedTasksAttribute() {
+        return $this->tasks->where('completed', 1);
+    }
+
+    /**
+     * A Project can have many leaders.
+     *
+     * @return mixed
+     */
+    public function getLeadersAttribute()
+    {
+        return $this->users->where('pivot.role', 'leader');
     }
 
     /**
@@ -51,5 +74,15 @@ class Project extends UUIDBaseEntity
     public function users()
     {
         return $this->belongsToMany(User::class)->withTimestamps()->withPivot('role');
+    }
+
+    /**
+     * A Project can have many invitations.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function invitations()
+    {
+        return $this->hasMany(Invitation::class);
     }
 }

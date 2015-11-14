@@ -5,7 +5,7 @@ namespace App\Projects\Controllers\Api\v1;
 use App\Contracts\Projects\ProjectRepository;
 use App\Core\Controllers\Controller;
 
-class ProjectController extends Controller
+class ProjectUsersController extends Controller
 {
     /**
      * @var ProjectRepository
@@ -26,27 +26,15 @@ class ProjectController extends Controller
     }
 
     /**
-     * Returns a list of all projects.
+     * Returns the project's users.
      *
-     * GET /api/v1/projects
-     *
-     * @return \App\Projects\Models\Project[]|\Illuminate\Database\Eloquent\Collection
-     */
-    public function index()
-    {
-        return $this->projects->all();
-    }
-
-    /**
-     * Returns the project's data.
-     *
-     * GET /api/v1/projects/{id}
+     * GET /api/v1/projects/{id}/users
      *
      * @param $id
      * @return \App\Projects\Models\Project|null
      */
     public function show($id)
     {
-        return $this->projects->findByUUID($id, ['users', 'invitations', 'tasks']);
+        return $this->projects->findByUUID($id)->users;
     }
 }

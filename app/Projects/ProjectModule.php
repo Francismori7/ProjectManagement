@@ -3,9 +3,11 @@
 namespace App\Projects;
 
 use App\Contracts\Projects\InvitationRepository;
+use App\Contracts\Projects\TaskRepository;
 use App\Core\Module;
 use App\Projects\Repositories\EloquentInvitationRepository;
 use App\Projects\Repositories\EloquentProjectRepository;
+use App\Projects\Repositories\EloquentTaskRepository;
 use Illuminate\Routing\Router;
 use App\Contracts\Projects\ProjectRepository;
 
@@ -16,8 +18,9 @@ class ProjectModule extends Module
      */
     public function registerContainerBindings()
     {
-        $this->app->bind(ProjectRepository::class, EloquentProjectRepository::class);
         $this->app->bind(InvitationRepository::class, EloquentInvitationRepository::class);
+        $this->app->bind(ProjectRepository::class, EloquentProjectRepository::class);
+        $this->app->bind(TaskRepository::class, EloquentTaskRepository::class);
     }
 
     /**
@@ -28,9 +31,13 @@ class ProjectModule extends Module
      */
     public function map(Router $router)
     {
-        $router->group(['prefix' => 'api/v1', 'as' => 'api.v1.', 'namespace' => 'App\Projects\Controllers\Api\v1'],
+        /*
+         * No need for 'as' => 'api.v1.' here because resource does it automatically.
+         */
+        $router->group(['prefix' => 'api/v1', 'namespace' => 'App\Projects\Controllers\Api\v1'],
             function (Router $router) {
-                $router->resource('projects', 'ProjectController');
+                $router->get('projects', ['as' => 'index', 'uses' => 'ProjectController@index']);
+                $router->get('projects/{id}', ['as' => 'show', 'uses' => 'ProjectController@show']);
             });
     }
 

@@ -63,6 +63,8 @@ class User extends UUIDBaseEntity implements AuthenticatableContract,
         'email',
     ];
 
+    protected $dates = ['deleted_at'];
+
     /**
      * A user can be part of many projects.
      *

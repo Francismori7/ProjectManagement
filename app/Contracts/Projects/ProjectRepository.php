@@ -19,7 +19,7 @@ interface ProjectRepository extends BaseRepository
      * Returns all the Projects.
      *
      * @param array $relations
-     * @return \App\Projects\Models\Project[]|Collection All projects.
+     * @return Collection All projects.
      */
     public function all(array $relations = []);
 

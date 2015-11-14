@@ -25,6 +25,10 @@ use App\Core\Models\UUIDBaseEntity;
  */
 class Invitation extends UUIDBaseEntity
 {
+    protected $fillable = [
+        'email'
+    ];
+
     /**
      * An invitation belongs to a project.
      *

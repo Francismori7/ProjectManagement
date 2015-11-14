@@ -5,7 +5,6 @@ namespace Tests\Auth\Repositories;
 use App\Contracts\Projects\ProjectRepository;
 use App\Projects\Models\Project;
 use DB;
-use Faker\Factory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 

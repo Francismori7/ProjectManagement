@@ -19,9 +19,6 @@ class Kernel extends ConsoleKernel
         \App\Core\Console\Commands\Permissions\GivePermission::class,
         \App\Core\Console\Commands\Permissions\RevokePermission::class,
         \App\Core\Console\Commands\Permissions\HasPermission::class,
-
-        \App\Core\Console\Commands\Angular\Feature::class,
-        \App\Core\Console\Commands\Angular\Service::class,
     ];
 
     /**
