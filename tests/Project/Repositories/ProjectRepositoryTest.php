@@ -6,10 +6,13 @@ use App\Contracts\Projects\ProjectRepository;
 use App\Projects\Models\Project;
 use DB;
 use Faker\Factory;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 
-class DoctrineProjectRepositoryTest extends TestCase
+class ProjectRepositoryTest extends TestCase
 {
+    use DatabaseTransactions;
+
     /**
      * @var array
      */
@@ -50,7 +53,7 @@ class DoctrineProjectRepositoryTest extends TestCase
     protected function removeFakeProject()
     {
         if ($this->fakeProject) {
-            $this->projects->delete($this->fakeProject)->flush();
+            $this->projects->delete($this->fakeProject);
             $this->fakeProject = null;
         }
     }
@@ -68,9 +71,13 @@ class DoctrineProjectRepositoryTest extends TestCase
      */
     public function all_method_returns_all_projects_in_the_database()
     {
+        factory(Project::class)->times(10)->create();
+
         $projectCount = DB::table('projects')->count();
 
         $projects = $this->projects->findAll();
+
+        $this->assertEquals(10, $projectCount);
         $this->assertCount($projectCount, $projects);
     }
 
@@ -81,9 +88,9 @@ class DoctrineProjectRepositoryTest extends TestCase
     {
         $this->createFakeProject();
 
-        $foundProject = $this->projects->findByUUID($this->fakeProject->getId());
+        $foundProject = $this->projects->findByUUID($this->fakeProject->id);
 
-        $this->assertEquals($this->fakeProject, $foundProject);
+        $this->assertEquals($this->fakeProject->fresh(), $foundProject);
         $this->assertNotNull($foundProject);
     }
 
@@ -94,17 +101,9 @@ class DoctrineProjectRepositoryTest extends TestCase
      */
     protected function createFakeProject()
     {
-        $faker = Factory::create();
-
-        $projectAttributes = $this->overrides + [
-                'name' => $faker->sentence(2),
-                'description' => $faker->paragraph(3),
-            ];
-
-        $this->fakeProject = (new Project)->setName($projectAttributes['name'])
-            ->setDescription($projectAttributes['description']);
-
-        $this->projects->create($this->fakeProject)->flush($this->fakeProject);
+        $this->fakeProject = $this->projects->create(
+            factory(Project::class)->make($this->overrides)
+        );
 
         $this->seeInDatabase('projects', $this->overrides);
 
@@ -118,11 +117,10 @@ class DoctrineProjectRepositoryTest extends TestCase
     {
         $this->createFakeProject();
 
-        $this->projects->delete($this->fakeProject)->flush($this->fakeProject);
+        $this->projects->delete($this->fakeProject);
         $this->fakeProject = null;
 
-        $projects = $this->projects->all();
-        $this->assertNotContains($this->overrides, $projects);
+        $this->notSeeInDatabase('projects', $this->overrides + ['deleted_at' => null]);
     }
 
     /**

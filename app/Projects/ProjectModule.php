@@ -2,14 +2,12 @@
 
 namespace App\Projects;
 
-use App\Auth\Models\User;
 use App\Contracts\Projects\InvitationRepository;
 use App\Core\Module;
-use App\Projects\Repositories\DoctrineInvitationRepository;
+use App\Projects\Repositories\EloquentInvitationRepository;
+use App\Projects\Repositories\EloquentProjectRepository;
 use Illuminate\Routing\Router;
-use Doctrine\ORM\Mapping\ClassMetadata;
 use App\Contracts\Projects\ProjectRepository;
-use App\Projects\Repositories\DoctrineProjectRepository;
 
 class ProjectModule extends Module
 {
@@ -18,16 +16,8 @@ class ProjectModule extends Module
      */
     public function registerContainerBindings()
     {
-        $this->app->bind(ProjectRepository::class, function ($app) {
-            return new DoctrineProjectRepository(
-                $app['em'],
-                new ClassMetadata(Project::class));
-        });
-        $this->app->bind(InvitationRepository::class, function ($app) {
-            return new DoctrineInvitationRepository(
-                $app['em'],
-                new ClassMetadata(Invitation::class));
-        });
+        $this->app->bind(ProjectRepository::class, EloquentProjectRepository::class);
+        $this->app->bind(InvitationRepository::class, EloquentInvitationRepository::class);
     }
 
     /**
@@ -38,6 +28,22 @@ class ProjectModule extends Module
      */
     public function map(Router $router)
     {
+    }
+
+    /**
+     * Return all the permissions this module needs installed.
+     *
+     * @return array
+     */
+    public function getModulePermissions()
+    {
+        return [
+            'projects.project.create' => 'Create projects',
+            'projects.project.update' => 'Update projects',
+            'projects.project.destroy' => 'Remove projects',
+            'projects.project.invite' => 'Invite users',
+            'projects.project.promote_user' => 'Promote users',
+        ];
     }
 
     /**

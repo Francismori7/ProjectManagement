@@ -2,7 +2,7 @@
 
 namespace App\Auth\Http\Requests;
 
-use App\Auth\Controllers\AuthController;
+use App\Auth\Controllers\Api\v1\AuthenticationController;
 use App\Core\Requests\Request;
 
 class RegisterUserRequest extends Request
@@ -24,6 +24,6 @@ class RegisterUserRequest extends Request
      */
     public function rules()
     {
-        return AuthController::getValidatorRules();
+        return AuthenticationController::getValidatorRules();
     }
 }

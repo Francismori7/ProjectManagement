@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "c119ae14988ebfa49ab4d9cfdaad9bb0",
-    "content-hash": "c29b2ee3c4e7574a57f190a4608a34fc",
+    "hash": "746b93fad05813734fd662d46f562476",
+    "content-hash": "33661043d516e92a91f09d253e1c3263",
     "packages": [
         {
             "name": "barryvdh/laravel-debugbar",
@@ -123,46 +123,6 @@
                 "sublime"
             ],
             "time": "2015-08-13 11:40:00"
-        },
-        {
-            "name": "behat/transliterator",
-            "version": "v1.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Behat/Transliterator.git",
-                "reference": "868e05be3a9f25ba6424c2dd4849567f50715003"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Behat/Transliterator/zipball/868e05be3a9f25ba6424c2dd4849567f50715003",
-                "reference": "868e05be3a9f25ba6424c2dd4849567f50715003",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.1-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "Behat\\Transliterator": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "Artistic-1.0"
-            ],
-            "description": "String transliterator",
-            "keywords": [
-                "i18n",
-                "slug",
-                "transliterator"
-            ],
-            "time": "2015-09-28 16:26:35"
         },
         {
             "name": "classpreloader/classpreloader",
@@ -723,60 +683,6 @@
             "time": "2015-11-06 14:35:42"
         },
         {
-            "name": "doctrine/instantiator",
-            "version": "1.0.5",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/doctrine/instantiator.git",
-                "reference": "8e884e78f9f0eb1329e445619e04456e64d8051d"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/instantiator/zipball/8e884e78f9f0eb1329e445619e04456e64d8051d",
-                "reference": "8e884e78f9f0eb1329e445619e04456e64d8051d",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3,<8.0-DEV"
-            },
-            "require-dev": {
-                "athletic/athletic": "~0.1.8",
-                "ext-pdo": "*",
-                "ext-phar": "*",
-                "phpunit/phpunit": "~4.0",
-                "squizlabs/php_codesniffer": "~2.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Doctrine\\Instantiator\\": "src/Doctrine/Instantiator/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Marco Pivetta",
-                    "email": "ocramius@gmail.com",
-                    "homepage": "http://ocramius.github.com/"
-                }
-            ],
-            "description": "A small, lightweight utility to instantiate objects in PHP without invoking their constructors",
-            "homepage": "https://github.com/doctrine/instantiator",
-            "keywords": [
-                "constructor",
-                "instantiate"
-            ],
-            "time": "2015-06-14 21:17:01"
-        },
-        {
             "name": "doctrine/lexer",
             "version": "v1.0.1",
             "source": {
@@ -829,229 +735,6 @@
                 "parser"
             ],
             "time": "2014-09-09 13:34:57"
-        },
-        {
-            "name": "doctrine/migrations",
-            "version": "v1.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/doctrine/migrations.git",
-                "reference": "d196ddc229f50c66c5a015c158adb78a2dfb4351"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/migrations/zipball/d196ddc229f50c66c5a015c158adb78a2dfb4351",
-                "reference": "d196ddc229f50c66c5a015c158adb78a2dfb4351",
-                "shasum": ""
-            },
-            "require": {
-                "doctrine/dbal": "~2.2",
-                "php": ">=5.4.0",
-                "symfony/console": "~2.3",
-                "symfony/yaml": "~2.3"
-            },
-            "require-dev": {
-                "doctrine/coding-standard": "dev-master",
-                "doctrine/orm": "2.*",
-                "johnkary/phpunit-speedtrap": "~1.0@dev",
-                "mockery/mockery": "^0.9.4",
-                "phpunit/phpunit": "~4.7",
-                "satooshi/php-coveralls": "0.6.*"
-            },
-            "suggest": {
-                "symfony/console": "to run the migration from the console"
-            },
-            "bin": [
-                "bin/doctrine-migrations"
-            ],
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "v1.1.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Doctrine\\DBAL\\Migrations\\": "lib/Doctrine/DBAL/Migrations"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL-2.1"
-            ],
-            "authors": [
-                {
-                    "name": "Benjamin Eberlei",
-                    "email": "kontakt@beberlei.de"
-                },
-                {
-                    "name": "Jonathan Wage",
-                    "email": "jonwage@gmail.com"
-                }
-            ],
-            "description": "Database Schema migrations using Doctrine DBAL",
-            "homepage": "http://www.doctrine-project.org",
-            "keywords": [
-                "database",
-                "migrations"
-            ],
-            "time": "2015-09-29 11:13:06"
-        },
-        {
-            "name": "doctrine/orm",
-            "version": "v2.5.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/doctrine/doctrine2.git",
-                "reference": "e6a83bedbe67579cb0bfb688e982e617943a2945"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/e6a83bedbe67579cb0bfb688e982e617943a2945",
-                "reference": "e6a83bedbe67579cb0bfb688e982e617943a2945",
-                "shasum": ""
-            },
-            "require": {
-                "doctrine/cache": "~1.4",
-                "doctrine/collections": "~1.2",
-                "doctrine/common": ">=2.5-dev,<2.6-dev",
-                "doctrine/dbal": ">=2.5-dev,<2.6-dev",
-                "doctrine/instantiator": "~1.0.1",
-                "ext-pdo": "*",
-                "php": ">=5.4",
-                "symfony/console": "~2.5"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~4.0",
-                "satooshi/php-coveralls": "dev-master",
-                "symfony/yaml": "~2.1"
-            },
-            "suggest": {
-                "symfony/yaml": "If you want to use YAML Metadata Mapping Driver"
-            },
-            "bin": [
-                "bin/doctrine",
-                "bin/doctrine.php"
-            ],
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.6.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "Doctrine\\ORM\\": "lib/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Roman Borschel",
-                    "email": "roman@code-factory.org"
-                },
-                {
-                    "name": "Benjamin Eberlei",
-                    "email": "kontakt@beberlei.de"
-                },
-                {
-                    "name": "Guilherme Blanco",
-                    "email": "guilhermeblanco@gmail.com"
-                },
-                {
-                    "name": "Jonathan Wage",
-                    "email": "jonwage@gmail.com"
-                }
-            ],
-            "description": "Object-Relational-Mapper for PHP",
-            "homepage": "http://www.doctrine-project.org",
-            "keywords": [
-                "database",
-                "orm"
-            ],
-            "time": "2015-08-31 12:59:39"
-        },
-        {
-            "name": "gedmo/doctrine-extensions",
-            "version": "v2.4.7",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Atlantic18/DoctrineExtensions.git",
-                "reference": "1a86ba1c7426238b4f765089e0af51174a38af7f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Atlantic18/DoctrineExtensions/zipball/1a86ba1c7426238b4f765089e0af51174a38af7f",
-                "reference": "1a86ba1c7426238b4f765089e0af51174a38af7f",
-                "shasum": ""
-            },
-            "require": {
-                "behat/transliterator": "~1.0",
-                "doctrine/common": "~2.4",
-                "php": ">=5.3.2"
-            },
-            "require-dev": {
-                "doctrine/common": ">=2.5.0",
-                "doctrine/mongodb-odm": ">=1.0.2",
-                "doctrine/orm": ">=2.5.0",
-                "phpunit/phpunit": "~4.4",
-                "phpunit/phpunit-mock-objects": "~2.3",
-                "symfony/yaml": "~2.6"
-            },
-            "suggest": {
-                "doctrine/mongodb-odm": "to use the extensions with the MongoDB ODM",
-                "doctrine/orm": "to use the extensions with the ORM"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.4.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "Gedmo\\": "lib/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "David Buchmann",
-                    "email": "david@liip.ch"
-                },
-                {
-                    "name": "Gediminas Morkevicius",
-                    "email": "gediminas.morkevicius@gmail.com"
-                },
-                {
-                    "name": "Gustavo Falco",
-                    "email": "comfortablynumb84@gmail.com"
-                }
-            ],
-            "description": "Doctrine2 behavioral extensions",
-            "homepage": "http://gediminasm.org/",
-            "keywords": [
-                "Blameable",
-                "behaviors",
-                "doctrine2",
-                "extensions",
-                "gedmo",
-                "loggable",
-                "nestedset",
-                "sluggable",
-                "sortable",
-                "timestampable",
-                "translatable",
-                "tree",
-                "uploadable"
-            ],
-            "time": "2015-09-28 16:39:27"
         },
         {
             "name": "jakub-onderka/php-console-color",
@@ -1197,248 +880,6 @@
                 "tokenizer"
             ],
             "time": "2015-03-11 20:06:43"
-        },
-        {
-            "name": "laravel-doctrine/acl",
-            "version": "1.0.6",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/laravel-doctrine/acl.git",
-                "reference": "3298dfb3a31e71fb6ea202c8f041fafe236fe06f"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/laravel-doctrine/acl/zipball/3298dfb3a31e71fb6ea202c8f041fafe236fe06f",
-                "reference": "3298dfb3a31e71fb6ea202c8f041fafe236fe06f",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/auth": "~5.1",
-                "illuminate/config": "~5.1",
-                "illuminate/contracts": "~5.1",
-                "illuminate/support": "~5.1",
-                "laravel-doctrine/orm": "~1.0",
-                "php": ">=5.5.0"
-            },
-            "require-dev": {
-                "mockery/mockery": "~0.9",
-                "phpunit/phpunit": "~4.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "LaravelDoctrine\\ACL\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Patrick Brouwers",
-                    "email": "patrick@maatwebsite.nl"
-                }
-            ],
-            "description": "Doctrine ACL for Doctrine 2 and Laravel 5",
-            "keywords": [
-                "abilities",
-                "acl",
-                "data mapper",
-                "database",
-                "doctrine",
-                "laravel",
-                "organisations",
-                "orm",
-                "permissions",
-                "policies",
-                "roles"
-            ],
-            "time": "2015-10-23 15:08:42"
-        },
-        {
-            "name": "laravel-doctrine/extensions",
-            "version": "1.0.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/laravel-doctrine/extensions.git",
-                "reference": "ad24197af635ed0bba065c8a0cbaa66753955c77"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/laravel-doctrine/extensions/zipball/ad24197af635ed0bba065c8a0cbaa66753955c77",
-                "reference": "ad24197af635ed0bba065c8a0cbaa66753955c77",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/auth": "~5.1",
-                "illuminate/config": "~5.1",
-                "illuminate/contracts": "~5.1",
-                "illuminate/http": "~5.1",
-                "illuminate/support": "~5.1",
-                "laravel-doctrine/orm": "~1.0",
-                "php": ">=5.5.0"
-            },
-            "require-dev": {
-                "beberlei/doctrineextensions": "^1.0",
-                "gedmo/doctrine-extensions": "^2.4",
-                "mockery/mockery": "~0.9",
-                "phpunit/phpunit": "~4.0"
-            },
-            "suggest": {
-                "beberlei/DoctrineExtensions": "Query/Type Doctrine2 extensions (^1.0)",
-                "gedmo/doctrine-extensions": "Behavioral Doctrine2 extensions (^2.4)"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "LaravelDoctrine\\Extensions\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Patrick Brouwers",
-                    "email": "patrick@maatwebsite.nl"
-                }
-            ],
-            "description": "Doctrine extensions for Doctrine 2 and Laravel 5",
-            "keywords": [
-                "beberlei",
-                "data mapper",
-                "database",
-                "doctrine",
-                "gedmo",
-                "laravel",
-                "orm"
-            ],
-            "time": "2015-09-23 19:27:30"
-        },
-        {
-            "name": "laravel-doctrine/migrations",
-            "version": "1.0.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/laravel-doctrine/migrations.git",
-                "reference": "36d37d1afc3b9526f4de5d41067f5b468498cf3a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/laravel-doctrine/migrations/zipball/36d37d1afc3b9526f4de5d41067f5b468498cf3a",
-                "reference": "36d37d1afc3b9526f4de5d41067f5b468498cf3a",
-                "shasum": ""
-            },
-            "require": {
-                "doctrine/migrations": "~1.1.0",
-                "illuminate/console": "~5.1",
-                "illuminate/contracts": "~5.1",
-                "illuminate/support": "~5.1",
-                "laravel-doctrine/orm": "~1.0",
-                "php": ">=5.5.0"
-            },
-            "require-dev": {
-                "mockery/mockery": "~0.9",
-                "phpunit/phpunit": "~4.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "LaravelDoctrine\\Migrations\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Patrick Brouwers",
-                    "email": "patrick@maatwebsite.nl"
-                }
-            ],
-            "description": "Doctrine Migrations for Laravel",
-            "keywords": [
-                "data mapper",
-                "database",
-                "doctrine",
-                "laravel",
-                "migrations",
-                "orm"
-            ],
-            "time": "2015-10-20 17:09:42"
-        },
-        {
-            "name": "laravel-doctrine/orm",
-            "version": "1.0.12",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/laravel-doctrine/orm.git",
-                "reference": "103c2276bed4300347d9cdb4a96d22082712a1fc"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/laravel-doctrine/orm/zipball/103c2276bed4300347d9cdb4a96d22082712a1fc",
-                "reference": "103c2276bed4300347d9cdb4a96d22082712a1fc",
-                "shasum": ""
-            },
-            "require": {
-                "doctrine/orm": "2.5.*",
-                "illuminate/auth": "~5.1",
-                "illuminate/console": "~5.1",
-                "illuminate/container": "~5.1",
-                "illuminate/contracts": "~5.1",
-                "illuminate/pagination": "~5.1",
-                "illuminate/support": "~5.1",
-                "illuminate/validation": "~5.1",
-                "illuminate/view": "~5.1",
-                "php": ">=5.5.0",
-                "symfony/serializer": "^2.7"
-            },
-            "require-dev": {
-                "barryvdh/laravel-debugbar": "~2.0",
-                "illuminate/log": "~5.1",
-                "itsgoingd/clockwork": "~1.9",
-                "mockery/mockery": "~0.9",
-                "phpunit/phpunit": "~4.0"
-            },
-            "suggest": {
-                "fzaninotto/faker": "Required to use the entity factory builder (~1.4).",
-                "laravel-doctrine/acl": "to integrate Doctrine roles & permissions with Laravel's Authorization system (~1.0)",
-                "laravel-doctrine/extensions": "to add Behavioral and Query/Type Extensions for Laravel Doctrine (~1.0)",
-                "laravel-doctrine/migrations": "to add support for migrations in Laravel Doctrine (~1.0)",
-                "yajra/laravel-oci8": "Support for Laravel native queue and session database drivers in Oracle (~2.0)."
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "LaravelDoctrine\\ORM\\": "src/"
-                },
-                "files": [
-                    "src/helpers.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Patrick Brouwers",
-                    "email": "patrick@maatwebsite.nl"
-                }
-            ],
-            "description": "A Doctrine ORM bridge for Laravel 5",
-            "keywords": [
-                "data mapper",
-                "database",
-                "doctrine",
-                "laravel",
-                "orm"
-            ],
-            "time": "2015-11-12 11:28:53"
         },
         {
             "name": "laravel/framework",
@@ -1879,47 +1320,6 @@
                 "token"
             ],
             "time": "2015-06-29 05:41:44"
-        },
-        {
-            "name": "nayjest/laravel-doctrine-dbal",
-            "version": "v1.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Nayjest/Laravel_DoctrineDBAL.git",
-                "reference": "f024c7af57f88deb4584a61fdd44556d9439bddc"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Nayjest/Laravel_DoctrineDBAL/zipball/f024c7af57f88deb4584a61fdd44556d9439bddc",
-                "reference": "f024c7af57f88deb4584a61fdd44556d9439bddc",
-                "shasum": ""
-            },
-            "require": {
-                "doctrine/dbal": "~2.5",
-                "illuminate/database": "*",
-                "illuminate/support": "*"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "4.*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Nayjest\\LaravelDoctrineDBAL\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Vitalii Stepanenko",
-                    "email": "mail@vitaliy.in"
-                }
-            ],
-            "description": "Doctrine DBAL integration for Laravel",
-            "time": "2015-03-18 18:32:43"
         },
         {
             "name": "nesbot/carbon",
@@ -2983,66 +2383,6 @@
             "time": "2015-10-27 15:38:06"
         },
         {
-            "name": "symfony/serializer",
-            "version": "v2.7.6",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/serializer.git",
-                "reference": "14056684acad23b8815eb336bccc0b4ac76bd823"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/serializer/zipball/14056684acad23b8815eb336bccc0b4ac76bd823",
-                "reference": "14056684acad23b8815eb336bccc0b4ac76bd823",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.9"
-            },
-            "require-dev": {
-                "doctrine/annotations": "~1.0",
-                "doctrine/cache": "~1.0",
-                "symfony/config": "~2.2",
-                "symfony/property-access": "~2.3",
-                "symfony/yaml": "~2.0,>=2.0.5"
-            },
-            "suggest": {
-                "doctrine/annotations": "For using the annotation mapping. You will also need doctrine/cache.",
-                "doctrine/cache": "For using the default cached annotation reader and metadata cache.",
-                "symfony/config": "For using the XML mapping loader.",
-                "symfony/property-access": "For using the ObjectNormalizer.",
-                "symfony/yaml": "For using the default YAML mapping loader."
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.7-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Component\\Serializer\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony Serializer Component",
-            "homepage": "https://symfony.com",
-            "time": "2015-10-11 09:39:48"
-        },
-        {
             "name": "symfony/translation",
             "version": "v2.7.6",
             "source": {
@@ -3159,52 +2499,6 @@
             "time": "2015-10-25 17:17:38"
         },
         {
-            "name": "symfony/yaml",
-            "version": "v2.7.6",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/yaml.git",
-                "reference": "eca9019c88fbe250164affd107bc8057771f3f4d"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/eca9019c88fbe250164affd107bc8057771f3f4d",
-                "reference": "eca9019c88fbe250164affd107bc8057771f3f4d",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.9"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.7-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Component\\Yaml\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony Yaml Component",
-            "homepage": "https://symfony.com",
-            "time": "2015-10-11 09:39:48"
-        },
-        {
             "name": "tymon/jwt-auth",
             "version": "dev-master",
             "source": {
@@ -3312,9 +2606,107 @@
                 "environment"
             ],
             "time": "2015-05-30 15:59:26"
+        },
+        {
+            "name": "webpatser/laravel-uuid",
+            "version": "2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/webpatser/laravel-uuid.git",
+                "reference": "7c0a65be9367b99b7f4c13119c0c6514701de40b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/webpatser/laravel-uuid/zipball/7c0a65be9367b99b7f4c13119c0c6514701de40b",
+                "reference": "7c0a65be9367b99b7f4c13119c0c6514701de40b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "fzaninotto/faker": "1.5.*",
+                "phpunit/phpunit": "4.7.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Webpatser\\Uuid": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Christoph Kempen",
+                    "email": "christoph@downsized.nl"
+                }
+            ],
+            "description": "Class to generate a UUID according to the RFC 4122 standard. Support for version 1, 3, 4 and 5 UUID are built-in.",
+            "homepage": "https://github.com/webpatser/uuid",
+            "keywords": [
+                "UUID RFC4122"
+            ],
+            "time": "2015-06-15 21:48:27"
         }
     ],
     "packages-dev": [
+        {
+            "name": "doctrine/instantiator",
+            "version": "1.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/doctrine/instantiator.git",
+                "reference": "8e884e78f9f0eb1329e445619e04456e64d8051d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/doctrine/instantiator/zipball/8e884e78f9f0eb1329e445619e04456e64d8051d",
+                "reference": "8e884e78f9f0eb1329e445619e04456e64d8051d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3,<8.0-DEV"
+            },
+            "require-dev": {
+                "athletic/athletic": "~0.1.8",
+                "ext-pdo": "*",
+                "ext-phar": "*",
+                "phpunit/phpunit": "~4.0",
+                "squizlabs/php_codesniffer": "~2.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Doctrine\\Instantiator\\": "src/Doctrine/Instantiator/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Marco Pivetta",
+                    "email": "ocramius@gmail.com",
+                    "homepage": "http://ocramius.github.com/"
+                }
+            ],
+            "description": "A small, lightweight utility to instantiate objects in PHP without invoking their constructors",
+            "homepage": "https://github.com/doctrine/instantiator",
+            "keywords": [
+                "constructor",
+                "instantiate"
+            ],
+            "time": "2015-06-14 21:17:01"
+        },
         {
             "name": "fzaninotto/faker",
             "version": "v1.5.0",
@@ -4472,6 +3864,52 @@
             "description": "Library that helps with managing the version number of Git-hosted PHP projects",
             "homepage": "https://github.com/sebastianbergmann/version",
             "time": "2015-06-21 13:59:46"
+        },
+        {
+            "name": "symfony/yaml",
+            "version": "v2.7.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/yaml.git",
+                "reference": "eca9019c88fbe250164affd107bc8057771f3f4d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/eca9019c88fbe250164affd107bc8057771f3f4d",
+                "reference": "eca9019c88fbe250164affd107bc8057771f3f4d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.9"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.7-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Yaml\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Yaml Component",
+            "homepage": "https://symfony.com",
+            "time": "2015-10-11 09:39:48"
         }
     ],
     "aliases": [],

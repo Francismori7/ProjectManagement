@@ -2,118 +2,49 @@
 
 namespace App\Projects\Models;
 
-use App\Core\Models\BaseEntity;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
-use LaravelDoctrine\Extensions\SoftDeletes\SoftDeletes;
-use LaravelDoctrine\Extensions\Timestamps\Timestamps;
+use App\Auth\Models\User;
+use App\Core\Models\UUIDBaseEntity;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * @ORM\Entity(repositoryClass="App\Projects\Repositories\DoctrineProjectRepository")
- * @ORM\Table(name="projects")
- * @ORM\HasLifecycleCallbacks
+ * Class Project.
+ *
+ * @property string $id
+ * @property string $name
+ * @property string $description
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property string $deleted_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|Invitation[] $invitations
+ * @property-read \Illuminate\Database\Eloquent\Collection|User[] $users
+ * @method static \Illuminate\Database\Query\Builder|\App\Projects\Models\Project whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Projects\Models\Project whereName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Projects\Models\Project whereDescription($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Projects\Models\Project whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Projects\Models\Project whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Projects\Models\Project whereDeletedAt($value)
  */
-class Project extends BaseEntity
+class Project extends UUIDBaseEntity
 {
-    use Timestamps, SoftDeletes;
+    use SoftDeletes;
 
     /**
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="UUID")
-     * @ORM\Column(type="string", length=36)
+     * A Project can have many invitations.
      *
-     * @var string
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    private $id;
-
-    /**
-     * @ORM\Column(type="string", length=100)
-     *
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     *
-     * @var string
-     */
-    private $description;
-
-    /**
-     * @ORM\OneToMany(targetEntity="Invitation", mappedBy="project", cascade={"remove"}, orphanRemoval=true)
-     */
-    private $invitations;
-
-    public function __construct()
+    public function invitations()
     {
-        $this->invitations = new ArrayCollection;
+        return $this->hasMany(Invitation::class);
     }
 
     /**
-     * Returns the Project's identification number.
+     * A Project can have many users.
      *
-     * @return string
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function getId()
+    public function users()
     {
-        return $this->id;
-    }
-
-    /**
-     * Returns the Project's description.
-     *
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
-     * Overwrite the Project's description.
-     *
-     * @param string $description
-     *
-     * @return Project
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    /**
-     * Returns the name of the Project.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * Overwrites the name of the Project.
-     *
-     * @param string $name
-     *
-     * @return Project
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getInvitations()
-    {
-        return $this->invitations;
+        return $this->belongsToMany(User::class)->withTimestamps()->withPivot('role');
     }
 }
