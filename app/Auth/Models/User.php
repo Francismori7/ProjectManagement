@@ -7,6 +7,7 @@ use App\Core\ACL\Traits\HasPermissions;
 use App\Core\Models\UUIDBaseEntity;
 use App\Projects\Models\Invitation;
 use App\Projects\Models\Project;
+use App\Projects\Models\Task;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
@@ -73,6 +74,16 @@ class User extends UUIDBaseEntity implements AuthenticatableContract,
     public function projects()
     {
         return $this->belongsToMany(Project::class)->withTimestamps()->withPivot('role');
+    }
+
+    /**
+     * A user can have many tasks
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     */
+    public function tasks()
+    {
+        return $this->hasMany(Task::class, 'employee_id');
     }
 
     /**

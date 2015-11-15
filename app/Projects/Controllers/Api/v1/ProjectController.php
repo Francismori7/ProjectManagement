@@ -2,22 +2,15 @@
 
 namespace App\Projects\Controllers\Api\v1;
 
-use App\Auth\Models\User;
-use App\Contracts\Auth\UserRepository;
 use App\Contracts\Projects\ProjectRepository;
 use App\Core\Controllers\Controller;
 use App\Projects\Http\Requests\CreateProjectRequest;
 use App\Projects\Http\Requests\DeleteProjectRequest;
-use App\Projects\Http\Requests\DemoteUserRequest;
-use App\Projects\Http\Requests\PromoteUserRequest;
-use App\Projects\Http\Requests\RestoreProjectRequest;
+use App\Projects\Http\Requests\UpdateProjectRequest;
 use App\Projects\Jobs\CreateNewProject;
 use App\Projects\Jobs\DeleteProject;
-use App\Projects\Jobs\DemoteUser;
-use App\Projects\Jobs\PromoteUser;
-use App\Projects\Jobs\RestoreProject;
+use App\Projects\Jobs\UpdateProject;
 use App\Projects\Models\Project;
-use Auth;
 
 class ProjectController extends Controller
 {
@@ -35,8 +28,8 @@ class ProjectController extends Controller
     {
         $this->projects = $projects;
 
-        //$this->middleware('jwt.auth');
-        //$this->middleware('jwt.refresh');
+        $this->middleware('jwt.auth');
+        $this->middleware('jwt.refresh');
     }
 
     /**
@@ -54,20 +47,20 @@ class ProjectController extends Controller
     /**
      * Returns the project's data.
      *
-     * GET /api/v1/projects/{id}
+     * GET /api/v1/projects/{project}
      *
-     * @param $id
+     * @param $project
      * @return Project|null
      */
-    public function show($id)
+    public function show($project)
     {
-        return $this->projects->findByUUID($id, ['users', 'invitations', 'tasks']);
+        return $this->projects->findByUUID($project, ['users', 'invitations', 'tasks']);
     }
 
     /**
      * Creates a new project.
      *
-     * POST /api/v1/projects
+     * POST /api/v1/projects (name, description, due_at)
      *
      * @param CreateProjectRequest $request
      * @return Project
@@ -82,14 +75,14 @@ class ProjectController extends Controller
     /**
      * Deletes a project.
      *
-     * DELETE /api/v1/projects/{id}
+     * DELETE /api/v1/projects/{project}
      *
      * @param DeleteProjectRequest $request
      * @return Project
      */
-    public function destroy($id, DeleteProjectRequest $request)
+    public function destroy($project, DeleteProjectRequest $request)
     {
-        $project = $this->projects->findByUUID($id);
+        $project = $this->projects->findByUUID($project);
 
         return $this->dispatch(
             new DeleteProject($project)
@@ -97,20 +90,20 @@ class ProjectController extends Controller
     }
 
     /**
-     * Deletes a project.
+     * Updates the project's data.
      *
-     * PATCH /api/v1/projects/{id}/restore
+     * PATCH /api/v1/projects/{project} (name, description, due_at)
      *
-     * @param RestoreProjectRequest $request
-     * @return Project
+     * @param $project
+     * @param UpdateProjectRequest $request
+     * @return mixed
      */
-    public function restore($id, RestoreProjectRequest $request)
+    public function update($project, UpdateProjectRequest $request)
     {
-        /** @var Project $project */
-        $project = Project::withTrashed()->where('id', $id)->first();
+        $project = $this->projects->findByUUID($project);
 
         return $this->dispatch(
-            new RestoreProject($project)
+            new UpdateProject($project, $request->all())
         );
     }
 
@@ -118,15 +111,15 @@ class ProjectController extends Controller
 //    /**
 //     * Gets a list of comments.
 //     *
-//     * GET /api/v1/projects/{id}/comments
+//     * GET /api/v1/projects/{project}/comments
 //     *
-//     * @param $id
+//     * @param $project
 //     * @param ProjectRepository $projects
 //     * @return array
 //     */
-//    public function comments($id, ProjectRepository $projects)
+//    public function comments($project, ProjectRepository $projects)
 //    {
-//        $project = $projects->findByUUID($id, ['comments']);
+//        $project = $projects->findByUUID($project, ['comments']);
 //
 //        return [
 //            'comments' => $project->comments,

@@ -31,26 +31,36 @@ class ProjectModule extends Module
      */
     public function map(Router $router)
     {
-        /*
-         * No need for 'as' => 'api.v1.' here because resource does it automatically.
-         */
         $router->group(['prefix' => 'api/v1', 'as' => 'api.v1.', 'namespace' => 'App\Projects\Controllers\Api\v1'],
             function (Router $router) {
                 $router->group(['prefix' => 'projects', 'as' => 'projects.'], function (Router $router) {
                     $router->get('/', ['as' => 'index', 'uses' => 'ProjectController@index']);
-                    $router->get('{id}', ['as' => 'show', 'uses' => 'ProjectController@show']);
+                    $router->get('{project}', ['as' => 'show', 'uses' => 'ProjectController@show']);
                     $router->post('/', ['as' => 'store', 'uses' => 'ProjectController@store']);
-                    $router->delete('{id}', ['as' => 'destroy', 'uses' => 'ProjectController@destroy']);
-                    $router->patch('{id}/restore', ['as' => 'restore', 'uses' => 'ProjectController@restore']);
+                    $router->patch('{project}', ['as' => 'update', 'uses' => 'ProjectController@update']);
+                    $router->delete('{project}', ['as' => 'destroy', 'uses' => 'ProjectController@destroy']);
+                    $router->patch('{project}/restore', ['as' => 'restore', 'uses' => 'ProjectController@restore']);
 
-                    $router->group(['prefix' =>'{id}/users', 'as' => 'users.'], function (Router $router) {
-                        $router->get('users', ['as' => 'index', 'uses' => 'ProjectUserController@index']);
-                        $router->patch('users/promote', ['as' => 'promote', 'uses' => 'ProjectUserController@promote']);
-                        $router->patch('users/demote', ['as' => 'demote', 'uses' => 'ProjectUserController@demote']);
+                    $router->group(['prefix' =>'{project}/users', 'as' => 'users.'], function (Router $router) {
+                        $router->get('/', ['as' => 'index', 'uses' => 'ProjectUserController@index']);
+                        $router->patch('{user}/promote', ['as' => 'promote', 'uses' => 'ProjectUserController@promote']);
+                        $router->patch('{user}/demote', ['as' => 'demote', 'uses' => 'ProjectUserController@demote']);
+                        $router->post('invite', ['as' => 'invite', 'uses' => 'ProjectUserController@invite']);
                     });
 
-                    $router->get('{id}/tasks', ['as' => 'tasks.index', 'uses' => 'ProjectTaskController@index']);
-//                    $router->get('{id}/comments', ['as' => 'comments', 'uses' => 'ProjectController@comments']);
+                    $router->group(['prefix' =>'{project}/tasks', 'as' => 'tasks.'], function (Router $router) {
+                        $router->get('/', ['as' => 'index', 'uses' => 'ProjectTaskController@index']);
+                        $router->post('/', ['as' => 'store', 'uses' => 'ProjectTaskController@store']);
+                        $router->patch('{task}', ['as' => 'update', 'uses' => 'ProjectTaskController@update']);
+                    });
+
+//                    TODO: Add comments
+//                    $router->group(['prefix' =>'{project}/comments', 'as' => 'comments.'], function (Router $router) {
+//                        $router->get('/', ['as' => 'index', 'uses' => 'ProjectCommentController@index']);
+//                        $router->get('{comment}', ['as' => 'show', 'uses' => 'ProjectCommentController@show']);
+//                        $router->post('/', ['as' => 'store', 'uses' => 'ProjectCommentController@store']);
+//                        $router->patch('{comment}', ['as' => 'update', 'uses' => 'ProjectCommentController@update']);
+//                    });
                 });
             });
     }

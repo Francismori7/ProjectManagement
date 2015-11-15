@@ -4,9 +4,8 @@ namespace App\Projects\Http\Requests;
 
 use App\Contracts\Projects\ProjectRepository;
 use App\Core\Requests\Request;
-use App\Projects\Models\Project;
 
-class RestoreProjectRequest extends Request
+class UpdateProjectRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -19,16 +18,17 @@ class RestoreProjectRequest extends Request
             return false;
         }
 
-        if (!$this->user()->hasPermission('projects.project.restore')) {
+        if (!$this->user()->hasPermission('projects.project.update')) {
             return false;
         }
 
         /*
-         * Can the user restore the project (ie: is he the project creator?)
+         * Can the user delete the project (is he the creator of the project?)
          */
-        $project = Project::withTrashed()->with(['users'])->where('id', $this->route('project'))->first();
+        $projects = app()->make(ProjectRepository::class);
+        $project = $projects->findByUUID($this->route('project'), ['users']);
 
-        return $project->creator->id === $this->user()->id;
+        return $project->leaders->contains('id', $this->user()->id);
     }
 
     /**
@@ -38,6 +38,9 @@ class RestoreProjectRequest extends Request
      */
     public function rules()
     {
-        return [];
+        return [
+            'name' => 'required|min:3|max:100',
+            'due_at' => 'date',
+        ];
     }
 }

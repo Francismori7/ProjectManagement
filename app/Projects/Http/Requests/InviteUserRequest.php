@@ -2,11 +2,12 @@
 
 namespace App\Projects\Http\Requests;
 
+use App\Contracts\Auth\UserRepository;
 use App\Contracts\Projects\ProjectRepository;
 use App\Core\Requests\Request;
 use App\Projects\Models\Project;
 
-class DeleteProjectRequest extends Request
+class InviteUserRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -19,17 +20,28 @@ class DeleteProjectRequest extends Request
             return false;
         }
 
-        if (!$this->user()->hasPermission('projects.project.destroy')) {
+        if (!$this->user()->hasPermission('projects.project.invite_user')) {
+            return false;
+        }
+
+        $projects = app()->make(ProjectRepository::class);
+        $project = $projects->findByUUID($this->route('project'), ['users']);
+
+        /*
+         * Can the user invite another user? (ie: is he a project leader?)
+         */
+        if (!$project->leaders->contains('id', $this->user()->id)) {
             return false;
         }
 
         /*
-         * Can the user delete the project (is he the creator of the project?)
+         * The user whose email is getting invited is already part of this project.
          */
-        $projects = app()->make(ProjectRepository::class);
-        $project = $projects->findByUUID($this->route('project'), ['users']);
+        if ($project->users->contains('email', $this->input('email'))) {
+            return false;
+        }
 
-        return $project->creator->id === $this->user()->id;
+        return true;
     }
 
     /**
@@ -39,6 +51,8 @@ class DeleteProjectRequest extends Request
      */
     public function rules()
     {
-        return [];
+        return [
+            'email' => 'required|email',
+        ];
     }
 }

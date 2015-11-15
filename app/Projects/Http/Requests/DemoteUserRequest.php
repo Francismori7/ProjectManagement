@@ -2,6 +2,7 @@
 
 namespace App\Projects\Http\Requests;
 
+use App\Contracts\Auth\UserRepository;
 use App\Contracts\Projects\ProjectRepository;
 use App\Core\Requests\Request;
 use App\Projects\Models\Project;
@@ -23,14 +24,34 @@ class DemoteUserRequest extends Request
             return false;
         }
 
+        $projects = app()->make(ProjectRepository::class);
+        $project = $projects->findByUUID($this->route('project'), ['users']);
+
         /*
          * Can the user demote another user? (ie: is he the project creator?)
          */
-        $projects = app()->make(ProjectRepository::class);
+        if($project->creator->id !== $this->user()->id) {
+            return false;
+        }
 
-        $project = $projects->findByUUID($this->route('id'), ['users']);
+        $users = app()->make(UserRepository::class);
+        $user = $users->findByUUID($this->route('user'));
 
-        return $project->creator->id === $this->user()->id;
+        /*
+         * We don't want to be able to demote the project's creator.
+         */
+        if($user->id === $project->creator->id) {
+            return false;
+        }
+
+        /*
+         * We cannot demote a user if he's not in the project's leaders.
+         */
+        if (!$project->leader->contains('id', $user->id)) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -40,8 +61,6 @@ class DemoteUserRequest extends Request
      */
     public function rules()
     {
-        return [
-            'user_id' => 'required|exists:users,id',
-        ];
+        return [];
     }
 }

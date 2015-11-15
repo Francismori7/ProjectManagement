@@ -15,6 +15,13 @@ class Task extends UUIDBaseEntity
 
     protected $dates = ['due_at', 'deleted_at'];
 
+    protected $fillable = [
+        'task',
+        'employee_id',
+        'completed',
+        'due_at',
+    ];
+
     /**
      * A task is part of a project.
      *
