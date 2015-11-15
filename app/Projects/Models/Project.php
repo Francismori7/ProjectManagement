@@ -69,7 +69,7 @@ class Project extends UUIDBaseEntity
     /**
      * A Project can have many users.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function users()
     {
@@ -85,4 +85,24 @@ class Project extends UUIDBaseEntity
     {
         return $this->hasMany(Invitation::class);
     }
+
+    /**
+     * A Project was created by one leader (protected from demotion and more).
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function creator()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+//    TODO: Add comments
+//    /**
+//     * A Project can have many comments to it.
+//     *
+//     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+//     */
+//    public function comments() {
+//        return $this->hasMany(Comment::class);
+//    }
 }

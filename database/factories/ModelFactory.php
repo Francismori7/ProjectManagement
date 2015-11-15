@@ -45,9 +45,11 @@ $factory->define(Role::class, function (Generator $faker) {
 });
 
 $factory->define(Project::class, function (Generator $faker) {
+    $createdBy = factory(User::class)->create();
     return [
         'name' => $faker->sentence(3),
         'description' => $faker->text,
+        'created_by' => $createdBy->id,
     ];
 });
 

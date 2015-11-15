@@ -16,12 +16,14 @@ class CreateProjectsTable extends Migration
             $table->char('id', 36);
             $table->string('name', 100);
             $table->text('description');
+            $table->char('created_by', 36)->nullable();
             $table->timestamp('due_at')->nullable();
 
             $table->timestamps();
             $table->softDeletes();
 
             $table->primary('id');
+            $table->foreign('created_by')->references('id')->on('users')->onDelete('set null');
         });
     }
 

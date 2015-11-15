@@ -41,7 +41,16 @@ class ProjectModule extends Module
                     $router->get('{id}', ['as' => 'show', 'uses' => 'ProjectController@show']);
                     $router->post('/', ['as' => 'store', 'uses' => 'ProjectController@store']);
                     $router->delete('{id}', ['as' => 'destroy', 'uses' => 'ProjectController@destroy']);
-                    $router->get('{id}/restore', ['as' => 'restore', 'uses' => 'ProjectController@restore']);
+                    $router->patch('{id}/restore', ['as' => 'restore', 'uses' => 'ProjectController@restore']);
+
+                    $router->group(['prefix' =>'{id}/users', 'as' => 'users.'], function (Router $router) {
+                        $router->get('users', ['as' => 'index', 'uses' => 'ProjectUserController@index']);
+                        $router->patch('users/promote', ['as' => 'promote', 'uses' => 'ProjectUserController@promote']);
+                        $router->patch('users/demote', ['as' => 'demote', 'uses' => 'ProjectUserController@demote']);
+                    });
+
+                    $router->get('{id}/tasks', ['as' => 'tasks.index', 'uses' => 'ProjectTaskController@index']);
+//                    $router->get('{id}/comments', ['as' => 'comments', 'uses' => 'ProjectController@comments']);
                 });
             });
     }
@@ -60,6 +69,7 @@ class ProjectModule extends Module
             'projects.project.restore' => 'Restore projects',
             'projects.project.invite' => 'Invite users',
             'projects.project.promote_user' => 'Promote users',
+            'projects.project.demote_user' => 'Demote users',
         ];
     }
 

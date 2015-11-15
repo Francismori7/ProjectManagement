@@ -6,7 +6,7 @@ use App\Contracts\Projects\ProjectRepository;
 use App\Core\Requests\Request;
 use App\Projects\Models\Project;
 
-class RestoreProjectRequest extends Request
+class PromoteUserRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -19,14 +19,16 @@ class RestoreProjectRequest extends Request
             return false;
         }
 
-        if (!$this->user()->hasPermission('projects.project.restore')) {
+        if (!$this->user()->hasPermission('projects.project.promote_user')) {
             return false;
         }
 
         /*
-         * Can the user restore the project (ie: is he the project creator?)
+         * Can the user promote another user? (ie: is he the project creator?)
          */
-        $project = Project::withTrashed()->with(['users'])->where('id', $this->route('id'))->first();
+        $projects = app()->make(ProjectRepository::class);
+
+        $project = $projects->findByUUID($this->route('id'), ['users']);
 
         return $project->creator->id === $this->user()->id;
     }
@@ -38,6 +40,8 @@ class RestoreProjectRequest extends Request
      */
     public function rules()
     {
-        return [];
+        return [
+            'user_id' => 'required|exists:users,id',
+        ];
     }
 }

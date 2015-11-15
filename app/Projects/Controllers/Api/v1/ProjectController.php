@@ -3,13 +3,18 @@
 namespace App\Projects\Controllers\Api\v1;
 
 use App\Auth\Models\User;
+use App\Contracts\Auth\UserRepository;
 use App\Contracts\Projects\ProjectRepository;
 use App\Core\Controllers\Controller;
 use App\Projects\Http\Requests\CreateProjectRequest;
 use App\Projects\Http\Requests\DeleteProjectRequest;
+use App\Projects\Http\Requests\DemoteUserRequest;
+use App\Projects\Http\Requests\PromoteUserRequest;
 use App\Projects\Http\Requests\RestoreProjectRequest;
 use App\Projects\Jobs\CreateNewProject;
 use App\Projects\Jobs\DeleteProject;
+use App\Projects\Jobs\DemoteUser;
+use App\Projects\Jobs\PromoteUser;
 use App\Projects\Jobs\RestoreProject;
 use App\Projects\Models\Project;
 use Auth;
@@ -30,8 +35,8 @@ class ProjectController extends Controller
     {
         $this->projects = $projects;
 
-        $this->middleware('jwt.auth');
-        $this->middleware('jwt.refresh');
+        //$this->middleware('jwt.auth');
+        //$this->middleware('jwt.refresh');
     }
 
     /**
@@ -94,7 +99,7 @@ class ProjectController extends Controller
     /**
      * Deletes a project.
      *
-     * GET /api/v1/projects/{id}/restore
+     * PATCH /api/v1/projects/{id}/restore
      *
      * @param RestoreProjectRequest $request
      * @return Project
@@ -108,4 +113,23 @@ class ProjectController extends Controller
             new RestoreProject($project)
         );
     }
+
+//    TODO: Add comments
+//    /**
+//     * Gets a list of comments.
+//     *
+//     * GET /api/v1/projects/{id}/comments
+//     *
+//     * @param $id
+//     * @param ProjectRepository $projects
+//     * @return array
+//     */
+//    public function comments($id, ProjectRepository $projects)
+//    {
+//        $project = $projects->findByUUID($id, ['comments']);
+//
+//        return [
+//            'comments' => $project->comments,
+//        ];
+//    }
 }

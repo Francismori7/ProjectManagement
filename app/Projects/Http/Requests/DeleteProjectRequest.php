@@ -24,13 +24,13 @@ class DeleteProjectRequest extends Request
         }
 
         /*
-         * Can the user delete the project (ie: is he a leader?)
+         * Can the user delete the project (is he the creator of the project?)
          */
         $projects = app()->make(ProjectRepository::class);
 
         $project = $projects->findByUUID($this->route('id'), ['users']);
 
-        return $project->leaders->contains('id', $this->user()->id);
+        return $project->creator->id === $this->user()->id;
     }
 
     /**
