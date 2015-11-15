@@ -26,7 +26,8 @@ class RestoreProject extends Job implements SelfHandling
         $this->project->restore();
 
         $projects->save($this->project);
-        $projects->flush();
+
+        return $this->project->fresh();
     }
 
     /**

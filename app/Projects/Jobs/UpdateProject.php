@@ -19,24 +19,6 @@ class UpdateProject extends Job implements SelfHandling
     private $data;
 
     /**
-     * Execute the job.
-     *
-     * @param ProjectRepository $projects
-     *
-     * @return Project
-     */
-    public function handle(ProjectRepository $projects)
-    {
-        $this->project->setName($this->data['name'])
-            ->setDescription($this->data['description']);
-
-        $projects->save($this->project);
-        $projects->flush();
-
-        return $this->project;
-    }
-
-    /**
      * Create a new job instance.
      *
      * @param Project $project
@@ -46,5 +28,21 @@ class UpdateProject extends Job implements SelfHandling
     {
         $this->project = $project;
         $this->data = $data;
+    }
+
+    /**
+     * Execute the job.
+     *
+     * @param ProjectRepository $projects
+     *
+     * @return Project
+     */
+    public function handle(ProjectRepository $projects)
+    {
+        $this->project->fill($this->data);
+
+        $projects->save($this->project);
+
+        return $this->project;
     }
 }

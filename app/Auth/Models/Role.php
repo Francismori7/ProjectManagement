@@ -2,72 +2,48 @@
 
 namespace App\Auth\Models;
 
+use App\Core\ACL\Models\Permission;
 use App\Core\Models\BaseEntity;
 use App\Core\ACL\Traits\HasPermissions;
 use App\Contracts\ACL\HasPermissions as HasPermissionsContract;
-use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Class Role.
  *
- * @ORM\Entity(repositoryClass="App\Auth\Repositories\DoctrineRoleRepository")
- * @ORM\Table(name="roles")
- * @ORM\HasLifecycleCallbacks
+ * @property integer $id
+ * @property string $name
+ * @property-read \Illuminate\Database\Eloquent\Collection|User[] $users
+ * @property-read \Illuminate\Database\Eloquent\Collection|Permission[] $permissions
+ * @method static \Illuminate\Database\Query\Builder|\App\Auth\Models\Role whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Auth\Models\Role whereName($value)
  */
 class Role extends BaseEntity implements HasPermissionsContract
 {
     use HasPermissions;
 
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="integer")
-     *
-     * @var int
-     */
-    protected $id;
+    public $timestamps = false;
+
+    protected $fillable = [
+        'name',
+    ];
 
     /**
-     * @ORM\Column(type="string")
+     * A Role can have many users.
      *
-     * @var string
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    protected $name;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Auth\Models\User", mappedBy="role_user")
-     *
-     * @var Doctrine\Common\Collections\ArrayCollection|App\Auth\Models\User[]
-     */
-    protected $users;
-
-    /**
-     * Create a new role.
-     */
-    public function __construct()
+    public function users()
     {
-        $this->users = ArrayCollection;
-        $this->permissions = ArrayCollection;
+        return $this->hasMany(User::class);
     }
 
     /**
-     * Add a user to the role.
+     * A Role can have many permissions.
      *
-     * @param App\Auth\Models\User $user
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function addUser(User $user)
+    public function permissions()
     {
-        $this->users->add($user);
-    }
-
-    /**
-     * Returns the role's users.
-     *
-     * @return Doctrine\Common\Collections\ArrayCollection|App\Auth\Models\User[]
-     */
-    public function getUsers()
-    {
-        return $this->users;
+        return $this->hasMany(Permission::class);
     }
 }

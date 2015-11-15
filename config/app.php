@@ -137,20 +137,10 @@ return [
         Illuminate\View\ViewServiceProvider::class,
 
         /*
-         * Doctrine
-         */
-        LaravelDoctrine\ACL\AclServiceProvider::class,
-        LaravelDoctrine\ORM\DoctrineServiceProvider::class,
-        LaravelDoctrine\Extensions\GedmoExtensionsServiceProvider::class,
-        LaravelDoctrine\Migrations\MigrationsServiceProvider::class,
-        LaravelDoctrine\ORM\Auth\Passwords\PasswordResetServiceProvider::class,
-
-        /*
          * Packages
          */
         Barryvdh\Debugbar\ServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
-        Nayjest\LaravelDoctrineDBAL\ServiceProvider::class,
         Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
 
         /*
@@ -208,18 +198,12 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         /*
-         * Doctrine
-         */
-        'EntityManager' => LaravelDoctrine\ORM\Facades\EntityManager::class,
-        'Registry' => LaravelDoctrine\ORM\Facades\Registry::class,
-        'Doctrine' => LaravelDoctrine\ORM\Facades\Doctrine::class,
-
-        /*
          * Packages
          */
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
         'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
+        'Uuid' => Webpatser\Uuid\Uuid::class,
 
     ],
 

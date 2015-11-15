@@ -3,15 +3,19 @@
 namespace App\Auth\Traits;
 
 use App\Auth\Models\Role;
+use Illuminate\Database\Eloquent\Collection;
 
 trait HasRoles
 {
     /**
-     * @ORM\ManyToMany(targetEntity="App\Auth\Models\Role", inversedBy="role_user")
+     * This entity belongs to many roles.
      *
-     * @var Doctrine\Common\Collections\ArrayCollection|App\Auth\Models\Role[]
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    protected $roles;
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
 
     /**
      * Check if the object has a given role.
@@ -32,7 +36,7 @@ trait HasRoles
      */
     public function addRole(Role $role)
     {
-        $this->roles->add($role);
+        $this->roles()->attach($role);
     }
 
     /**
@@ -42,13 +46,11 @@ trait HasRoles
      */
     public function removeRole(Role $role)
     {
-        $this->roles->remove($role);
+        $this->roles()->detach($role);
     }
 
     /**
-     * Get all the object's roles.
-     *
-     * @return Doctrine\Common\Collections\ArrayCollection|App\Auth\Models\Role[]
+     * @return Collection
      */
     public function getRoles()
     {

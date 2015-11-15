@@ -2,96 +2,48 @@
 
 namespace App\Core\ACL\Models;
 
+use App\Auth\Models\Role;
+use App\Auth\Models\User;
 use App\Core\Models\BaseEntity;
-use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Class Permission.
  *
- * @ORM\Entity(repositoryClass="App\Auth\Repositories\DoctrinePermissionRepository")
- * @ORM\Table(name="permissions")
- * @ORM\HasLifecycleCallbacks
+ * @property integer $id
+ * @property string $pattern
+ * @property string $name
+ * @property-read \Illuminate\Database\Eloquent\Collection|Role[] $roles
+ * @property-read \Illuminate\Database\Eloquent\Collection|User[] $users
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\ACL\Models\Permission whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\ACL\Models\Permission wherePattern($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Core\ACL\Models\Permission whereName($value)
  */
 class Permission extends BaseEntity
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="integer")
-     *
-     * @var int
-     */
-    protected $id;
+    public $timestamps = false;
+
+    protected $fillable = [
+        'pattern',
+        'name',
+    ];
 
     /**
-     * @ORM\Column(type="string", unique=true, name="pattern")
+     * A Permission can belong to many roles.
      *
-     * @var string
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    protected $pattern;
-
-    /**
-     * @ORM\Column(type="string", name="name")
-     *
-     * @var [type]
-     */
-    protected $name;
-
-    /**
-     * Returns the Permission's identification number.
-     *
-     * @return string
-     */
-    public function getId()
+    public function roles()
     {
-        return $this->id;
+        return $this->belongsToMany(Role::class);
     }
 
     /**
-     * Returns the Permission's unique pattern used for matching.
+     * A Permission can belong to many users.
      *
-     * @return string
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function getPattern()
+    public function users()
     {
-        return $this->pattern;
-    }
-
-    /**
-     * Overwrites Permission's pattern.
-     *
-     * @param string $pattern
-     *
-     * @return Permission
-     */
-    public function setPattern($pattern)
-    {
-        $this->pattern = $pattern;
-
-        return $this;
-    }
-
-    /**
-     * Returns the Permission's display name.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * Overwrites the Permission's display name.
-     *
-     * @param string $name
-     *
-     * @return Permission
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
+        return $this->belongsToMany(User::class);
     }
 }

@@ -69,10 +69,9 @@ class GivePermission extends Command
 
         $user->addPermission($permission);
 
-        $this->users->persist($user);
-        $this->users->flush();
+        $this->users->save($user);
 
-        $this->info(sprintf("'%s' was given the ability to '%s'", $user->getUsername(), $permission->getName()));
+        $this->info(sprintf("'%s' was given the ability to '%s'", $user->username, $permission->name));
     }
 
     /**

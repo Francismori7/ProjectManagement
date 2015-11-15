@@ -15,6 +15,16 @@ class DeleteProject extends Job implements SelfHandling
     private $project;
 
     /**
+     * Create a new job instance.
+     *
+     * @param Project $project
+     */
+    public function __construct(Project $project)
+    {
+        $this->project = $project;
+    }
+
+    /**
      * Execute the job.
      *
      * @param ProjectRepository $projects
@@ -24,16 +34,7 @@ class DeleteProject extends Job implements SelfHandling
     public function handle(ProjectRepository $projects)
     {
         $projects->delete($this->project);
-        $projects->flush();
-    }
 
-    /**
-     * Create a new job instance.
-     *
-     * @param Project $project
-     */
-    public function __construct(Project $project)
-    {
-        $this->project = $project;
+        return ['deleted' => true];
     }
 }

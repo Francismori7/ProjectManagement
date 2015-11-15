@@ -2,200 +2,97 @@
 
 namespace App\Auth\Models;
 
-use App\Core\Models\BaseEntity;
 use App\Auth\Traits\HasRoles;
 use App\Core\ACL\Traits\HasPermissions;
-use App\Auth\Traits\AuthenticatesUsers;
-use App\Contracts\ACL\HasRoles as HasRolesContract;
-use App\Contracts\ACL\HasPermissions as HasPermissionsContract;
-use Doctrine\ORM\Mapping as ORM;
+use App\Core\Models\UUIDBaseEntity;
+use App\Projects\Models\Invitation;
+use App\Projects\Models\Project;
+use App\Projects\Models\Task;
+use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
-use Doctrine\Common\Collections\ArrayCollection;
-use Illuminate\Foundation\Auth\Access\Authorizable;
-use LaravelDoctrine\Extensions\Timestamps\Timestamps;
-use LaravelDoctrine\Extensions\SoftDeletes\SoftDeletes;
-use LaravelDoctrine\ORM\Contracts\Auth\Authenticatable;
-use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
+use App\Contracts\ACL\HasPermissions as HasPermissionsContract;
+use App\Contracts\ACL\HasRoles as HasRolesContract;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Foundation\Auth\Access\Authorizable;
 
 /**
  * Class User.
  *
- * @ORM\Entity(repositoryClass="App\Auth\Repositories\DoctrineUserRepository")
- * @ORM\Table(name="users")
- * @ORM\HasLifecycleCallbacks
+ * @property string $id
+ * @property string $username
+ * @property string $first_name
+ * @property string $last_name
+ * @property string $email
+ * @property string $password
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property string $deleted_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|Permission[] $permissions
+ * @property-read \Illuminate\Database\Eloquent\Collection|Role[] $roles
+ * @method static \Illuminate\Database\Query\Builder|\App\Auth\Models\User whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Auth\Models\User whereUsername($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Auth\Models\User whereFirstName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Auth\Models\User whereLastName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Auth\Models\User whereEmail($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Auth\Models\User wherePassword($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Auth\Models\User whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Auth\Models\User whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Auth\Models\User whereDeletedAt($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|Project[] $projects
+ * @property-read \Illuminate\Database\Eloquent\Collection|Invitation[] $invitations
  */
-class User extends BaseEntity implements Authenticatable,
+class User extends UUIDBaseEntity implements AuthenticatableContract,
     CanResetPasswordContract,
     AuthorizableContract,
     HasPermissionsContract,
     HasRolesContract
 {
-    use Timestamps,
-        SoftDeletes,
-        AuthenticatesUsers,
+    use SoftDeletes,
+        Authenticatable,
         CanResetPassword,
         Authorizable,
         HasPermissions,
         HasRoles;
 
-    /**
-     * These attributes will not be included in the serialized Json or array.
-     *
-     * @var array
-     */
-    protected $ignoredAttributes = [
-        'authIdentifier',
-        'authIdentifierName',
-        'authPassword',
-        'rememberToken',
-        'rememberTokenName',
-        'emailForPasswordReset',
-        'password',
+    protected $fillable = [
+        'username',
+        'first_name',
+        'last_name',
+        'email',
     ];
 
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="UUID")
-     * @ORM\Column(type="string", length=36)
-     *
-     * @var string The identifier of the user.
-     */
-    protected $id;
-    /**
-     * @ORM\Column(type="string", unique=true, length=30, name="username")
-     *
-     * @var string
-     */
-    protected $username;
-    /**
-     * @ORM\Column(type="string", length=50, name="first_name")
-     *
-     * @var string
-     */
-    protected $firstName;
-    /**
-     * @ORM\Column(type="string", length=50, name="last_name")
-     *
-     * @var string
-     */
-    protected $lastName;
-    /**
-     * @ORM\Column(type="string", unique=true)
-     *
-     * @var string
-     */
-    protected $email;
+    protected $dates = ['deleted_at'];
 
-    public function __construct()
+    /**
+     * A user can be part of many projects.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function projects()
     {
-        $this->roles = new ArrayCollection();
-        $this->permissions = new ArrayCollection();
+        return $this->belongsToMany(Project::class)->withTimestamps()->withPivot('role');
     }
 
     /**
-     * Returns the User's identification number.
+     * A user can have many tasks
      *
-     * @return string
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
      */
-    public function getId()
+    public function tasks()
     {
-        return $this->id;
+        return $this->hasMany(Task::class, 'employee_id');
     }
 
     /**
-     * Returns the User's username.
+     * A user can host many invitations.
      *
-     * @return string
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function getUsername()
+    public function invitations()
     {
-        return $this->username;
-    }
-
-    /**
-     * Overwrites the User's username.
-     *
-     * @param string $username
-     *
-     * @return User
-     */
-    public function setUsername($username)
-    {
-        $this->username = $username;
-
-        return $this;
-    }
-
-    /**
-     * Returns the User's email address.
-     *
-     * @return string
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    /**
-     * Overwrites the User's email address.
-     *
-     * @param string $email
-     *
-     * @return User
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    /**
-     * Returns the User's first name.
-     *
-     * @return string
-     */
-    public function getFirstName()
-    {
-        return $this->firstName;
-    }
-
-    /**
-     * Overwrites the User's first name.
-     *
-     * @param string $firstName
-     *
-     * @return User
-     */
-    public function setFirstName($firstName)
-    {
-        $this->firstName = $firstName;
-
-        return $this;
-    }
-
-    /**
-     * Returns the User's last name.
-     *
-     * @return string
-     */
-    public function getLastName()
-    {
-        return $this->lastName;
-    }
-
-    /**
-     * Overwrites the User's last name.
-     *
-     * @param mixed $lastName
-     *
-     * @return User
-     */
-    public function setLastName($lastName)
-    {
-        $this->lastName = $lastName;
-
-        return $this;
+        return $this->hasMany(Invitation::class);
     }
 }

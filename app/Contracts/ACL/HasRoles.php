@@ -3,6 +3,7 @@
 namespace App\Contracts\ACL;
 
 use App\Auth\Models\Role;
+use Illuminate\Database\Eloquent\Collection;
 
 interface HasRoles
 {
@@ -32,7 +33,7 @@ interface HasRoles
     /**
      * Get all the object's roles.
      *
-     * @return Doctrine\Common\Collections\ArrayCollection|App\Auth\Models\Role[]
+     * @return Collection
      */
     public function getRoles();
 }

@@ -1,0 +1,30 @@
+language: php
+
+php:
+  - 5.6
+  - 7.0
+
+cache:
+  directories:
+  - vendor
+  - $HOME/.composer/cache
+
+before_script:
+  - composer install
+  - mysql -e 'create database creaperio_test;'
+  - php artisan key:generate
+  - php artisan jwt:generate
+  - php artisan migrate --force
+
+script:
+  - vendor/bin/phpunit --debug
+
+matrix:
+  fast_finish: true
+
+notifications:
+  email:
+    recipients:
+      - morissette.francis@gmail.com
+    on_success: change
+    on_failure: always

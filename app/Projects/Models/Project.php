@@ -2,128 +2,107 @@
 
 namespace App\Projects\Models;
 
-use App\Core\Models\BaseEntity;
-use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
-use LaravelDoctrine\Extensions\SoftDeletes\SoftDeletes;
-use LaravelDoctrine\Extensions\Timestamps\Timestamps;
+use App\Auth\Models\User;
+use App\Core\Models\UUIDBaseEntity;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * @ORM\Entity(repositoryClass="App\Projects\Repositories\DoctrineProjectRepository")
- * @ORM\Table(name="projects")
- * @ORM\HasLifecycleCallbacks
+ * Class Project.
+ *
+ * @property string $id
+ * @property string $name
+ * @property string $description
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property string $deleted_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|Invitation[] $invitations
+ * @property-read \Illuminate\Database\Eloquent\Collection|User[] $users
+ * @method static \Illuminate\Database\Query\Builder|\App\Projects\Models\Project whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Projects\Models\Project whereName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Projects\Models\Project whereDescription($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Projects\Models\Project whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Projects\Models\Project whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Projects\Models\Project whereDeletedAt($value)
  */
-class Project extends BaseEntity
+class Project extends UUIDBaseEntity
 {
-    use Timestamps, SoftDeletes;
+    use SoftDeletes;
+
+    protected $fillable = [
+        'name',
+        'description',
+    ];
+
+    protected $dates = ['deleted_at'];
+
+    protected $appends = ['leaders', 'completedTasks'];
 
     /**
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="UUID")
-     * @ORM\Column(type="string", length=36)
+     * A Project can have many tasks.
      *
-     * @var string
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    private $id;
-    /**
-     * @Gedmo\Slug(fields={"name"})
-     * @ORM\Column(length=128, unique=true)
-     *
-     * @var string
-     */
-    private $slug;
-    /**
-     * @ORM\Column(type="string", length=100)
-     *
-     * @var string
-     */
-    private $name;
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     *
-     * @var string
-     */
-    private $description;
-
-    /**
-     * Returns the Project's identification number.
-     *
-     * @return string
-     */
-    public function getId()
+    public function tasks()
     {
-        return $this->id;
+        return $this->hasMany(Task::class);
     }
 
     /**
-     * Returns the Project's slug. Mainly used for URLs.
+     * Returns a list of completed tasks.
      *
-     * @return string
+     * @return mixed
      */
-    public function getSlug()
-    {
-        return $this->slug;
+    public function getCompletedTasksAttribute() {
+        return $this->tasks->where('completed', 1);
     }
 
     /**
-     * Overwrites the Project's slug.
+     * A Project can have many leaders.
      *
-     * @param string $slug
-     *
-     * @return Project
+     * @return mixed
      */
-    public function setSlug($slug)
+    public function getLeadersAttribute()
     {
-        $this->slug = $slug;
-
-        return $this;
+        return $this->users->where('pivot.role', 'leader');
     }
 
     /**
-     * Returns the Project's description.
+     * A Project can have many users.
      *
-     * @return string
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function getDescription()
+    public function users()
     {
-        return $this->description;
+        return $this->belongsToMany(User::class)->withTimestamps()->withPivot('role');
     }
 
     /**
-     * Overwrite the Project's description.
+     * A Project can have many invitations.
      *
-     * @param string $description
-     *
-     * @return Project
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function setDescription($description)
+    public function invitations()
     {
-        $this->description = $description;
-
-        return $this;
+        return $this->hasMany(Invitation::class);
     }
 
     /**
-     * Returns the name of the Project.
+     * A Project was created by one leader (protected from demotion and more).
      *
-     * @return string
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function getName()
+    public function creator()
     {
-        return $this->name;
+        return $this->belongsTo(User::class, 'created_by');
     }
 
-    /**
-     * Overwrites the name of the Project.
-     *
-     * @param string $name
-     *
-     * @return Project
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
+//    TODO: Add comments
+//    /**
+//     * A Project can have many comments to it.
+//     *
+//     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+//     */
+//    public function comments() {
+//        return $this->hasMany(Comment::class);
+//    }
 }

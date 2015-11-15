@@ -18,31 +18,26 @@ interface ProjectRepository extends BaseRepository
     /**
      * Returns all the Projects.
      *
-     * @return Collection|Project[] All projects.
+     * @param array $relations
+     * @return Collection All projects.
      */
-    public function all();
+    public function all(array $relations = []);
 
     /**
      * Find a project entity by UUID.
      *
-     * @param int $uuid The identifier to look for in the database.
+     * @param string $uuid The identifier to look for in the database.
+     * @param array $relations
      * @return Project|null The project.
      */
-    public function find($uuid);
+    public function find($uuid, array $relations = []);
 
     /**
      * Find a project entity by UUID.
      *
-     * @param int $uuid The identifier to look for in the database.
+     * @param string $uuid The identifier to look for in the database.
+     * @param array $relations
      * @return Project|null The project.
      */
-    public function findByUUID($uuid);
-
-    /**
-     * Find a project entity by its slug.
-     *
-     * @param string $slug The slug to look for in the database.
-     * @return Project|null The project.
-     */
-    public function findBySlug($slug);
+    public function findByUUID($uuid, array $relations = []);
 }

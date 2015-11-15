@@ -42,6 +42,7 @@ return [
 
     'model_locations' => [
         'app/Core/Models',
+        'app/Core/ACL/Models',
         'app/Auth/Models',
         'app/Projects/Models',
     ],

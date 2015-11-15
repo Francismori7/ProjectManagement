@@ -2,12 +2,14 @@
 
 namespace App\Projects;
 
-use App\Auth\Models\User;
+use App\Contracts\Projects\InvitationRepository;
+use App\Contracts\Projects\TaskRepository;
 use App\Core\Module;
+use App\Projects\Repositories\EloquentInvitationRepository;
+use App\Projects\Repositories\EloquentProjectRepository;
+use App\Projects\Repositories\EloquentTaskRepository;
 use Illuminate\Routing\Router;
-use Doctrine\ORM\Mapping\ClassMetadata;
 use App\Contracts\Projects\ProjectRepository;
-use App\Projects\Repositories\DoctrineProjectRepository;
 
 class ProjectModule extends Module
 {
@@ -16,11 +18,9 @@ class ProjectModule extends Module
      */
     public function registerContainerBindings()
     {
-        $this->app->bind(ProjectRepository::class, function ($app) {
-            return new DoctrineProjectRepository(
-                $app['em'],
-                new ClassMetadata(User::class));
-        });
+        $this->app->bind(InvitationRepository::class, EloquentInvitationRepository::class);
+        $this->app->bind(ProjectRepository::class, EloquentProjectRepository::class);
+        $this->app->bind(TaskRepository::class, EloquentTaskRepository::class);
     }
 
     /**
@@ -31,6 +31,56 @@ class ProjectModule extends Module
      */
     public function map(Router $router)
     {
+        $router->group(['prefix' => 'api/v1', 'as' => 'api.v1.', 'namespace' => 'App\Projects\Controllers\Api\v1'],
+            function (Router $router) {
+                $router->group(['prefix' => 'projects', 'as' => 'projects.'], function (Router $router) {
+                    $router->get('/', ['as' => 'index', 'uses' => 'ProjectController@index']);
+                    $router->get('{project}', ['as' => 'show', 'uses' => 'ProjectController@show']);
+                    $router->post('/', ['as' => 'store', 'uses' => 'ProjectController@store']);
+                    $router->patch('{project}', ['as' => 'update', 'uses' => 'ProjectController@update']);
+                    $router->delete('{project}', ['as' => 'destroy', 'uses' => 'ProjectController@destroy']);
+                    $router->patch('{project}/restore', ['as' => 'restore', 'uses' => 'ProjectController@restore']);
+
+                    $router->group(['prefix' =>'{project}/users', 'as' => 'users.'], function (Router $router) {
+                        $router->get('/', ['as' => 'index', 'uses' => 'ProjectUserController@index']);
+                        $router->patch('{user}/promote', ['as' => 'promote', 'uses' => 'ProjectUserController@promote']);
+                        $router->patch('{user}/demote', ['as' => 'demote', 'uses' => 'ProjectUserController@demote']);
+                        $router->post('invite', ['as' => 'invite', 'uses' => 'ProjectUserController@invite']);
+                    });
+
+                    $router->group(['prefix' =>'{project}/tasks', 'as' => 'tasks.'], function (Router $router) {
+                        $router->get('/', ['as' => 'index', 'uses' => 'ProjectTaskController@index']);
+                        $router->post('/', ['as' => 'store', 'uses' => 'ProjectTaskController@store']);
+                        $router->patch('{task}', ['as' => 'update', 'uses' => 'ProjectTaskController@update']);
+                    });
+
+//                    TODO: Add comments
+//                    $router->group(['prefix' =>'{project}/comments', 'as' => 'comments.'], function (Router $router) {
+//                        $router->get('/', ['as' => 'index', 'uses' => 'ProjectCommentController@index']);
+//                        $router->get('{comment}', ['as' => 'show', 'uses' => 'ProjectCommentController@show']);
+//                        $router->post('/', ['as' => 'store', 'uses' => 'ProjectCommentController@store']);
+//                        $router->patch('{comment}', ['as' => 'update', 'uses' => 'ProjectCommentController@update']);
+//                    });
+                });
+            });
+    }
+
+    /**
+     * Return all the permissions this module needs installed.
+     *
+     * @return array
+     */
+    public function getModulePermissions()
+    {
+        return [
+            'projects.project.create' => 'Create projects',
+            'projects.project.update' => 'Update projects',
+            'projects.project.destroy' => 'Remove projects',
+            'projects.project.restore' => 'Restore projects',
+            'projects.project.invite' => 'Invite users',
+            'projects.project.promote_user' => 'Promote users',
+            'projects.project.demote_user' => 'Demote users',
+        ];
     }
 
     /**

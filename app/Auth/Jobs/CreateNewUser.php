@@ -15,6 +15,16 @@ class CreateNewUser extends Job implements SelfHandling
     private $data;
 
     /**
+     * Create a new job instance.
+     *
+     * @param array|User $data
+     */
+    public function __construct($data)
+    {
+        $this->data = $data;
+    }
+
+    /**
      * Execute the job.
      *
      * @param UserRepository $users
@@ -23,27 +33,11 @@ class CreateNewUser extends Job implements SelfHandling
      */
     public function handle(UserRepository $users)
     {
-        $user = $this->data instanceof User ?
-            $this->data :
-            (new User)->setUsername($this->data['username'])
-                ->setFirstName($this->data['first_name'])
-                ->setLastName($this->data['last_name'])
-                ->setEmail($this->data['email'])
-                ->setPassword($this->data['password']);
+        $user = new User($this->data);
+        $user->password = bcrypt($this->data['password']);
 
-        $users->save($user);
-        $users->flush();
+        $users->save($user)->flush();
 
         return $user;
-    }
-
-    /**
-     * Create a new job instance.
-     *
-     * @param array|User $data
-     */
-    public function __construct($data)
-    {
-        $this->data = $data;
     }
 }
