@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\ACL\Repositories;
+namespace Tests\Core\ACL\Repositories;
 
 use App\Contracts\ACL\PermissionRepository;
 use App\Core\ACL\Models\Permission;

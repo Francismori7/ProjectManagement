@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Auth\Repositories;
+namespace Tests\Projects\Repositories;
 
 use App\Contracts\Projects\ProjectRepository;
 use App\Projects\Models\Project;

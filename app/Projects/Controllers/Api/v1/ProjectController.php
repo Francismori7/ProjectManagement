@@ -11,6 +11,7 @@ use App\Projects\Jobs\CreateNewProject;
 use App\Projects\Jobs\DeleteProject;
 use App\Projects\Jobs\UpdateProject;
 use App\Projects\Models\Project;
+use Illuminate\Http\Request;
 
 class ProjectController extends Controller
 {
@@ -37,11 +38,11 @@ class ProjectController extends Controller
      *
      * GET /api/v1/projects
      *
-     * @return Project[]|\Illuminate\Database\Eloquent\Collection
+     * @return \App\Projects\Models\Project[]|\Illuminate\Database\Eloquent\Collection
      */
     public function index()
     {
-        return $this->projects->all();
+        return auth()->user()->projects;
     }
 
     /**
@@ -54,6 +55,10 @@ class ProjectController extends Controller
      */
     public function show($project)
     {
+        if (!auth()->user()->projects->contains('id', $project)) {
+            return response()->json(['not_in_project'], 403);
+        }
+
         return $this->projects->findByUUID($project, ['users', 'invitations', 'tasks']);
     }
 

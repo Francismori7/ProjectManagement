@@ -1,13 +1,12 @@
 <?php
 
-namespace Tests\Auth\Repositories;
+namespace Tests\Projects\Repositories;
 
 use App\Contracts\Projects\InvitationRepository;
 use App\Contracts\Projects\ProjectRepository;
 use App\Projects\Models\Project;
 use App\Projects\Models\Invitation;
 use DB;
-use Faker\Factory;
 use Tests\TestCase;
 
 class InvitationRepositoryTest extends TestCase
@@ -16,10 +15,6 @@ class InvitationRepositoryTest extends TestCase
      * @var array
      */
     private $overrides;
-    /**
-     * @var array
-     */
-    private $overridesProject;
     /**
      * @var InvitationRepository
      */
