@@ -37,6 +37,10 @@ class ProjectTaskController extends Controller
      */
     public function index($project)
     {
+        if (!auth()->user()->projects->contains('id', $project)) {
+            return response()->json(['not_in_project'], 403);
+        }
+
         $project = $this->projects->findByUUID($project, ['tasks']);
 
         return [

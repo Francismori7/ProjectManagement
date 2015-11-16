@@ -2,6 +2,7 @@
 
 namespace App\Projects\Http\Requests;
 
+use App\Contracts\Projects\ProjectRepository;
 use App\Core\Requests\Request;
 
 class CreateTaskRequest extends Request
@@ -13,7 +14,25 @@ class CreateTaskRequest extends Request
      */
     public function authorize()
     {
-        return $this->user() && $this->user()->hasPermission('projects.project.create');
+        if (!$this->user()) {
+            return false;
+        }
+
+        if (!$this->user()->hasPermission('projects.task.create')) {
+            return false;
+        }
+
+        $projects = app()->make(ProjectRepository::class);
+        $project = $projects->findByUUID($this->route('project'), ['users']);
+
+        /*
+         * Can the user create a task? (ie: is he part of the group?)
+         */
+        if (!$project->users->contains('id', $this->user()->id)) {
+            return false;
+        }
+
+        return true;
     }
 
     /**

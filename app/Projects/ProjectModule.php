@@ -80,6 +80,10 @@ class ProjectModule extends Module
             'projects.project.invite' => 'Invite users',
             'projects.project.promote_user' => 'Promote users',
             'projects.project.demote_user' => 'Demote users',
+
+            'projects.task.create' => 'Create tasks',
+            'projects.task.update' => 'Update tasks',
+            'projects.task.assign' => 'Assign tasks',
         ];
     }
 
