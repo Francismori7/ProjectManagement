@@ -52,6 +52,7 @@ class ProjectModule extends Module
                         $router->get('/', ['as' => 'index', 'uses' => 'ProjectTaskController@index']);
                         $router->post('/', ['as' => 'store', 'uses' => 'ProjectTaskController@store']);
                         $router->patch('{task}', ['as' => 'update', 'uses' => 'ProjectTaskController@update']);
+                        $router->patch('{task}/complete', ['as' => 'complete', 'uses' => 'ProjectTaskController@complete']);
                     });
 
 //                    TODO: Add comments
@@ -83,6 +84,7 @@ class ProjectModule extends Module
 
             'projects.task.create' => 'Create tasks',
             'projects.task.update' => 'Update tasks',
+            'projects.task.complete' => 'Complete tasks',
             'projects.task.assign' => 'Assign tasks',
         ];
     }

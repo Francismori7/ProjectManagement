@@ -29,7 +29,8 @@ class ProjectTest extends TestCase
      */
     public function a_logged_out_user_cannot_create_new_projects()
     {
-        $this->post(route('api.v1.projects.store'), $this->overrides)->assertResponseStatus(403);
+        $this->post(route('api.v1.projects.store'), $this->overrides,
+            ['X-Requested-With' => 'XMLHttpRequest'])->assertResponseStatus(403);
 
         $this->notSeeInDatabase('projects', $this->overrides);
     }
@@ -42,7 +43,8 @@ class ProjectTest extends TestCase
         $user = factory(User::class)->create();
         $this->actingAs($user);
 
-        $this->post(route('api.v1.projects.store'), $this->overrides)->assertResponseStatus(403);
+        $this->post(route('api.v1.projects.store'), $this->overrides,
+            ['X-Requested-With' => 'XMLHttpRequest'])->assertResponseStatus(403);
 
         $this->notSeeInDatabase('projects', $this->overrides);
     }
@@ -57,35 +59,11 @@ class ProjectTest extends TestCase
         $this->giveUserPermission($user, 'projects.project.create');
         $this->actingAs($user);
 
-        $this->post(route('api.v1.projects.store'), $this->overrides)->assertResponseStatus(200);
+        $this->post(route('api.v1.projects.store'), $this->overrides,
+            ['X-Requested-With' => 'XMLHttpRequest'])->assertResponseStatus(200);
 
         $this->seeJsonContains($this->overrides);
         $this->seeInDatabase('projects', $this->overrides);
-    }
-
-    /**
-     * Installs the permissions.
-     */
-    protected function setUpPermissions()
-    {
-        $this->artisan('permissions:install');
-    }
-
-    /**
-     * Gives permissions to a test user.
-     *
-     * @param User $user
-     * @param array|string $patterns
-     */
-    protected function giveUserPermission(User $user, $patterns)
-    {
-        if (is_array($patterns)) {
-            foreach ($patterns as $pattern) {
-                $this->artisan('permissions:give', ['username' => $user->username, 'pattern' => $pattern]);
-            }
-            return;
-        }
-        $this->artisan('permissions:give', ['username' => $user->username, 'pattern' => $patterns]);
     }
 
     /**
@@ -101,7 +79,8 @@ class ProjectTest extends TestCase
         $this->giveUserPermission($user, 'projects.project.destroy');
         $this->actingAs($user);
 
-        $this->delete(route('api.v1.projects.destroy', [$project->id]))->assertResponseOk();
+        $this->delete(route('api.v1.projects.destroy', [$project->id]),
+            ['X-Requested-With' => 'XMLHttpRequest'])->assertResponseOk();
 
         $this->seeJsonEquals(['deleted' => true]);
         $count = \DB::table('projects')->where('id', $project->id)->whereNotNull('deleted_at')->count();
@@ -143,7 +122,7 @@ class ProjectTest extends TestCase
         $project->users()->attach($user, ['role' => '']);
         $this->actingAs($user);
 
-        $this->get(route('api.v1.projects.index'));
+        $this->get(route('api.v1.projects.index'), ['X-Requested-With' => 'XMLHttpRequest']);
 
         $this->seeJsonContains(['id' => $project->id]);
 
@@ -164,12 +143,12 @@ class ProjectTest extends TestCase
         $project->users()->attach($user, ['role' => '']);
         $this->actingAs($user);
 
-        $this->get(route('api.v1.projects.show', [$project->id]));
+        $this->get(route('api.v1.projects.show', [$project->id]), ['X-Requested-With' => 'XMLHttpRequest']);
 
         $this->seeJsonContains(['id' => $project->id]);
 
         foreach ($projects as $dontSeeProject) {
-            $this->get(route('api.v1.projects.show', [$dontSeeProject->id]));
+            $this->get(route('api.v1.projects.show', [$dontSeeProject->id]), ['X-Requested-With' => 'XMLHttpRequest']);
             $this->seeJson(['not_in_project']);
             $this->assertResponseStatus(403);
         }
@@ -188,7 +167,8 @@ class ProjectTest extends TestCase
         $project->users()->attach($user, ['role' => 'leader']);
         $this->actingAs($user);
 
-        $this->patch(route('api.v1.projects.update', [$project->id]), ['name' => 'New name']);
+        $this->patch(route('api.v1.projects.update', [$project->id]), ['name' => 'New name'],
+            ['X-Requested-With' => 'XMLHttpRequest']);
 
         $this->assertResponseOk();
         $this->seeJsonContains([
@@ -209,7 +189,8 @@ class ProjectTest extends TestCase
         $project->users()->attach($user, ['role' => '']);
         $this->actingAs($user);
 
-        $this->patch(route('api.v1.projects.update', [$project->id]), ['name' => 'New name']);
+        $this->patch(route('api.v1.projects.update', [$project->id]), ['name' => 'New name'],
+            ['X-Requested-With' => 'XMLHttpRequest']);
 
         $this->assertResponseStatus(403);
         $this->notSeeInDatabase('projects', ['name' => 'New name']);

@@ -23,6 +23,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\Projects\Models\Project whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Projects\Models\Project whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Projects\Models\Project whereDeletedAt($value)
+ * @property string $created_by
+ * @property string $due_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|Task[] $tasks
+ * @property-read mixed $completed_tasks
+ * @property-read mixed $leaders
+ * @property-read User $creator
+ * @method static \Illuminate\Database\Query\Builder|\App\Projects\Models\Project whereCreatedBy($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Projects\Models\Project whereDueAt($value)
  */
 class Project extends UUIDBaseEntity
 {

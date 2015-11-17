@@ -23,7 +23,7 @@ class UpdateProjectRequest extends Request
         }
 
         /*
-         * Can the user delete the project (is he the creator of the project?)
+         * Can the user update the project (is he a leader of the project?)
          */
         $projects = app()->make(ProjectRepository::class);
         $project = $projects->findByUUID($this->route('project'), ['users']);

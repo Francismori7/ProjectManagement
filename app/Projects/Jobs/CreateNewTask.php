@@ -41,11 +41,9 @@ class CreateNewTask extends Job implements SelfHandling
     /**
      * Execute the job.
      *
-     * @param ProjectRepository $projects
-     *
      * @return Project
      */
-    public function handle(ProjectRepository $projects)
+    public function handle()
     {
         $task = new Task($this->data);
 

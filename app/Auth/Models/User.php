@@ -43,6 +43,7 @@ use Illuminate\Foundation\Auth\Access\Authorizable;
  * @method static \Illuminate\Database\Query\Builder|\App\Auth\Models\User whereDeletedAt($value)
  * @property-read \Illuminate\Database\Eloquent\Collection|Project[] $projects
  * @property-read \Illuminate\Database\Eloquent\Collection|Invitation[] $invitations
+ * @property-read \Illuminate\Database\Eloquent\Collection|Task[] $tasks
  */
 class User extends UUIDBaseEntity implements AuthenticatableContract,
     CanResetPasswordContract,

@@ -3,7 +3,7 @@ namespace PHPSTORM_META {
 
    /**
     * PhpStorm Meta file, to provide autocomplete information for PhpStorm
-    * Generated on 2015-11-14.
+    * Generated on 2015-11-17.
     *
     * @author Barry vd. Heuvel <barryvdh@gmail.com>
     * @see https://github.com/barryvdh/laravel-ide-helper
@@ -21,6 +21,7 @@ namespace PHPSTORM_META {
             'Illuminate\Contracts\Debug\ExceptionHandler' instanceof \App\Core\Exceptions\Handler,
             'Psr\Log\LoggerInterface' instanceof \Monolog\Logger,
             'auth' instanceof \Illuminate\Auth\AuthManager,
+            'auth.driver' instanceof \Illuminate\Auth\Guard,
             'Illuminate\Contracts\Auth\Access\Gate' instanceof \Illuminate\Auth\Access\Gate,
             'illuminate.route.dispatcher' instanceof \Illuminate\Routing\ControllerDispatcher,
             'cookie' instanceof \Illuminate\Cookie\CookieJar,
@@ -55,8 +56,9 @@ namespace PHPSTORM_META {
             'App\Contracts\ACL\PermissionRepository' instanceof \App\Core\ACL\Repositories\EloquentPermissionRepository,
             'App\Contracts\Auth\UserRepository' instanceof \App\Auth\Repositories\EloquentUserRepository,
             'App\Contracts\Auth\RoleRepository' instanceof \App\Auth\Repositories\EloquentRoleRepository,
-            'App\Contracts\Projects\ProjectRepository' instanceof \App\Projects\Repositories\EloquentProjectRepository,
             'App\Contracts\Projects\InvitationRepository' instanceof \App\Projects\Repositories\EloquentInvitationRepository,
+            'App\Contracts\Projects\ProjectRepository' instanceof \App\Projects\Repositories\EloquentProjectRepository,
+            'App\Contracts\Projects\TaskRepository' instanceof \App\Projects\Repositories\EloquentTaskRepository,
             'Tymon\JWTAuth\JWTAuth' instanceof \Tymon\JWTAuth\JWTAuth,
             'Tymon\JWTAuth\Providers\User\UserInterface' instanceof \Tymon\JWTAuth\Providers\User\EloquentUserAdapter,
             'Tymon\JWTAuth\Providers\JWT\JWTInterface' instanceof \Tymon\JWTAuth\Providers\JWT\NamshiAdapter,
@@ -159,6 +161,7 @@ namespace PHPSTORM_META {
             'Illuminate\Contracts\Debug\ExceptionHandler' instanceof \App\Core\Exceptions\Handler,
             'Psr\Log\LoggerInterface' instanceof \Monolog\Logger,
             'auth' instanceof \Illuminate\Auth\AuthManager,
+            'auth.driver' instanceof \Illuminate\Auth\Guard,
             'Illuminate\Contracts\Auth\Access\Gate' instanceof \Illuminate\Auth\Access\Gate,
             'illuminate.route.dispatcher' instanceof \Illuminate\Routing\ControllerDispatcher,
             'cookie' instanceof \Illuminate\Cookie\CookieJar,
@@ -193,8 +196,9 @@ namespace PHPSTORM_META {
             'App\Contracts\ACL\PermissionRepository' instanceof \App\Core\ACL\Repositories\EloquentPermissionRepository,
             'App\Contracts\Auth\UserRepository' instanceof \App\Auth\Repositories\EloquentUserRepository,
             'App\Contracts\Auth\RoleRepository' instanceof \App\Auth\Repositories\EloquentRoleRepository,
-            'App\Contracts\Projects\ProjectRepository' instanceof \App\Projects\Repositories\EloquentProjectRepository,
             'App\Contracts\Projects\InvitationRepository' instanceof \App\Projects\Repositories\EloquentInvitationRepository,
+            'App\Contracts\Projects\ProjectRepository' instanceof \App\Projects\Repositories\EloquentProjectRepository,
+            'App\Contracts\Projects\TaskRepository' instanceof \App\Projects\Repositories\EloquentTaskRepository,
             'Tymon\JWTAuth\JWTAuth' instanceof \Tymon\JWTAuth\JWTAuth,
             'Tymon\JWTAuth\Providers\User\UserInterface' instanceof \Tymon\JWTAuth\Providers\User\EloquentUserAdapter,
             'Tymon\JWTAuth\Providers\JWT\JWTInterface' instanceof \Tymon\JWTAuth\Providers\JWT\NamshiAdapter,
@@ -297,6 +301,7 @@ namespace PHPSTORM_META {
             'Illuminate\Contracts\Debug\ExceptionHandler' instanceof \App\Core\Exceptions\Handler,
             'Psr\Log\LoggerInterface' instanceof \Monolog\Logger,
             'auth' instanceof \Illuminate\Auth\AuthManager,
+            'auth.driver' instanceof \Illuminate\Auth\Guard,
             'Illuminate\Contracts\Auth\Access\Gate' instanceof \Illuminate\Auth\Access\Gate,
             'illuminate.route.dispatcher' instanceof \Illuminate\Routing\ControllerDispatcher,
             'cookie' instanceof \Illuminate\Cookie\CookieJar,
@@ -331,8 +336,9 @@ namespace PHPSTORM_META {
             'App\Contracts\ACL\PermissionRepository' instanceof \App\Core\ACL\Repositories\EloquentPermissionRepository,
             'App\Contracts\Auth\UserRepository' instanceof \App\Auth\Repositories\EloquentUserRepository,
             'App\Contracts\Auth\RoleRepository' instanceof \App\Auth\Repositories\EloquentRoleRepository,
-            'App\Contracts\Projects\ProjectRepository' instanceof \App\Projects\Repositories\EloquentProjectRepository,
             'App\Contracts\Projects\InvitationRepository' instanceof \App\Projects\Repositories\EloquentInvitationRepository,
+            'App\Contracts\Projects\ProjectRepository' instanceof \App\Projects\Repositories\EloquentProjectRepository,
+            'App\Contracts\Projects\TaskRepository' instanceof \App\Projects\Repositories\EloquentTaskRepository,
             'Tymon\JWTAuth\JWTAuth' instanceof \Tymon\JWTAuth\JWTAuth,
             'Tymon\JWTAuth\Providers\User\UserInterface' instanceof \Tymon\JWTAuth\Providers\User\EloquentUserAdapter,
             'Tymon\JWTAuth\Providers\JWT\JWTInterface' instanceof \Tymon\JWTAuth\Providers\JWT\NamshiAdapter,
@@ -435,6 +441,7 @@ namespace PHPSTORM_META {
             'Illuminate\Contracts\Debug\ExceptionHandler' instanceof \App\Core\Exceptions\Handler,
             'Psr\Log\LoggerInterface' instanceof \Monolog\Logger,
             'auth' instanceof \Illuminate\Auth\AuthManager,
+            'auth.driver' instanceof \Illuminate\Auth\Guard,
             'Illuminate\Contracts\Auth\Access\Gate' instanceof \Illuminate\Auth\Access\Gate,
             'illuminate.route.dispatcher' instanceof \Illuminate\Routing\ControllerDispatcher,
             'cookie' instanceof \Illuminate\Cookie\CookieJar,
@@ -469,8 +476,9 @@ namespace PHPSTORM_META {
             'App\Contracts\ACL\PermissionRepository' instanceof \App\Core\ACL\Repositories\EloquentPermissionRepository,
             'App\Contracts\Auth\UserRepository' instanceof \App\Auth\Repositories\EloquentUserRepository,
             'App\Contracts\Auth\RoleRepository' instanceof \App\Auth\Repositories\EloquentRoleRepository,
-            'App\Contracts\Projects\ProjectRepository' instanceof \App\Projects\Repositories\EloquentProjectRepository,
             'App\Contracts\Projects\InvitationRepository' instanceof \App\Projects\Repositories\EloquentInvitationRepository,
+            'App\Contracts\Projects\ProjectRepository' instanceof \App\Projects\Repositories\EloquentProjectRepository,
+            'App\Contracts\Projects\TaskRepository' instanceof \App\Projects\Repositories\EloquentTaskRepository,
             'Tymon\JWTAuth\JWTAuth' instanceof \Tymon\JWTAuth\JWTAuth,
             'Tymon\JWTAuth\Providers\User\UserInterface' instanceof \Tymon\JWTAuth\Providers\User\EloquentUserAdapter,
             'Tymon\JWTAuth\Providers\JWT\JWTInterface' instanceof \Tymon\JWTAuth\Providers\JWT\NamshiAdapter,
