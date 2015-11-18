@@ -22,8 +22,7 @@ class UpdateProjectRequest extends Request
             return false;
         }
 
-        $projects = app()->make(ProjectRepository::class);
-        $project = $projects->findByUUID($this->route('project'), ['users']);
+        $project = $this->route('project')->load(['users']);
 
         /*
          * The project is deleted. Keep everything as it is.

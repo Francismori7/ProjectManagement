@@ -26,7 +26,7 @@ class RestoreProjectRequest extends Request
         /*
          * Can the user restore the project (ie: is he the project creator?)
          */
-        $project = Project::withTrashed()->with(['users'])->where('id', $this->route('project'))->first();
+        $project = $this->route('project')->load(['users']);
 
         return $project->creator->id === $this->user()->id;
     }

@@ -15,37 +15,34 @@ class UpdateTaskRequest extends Request
      */
     public function authorize()
     {
-        if (!$this->user()) {
+        if (! $this->user()) {
             return false;
         }
 
-        if (!$this->user()->hasPermission('projects.task.update')) {
+        if (! $this->user()->hasPermission('projects.task.update')) {
             return false;
         }
 
-        $projects = app()->make(ProjectRepository::class);
-        $project = $projects->findByUUID($this->route('project'), ['users']);
+        $project = $this->route('project')->load(['users']);
 
         /*
          * The project is deleted. Keep everything as it is.
          */
-        if($project->deleted_at) {
+        if ($project->deleted_at) {
             return false;
         }
 
         /*
          * Can the user update the task (is he part of the project?)
          */
-        if(!$project->users->contains('id', $this->user()->id))
-        {
+        if (! $project->users->contains('id', $this->user()->id)) {
             return false;
         }
 
         /*
          * Can the user update the task? (is he the creator of the task?)
          */
-        $tasks = app()->make(TaskRepository::class);
-        $task = $tasks->findByUUID($this->route('task'), ['host']);
+        $task = $this->route('task')->load(['host']);
 
         if ($task->host->id === $this->user()->id) {
             return true;

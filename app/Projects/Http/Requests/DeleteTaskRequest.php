@@ -23,8 +23,7 @@ class DeleteTaskRequest extends Request
             return false;
         }
 
-        $projects = app()->make(ProjectRepository::class);
-        $project = $projects->findByUUID($this->route('project'), ['users']);
+        $project = $this->route('project')->load(['users']);
 
         /*
          * The project is deleted. Keep everything as it is.
@@ -36,8 +35,7 @@ class DeleteTaskRequest extends Request
         /*
          * Can the user delete the task? (is he the creator of the task?)
          */
-        $tasks = app()->make(TaskRepository::class);
-        $task = $tasks->findByUUID($this->route('task'), ['host']);
+        $task = $this->route('task')->load(['host']);
 
         if ($task->host->id === $this->user()->id) {
             return true;

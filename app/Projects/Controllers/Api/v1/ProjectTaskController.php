@@ -14,6 +14,8 @@ use App\Projects\Jobs\CreateNewTask;
 use App\Projects\Jobs\DeleteTask;
 use App\Projects\Jobs\RestoreTask;
 use App\Projects\Jobs\UpdateTask;
+use App\Projects\Models\Project;
+use App\Projects\Models\Task;
 
 class ProjectTaskController extends Controller
 {
@@ -28,35 +30,20 @@ class ProjectTaskController extends Controller
     protected $tasks;
 
     /**
-     * ProjectTaskController constructor.
-     *
-     * @param ProjectRepository $projects
-     * @param TaskRepository $tasks
-     */
-    public function __construct(ProjectRepository $projects, TaskRepository $tasks)
-    {
-        $this->projects = $projects;
-
-        $this->middleware('jwt.auth');
-        $this->middleware('jwt.refresh');
-        $this->tasks = $tasks;
-    }
-
-    /**
      * Gets a list of tasks and completed tasks.
      *
      * GET /api/v1/projects/{project}/tasks
      *
-     * @param $project
+     * @param Project $project
      * @return array
      */
-    public function index($project)
+    public function index(Project $project)
     {
-        if (! auth()->user()->projects->contains('id', $project)) {
+        if (! auth()->user()->projects->contains('id', $project->id)) {
             return response()->json(['not_in_project'], 403);
         }
 
-        $project = $this->projects->findByUUID($project, ['tasks']);
+        $project->load('tasks');
 
         return [
             'completedTasks' => $project->completedTasks,
@@ -69,15 +56,13 @@ class ProjectTaskController extends Controller
      *
      * DELETE /api/v1/projects/{project}/tasks/{task}
      *
-     * @param $project
-     * @param $task
+     * @param Project $project
+     * @param Task $task
      * @param DeleteTaskRequest $request
      * @return array
      */
-    public function destroy($project, $task, DeleteTaskRequest $request)
+    public function destroy(Project $project, Task $task, DeleteTaskRequest $request)
     {
-        $task = $this->tasks->findByUUID($task);
-
         return $this->dispatch(new DeleteTask(
             $task
         ));
@@ -93,28 +78,24 @@ class ProjectTaskController extends Controller
      * @param RestoreTaskRequest $request
      * @return array
      */
-    public function restore($project, $task, RestoreTaskRequest $request)
+    public function restore(Project $project, Task $task, RestoreTaskRequest $request)
     {
-        $task = $this->tasks->findByUUID($task);
-
         return $this->dispatch(new RestoreTask(
             $task
         ));
     }
 
     /**
-     * Gets a list of tasks and completed tasks.
+     * Creates a new task for the given project.
      *
      * POST /api/v1/projects/{project}/tasks (task, employee_id, completed, due_at)
      *
-     * @param $project
+     * @param Project $project
      * @param CreateTaskRequest $request
      * @return array
      */
-    public function store($project, CreateTaskRequest $request)
+    public function store(Project $project, CreateTaskRequest $request)
     {
-        $project = $this->projects->findByUUID($project);
-
         return $this->dispatch(
             new CreateNewTask($request->all(), $project, $request->user())
         );
@@ -125,15 +106,13 @@ class ProjectTaskController extends Controller
      *
      * PATCH /api/v1/projects/{project}/tasks/{task} (task, employee_id, completed, due_at)
      *
-     * @param $project
-     * @param $task
+     * @param Project $project
+     * @param Task $task
      * @param UpdateTaskRequest $request
      * @return array
      */
-    public function update($project, $task, UpdateTaskRequest $request)
+    public function update(Project $project, Task $task, UpdateTaskRequest $request)
     {
-        $task = $this->tasks->findByUUID($task);
-
         return $this->dispatch(
             new UpdateTask($task, $request->all())
         );
@@ -144,17 +123,28 @@ class ProjectTaskController extends Controller
      *
      * PATCH /api/v1/projects/{project}/tasks/{task}/complete
      *
-     * @param $project
-     * @param $task
+     * @param Project $project
+     * @param Task $task
      * @param CompleteTaskRequest $request
      * @return array
      */
-    public function complete($project, $task, CompleteTaskRequest $request)
+    public function complete(Project $project, Task $task, CompleteTaskRequest $request)
     {
-        $task = $this->tasks->findByUUID($task);
-
         return $this->dispatch(
             new UpdateTask($task, ['completed' => ! $task->completed])
         );
+    }
+
+    /**
+     * ProjectTaskController constructor.
+     *
+     * @param ProjectRepository $projects
+     * @param TaskRepository $tasks
+     */
+    public function __construct(ProjectRepository $projects, TaskRepository $tasks)
+    {
+        $this->middleware('jwt.auth');
+        $this->middleware('jwt.refresh');
+        $this->tasks = $tasks;
     }
 }

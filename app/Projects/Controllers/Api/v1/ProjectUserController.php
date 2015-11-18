@@ -2,6 +2,7 @@
 
 namespace App\Projects\Controllers\Api\v1;
 
+use App\Auth\Models\User;
 use App\Contracts\Auth\UserRepository;
 use App\Contracts\Projects\ProjectRepository;
 use App\Core\Controllers\Controller;
@@ -44,12 +45,12 @@ class ProjectUserController extends Controller
      *
      * GET /api/v1/projects/{project}/users
      *
-     * @param $project
+     * @param Project $project
      * @return array
      */
-    public function index($project)
+    public function index(Project $project)
     {
-        $project = $this->projects->findByUUID($project, ['users']);
+        $project->load('users');
 
         return [
             'leaders' => $project->leaders,
@@ -58,42 +59,34 @@ class ProjectUserController extends Controller
     }
 
     /**
-     * Promotes a user to leader.
+     * Promotes a user to leader of the project.
      *
      * PATCH /api/v1/projects/{project}/users/{user}/promote
      *
-     * @param $project
-     * @param $user
+     * @param Project $project
+     * @param User $user
      * @param PromoteUserRequest $request
      * @return array|mixed
      */
-    public function promote($project, $user, PromoteUserRequest $request)
+    public function promote(Project $project, User $user, PromoteUserRequest $request)
     {
-        /** @var Project $project */
-        $project = $this->projects->findByUUID($project, ['users']);
-        $user = $this->users->findByUUID($user);
-
         return $this->dispatch(new PromoteUser(
             $project, $user
         ));
     }
 
     /**
-     * Demotes a user from leader.
+     * Demotes a user from the leader role for the project.
      *
      * PATCH /api/v1/projects/{project}/users/{user}/promote
      *
-     * @param $project
-     * @param $user
+     * @param Project $project
+     * @param User $user
      * @param DemoteUserRequest $request
      * @return array|mixed
      */
-    public function demote($project, $user, DemoteUserRequest $request)
+    public function demote(Project $project, User $user, DemoteUserRequest $request)
     {
-        /** @var Project $project */
-        $project = $this->projects->findByUUID($project, ['users']);
-        $user = $this->users->findByUUID($user);
-
         return $this->dispatch(new DemoteUser(
             $project, $user
         ));
@@ -104,15 +97,12 @@ class ProjectUserController extends Controller
      *
      * POST /api/v1/projects/{project}/users/invite (email)
      *
-     * @param $project
+     * @param Project $project
      * @param InviteUserRequest $request
      * @return mixed
      */
-    public function invite($project, InviteUserRequest $request)
+    public function invite(Project $project, InviteUserRequest $request)
     {
-        /** @var Project $project */
-        $project = $this->projects->findByUUID($project);
-
         return $this->dispatch(new InviteUser(
             $project, $request->user(), $request->input('email')
         ));

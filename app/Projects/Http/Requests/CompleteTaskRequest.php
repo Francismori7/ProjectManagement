@@ -26,8 +26,7 @@ class CompleteTaskRequest extends Request
         /*
          * Can the user complete the task (is he part of the project?)
          */
-        $projects = app()->make(ProjectRepository::class);
-        $project = $projects->findByUUID($this->route('project'), ['users']);
+        $project = $this->route('project')->load(['users']);
 
         if (!$project->users->contains('id', $this->user()->id)) {
             return false;
@@ -43,8 +42,7 @@ class CompleteTaskRequest extends Request
         /*
          * Can the user update the task? (is he the creator of the task?)
          */
-        $tasks = app()->make(TaskRepository::class);
-        $task = $tasks->findByUUID($this->route('task'), ['host']);
+        $task = $this->route('task')->load(['host']);
 
         if ($task->host->id === $this->user()->id) {
             return true;

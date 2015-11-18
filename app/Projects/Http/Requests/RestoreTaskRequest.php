@@ -26,7 +26,7 @@ class RestoreTaskRequest extends Request
         /*
          * Can the user restore the task (ie: is he a project leader?)
          */
-        $project = Project::withTrashed()->with(['users'])->where('id', $this->route('project'))->first();
+        $project = $this->route('project')->load(['users']);
 
         return $project->leaders->contains('id', $this->user()->id);
     }

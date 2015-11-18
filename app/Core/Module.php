@@ -8,22 +8,11 @@ use Illuminate\Support\ServiceProvider;
 abstract class Module extends ServiceProvider
 {
     /**
-     * Register all the bindings on the service container.
-     */
-    abstract public function registerContainerBindings();
-
-    /**
-     * Map all the routes needed by this module.
+     * Binds the route model bindings for the module.
      *
-     * @param  Router $router
-     * @return void
+     * @param Router $router
      */
-    abstract public function map(Router $router);
-
-    /**
-     * Bootstrap the module.
-     */
-    public function bootModule()
+    public function bindModuleRouteBindings(Router $router)
     {
     }
 
@@ -46,14 +35,35 @@ abstract class Module extends ServiceProvider
     }
 
     /**
+     * Register all the bindings on the service container.
+     */
+    abstract public function registerContainerBindings();
+
+    /**
      * Bootstrap any application services.
      */
     public function boot()
     {
         $router = $this->app->make(Router::class);
 
+        $this->bindModuleRouteBindings($router);
         $this->map($router);
 
         $this->bootModule();
+    }
+
+    /**
+     * Map all the routes needed by this module.
+     *
+     * @param  Router $router
+     * @return void
+     */
+    abstract public function map(Router $router);
+
+    /**
+     * Bootstrap the module.
+     */
+    public function bootModule()
+    {
     }
 }

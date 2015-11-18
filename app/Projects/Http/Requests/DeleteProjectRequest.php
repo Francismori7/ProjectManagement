@@ -27,9 +27,9 @@ class DeleteProjectRequest extends Request
          * Can the user delete the project (is he the creator of the project?)
          */
         $projects = app()->make(ProjectRepository::class);
-        $project = $projects->findByUUID($this->route('project'), ['users']);
+        $project = $this->route('project')->load(['users']);
 
-        return $project->creator->id === $this->user()->id;
+        return $this->route('project')->creator->id === $this->user()->id;
     }
 
     /**

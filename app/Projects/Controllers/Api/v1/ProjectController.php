@@ -52,16 +52,16 @@ class ProjectController extends Controller
      *
      * GET /api/v1/projects/{project}
      *
-     * @param $project
+     * @param Project $project
      * @return Project|null
      */
-    public function show($project)
+    public function show(Project $project)
     {
-        if (!auth()->user()->projects->contains('id', $project)) {
+        if (!auth()->user()->projects->contains('id', $project->id)) {
             return response()->json(['not_in_project'], 403);
         }
 
-        return $this->projects->findByUUID($project, ['users', 'invitations', 'tasks']);
+        return $project->load(['users', 'invitations', 'tasks']);
     }
 
     /**
@@ -84,14 +84,12 @@ class ProjectController extends Controller
      *
      * DELETE /api/v1/projects/{project}
      *
-     * @param $project
+     * @param Project $project
      * @param DeleteProjectRequest $request
      * @return Project
      */
-    public function destroy($project, DeleteProjectRequest $request)
+    public function destroy(Project $project, DeleteProjectRequest $request)
     {
-        $project = $this->projects->findByUUID($project);
-
         return $this->dispatch(
             new DeleteProject($project)
         );
@@ -102,15 +100,12 @@ class ProjectController extends Controller
      *
      * PATCH /api/v1/projects/{project}/restore
      *
-     * @param $project
+     * @param Project $project
      * @param RestoreProjectRequest $request
      * @return Project
      */
-    public function restore($project, RestoreProjectRequest $request)
+    public function restore(Project $project, RestoreProjectRequest $request)
     {
-        /** @var Project $project */
-        $project = Project::withTrashed()->where('id', $project)->first();
-
         return $this->dispatch(
             new RestoreProject($project)
         );
@@ -121,14 +116,12 @@ class ProjectController extends Controller
      *
      * PATCH /api/v1/projects/{project} (name, description, due_at)
      *
-     * @param $project
+     * @param Project $project
      * @param UpdateProjectRequest $request
      * @return mixed
      */
-    public function update($project, UpdateProjectRequest $request)
+    public function update(Project $project, UpdateProjectRequest $request)
     {
-        $project = $this->projects->findByUUID($project);
-
         return $this->dispatch(
             new UpdateProject($project, $request->all())
         );
@@ -140,16 +133,16 @@ class ProjectController extends Controller
 //     *
 //     * GET /api/v1/projects/{project}/comments
 //     *
-//     * @param $project
-//     * @param ProjectRepository $projects
+//     * @param Project $project
+//     * @param ProjectRepository Project $projects
 //     * @return array
 //     */
-//    public function comments($project, ProjectRepository $projects)
+//    public function comments(Project $project, ProjectRepository Project $projects)
 //    {
-//        $project = $projects->findByUUID($project, ['comments']);
+//        Project $project = Project $projects->findByUUID(Project $project, ['comments']);
 //
 //        return [
-//            'comments' => $project->comments,
+//            'comments' => Project $project->comments,
 //        ];
 //    }
 }

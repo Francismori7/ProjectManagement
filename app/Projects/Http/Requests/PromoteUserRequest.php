@@ -24,8 +24,7 @@ class PromoteUserRequest extends Request
             return false;
         }
 
-        $projects = app()->make(ProjectRepository::class);
-        $project = $projects->findByUUID($this->route('project'), ['users']);
+        $project = $this->route('project')->load(['users']);
 
         /*
          * The project is deleted. Keep everything as it is.
@@ -41,8 +40,7 @@ class PromoteUserRequest extends Request
             return false;
         }
 
-        $users = app()->make(UserRepository::class);
-        $user = $users->findByUUID($this->route('user'));
+        $user = $this->route('user');
 
         /*
          * We cannot promote a user if he's not in the project's users.

@@ -2,9 +2,12 @@
 
 namespace App\Projects;
 
+use App\Auth\Models\User;
 use App\Contracts\Projects\InvitationRepository;
 use App\Contracts\Projects\TaskRepository;
 use App\Core\Module;
+use App\Projects\Models\Project;
+use App\Projects\Models\Task;
 use App\Projects\Repositories\EloquentInvitationRepository;
 use App\Projects\Repositories\EloquentProjectRepository;
 use App\Projects\Repositories\EloquentTaskRepository;
@@ -91,6 +94,23 @@ class ProjectModule extends Module
             'projects.task.restore' => 'Restore tasks',
             'projects.task.assign' => 'Assign tasks',
         ];
+    }
+
+    /**
+     * Binds the route model bindings for the module.
+     *
+     * @param Router $router
+     */
+    public function bindModuleRouteBindings(Router $router) {
+        $router->bind('project', function($id) {
+            return Project::withTrashed()->where('id', $id)->firstOrFail();
+        });
+        $router->bind('task', function($id) {
+            return Task::withTrashed()->where('id', $id)->firstOrFail();
+        });
+        $router->bind('user', function($id) {
+            return User::withTrashed()->where('id', $id)->firstOrFail();
+        });
     }
 
     /**
