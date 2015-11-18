@@ -3,6 +3,7 @@ var gulp = require('gulp');
 var conf = require('./conf');
 
 var browserSync = require('browser-sync');
+var gutil = require('gulp-util');
 
 var $ = require('gulp-load-plugins')();
 
@@ -19,6 +20,7 @@ gulp.task('styles', function () {
     var injectOptions = {
         transform: function(filePath) {
             filePath = filePath.replace(conf.paths.src + '/', '');
+            gutil.log("Filepath: " + filePath);
 
             return '@import "' + filePath + '";';
         },

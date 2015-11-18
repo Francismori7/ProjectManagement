@@ -10,20 +10,11 @@ gulp.task('watch', function () {
 
     gulp.watch(['bower.json'], ['bower']);
 
-    gulp.watch([
-        path.join(conf.paths.src, '/app/**/*.css'),
-        path.join(conf.paths.src, '/app/**/*.scss')
-    ], function(event) {
-        if(isOnlyChange(event)) {
-            gulp.start('styles');
-        }
+    gulp.watch(path.join(conf.paths.src, '/app/**/*.scss'), function(event) {
+        gulp.start('styles');
     });
 
     gulp.watch(path.join(conf.paths.src, '/**/*.js'), function(event) {
-        if(isOnlyChange(event)) {
-            gulp.start('scripts');
-        } else {
-            gulp.start('inject');
-        }
+        gulp.start('scripts');
     });
 });
