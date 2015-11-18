@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Core\Models;
+
 /**
  * Class BaseEntity
  *
@@ -8,5 +9,4 @@ namespace App\Core\Models;
  */
 class BaseEntity extends Entity
 {
-
 }

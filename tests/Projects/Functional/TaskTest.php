@@ -308,8 +308,7 @@ class TaskTest extends TestCase
      * @test
      */
     public function a_logged_in_user_with_permission_and_in_group_cannot_update_the_completed_field_of_a_task_if_it_is_not_assigned_to_him(
-    )
-    {
+    ) {
         $this->setUpPermissions();
         $user = factory(User::class)->create();
         $this->giveUserPermission($user, 'projects.task.complete');

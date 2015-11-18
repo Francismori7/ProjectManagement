@@ -27,7 +27,7 @@ class CreateTaskRequest extends Request
         /*
          * The project is deleted. Keep everything as it is.
          */
-        if($project->deleted_at) {
+        if ($project->deleted_at) {
             return false;
         }
 

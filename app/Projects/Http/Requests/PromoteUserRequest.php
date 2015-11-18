@@ -29,14 +29,14 @@ class PromoteUserRequest extends Request
         /*
          * The project is deleted. Keep everything as it is.
          */
-        if($project->deleted_at) {
+        if ($project->deleted_at) {
             return false;
         }
 
         /*
          * Can the user promote another user? (ie: is he the project creator?)
          */
-        if($project->creator->id !== $this->user()->id) {
+        if ($project->creator->id !== $this->user()->id) {
             return false;
         }
 

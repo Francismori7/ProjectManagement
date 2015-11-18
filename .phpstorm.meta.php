@@ -3,7 +3,7 @@ namespace PHPSTORM_META {
 
    /**
     * PhpStorm Meta file, to provide autocomplete information for PhpStorm
-    * Generated on 2015-11-17.
+    * Generated on 2015-11-18.
     *
     * @author Barry vd. Heuvel <barryvdh@gmail.com>
     * @see https://github.com/barryvdh/laravel-ide-helper
@@ -133,7 +133,7 @@ namespace PHPSTORM_META {
             'mailer' instanceof \Illuminate\Mail\Mailer,
             'Illuminate\Contracts\Pipeline\Hub' instanceof \Illuminate\Pipeline\Hub,
             'queue' instanceof \Illuminate\Queue\QueueManager,
-            'queue.connection' instanceof \Illuminate\Queue\SyncQueue,
+            'queue.connection' instanceof \Illuminate\Queue\DatabaseQueue,
             'command.queue.work' instanceof \Illuminate\Queue\Console\WorkCommand,
             'command.queue.restart' instanceof \Illuminate\Queue\Console\RestartCommand,
             'queue.worker' instanceof \Illuminate\Queue\Worker,
@@ -273,7 +273,7 @@ namespace PHPSTORM_META {
             'mailer' instanceof \Illuminate\Mail\Mailer,
             'Illuminate\Contracts\Pipeline\Hub' instanceof \Illuminate\Pipeline\Hub,
             'queue' instanceof \Illuminate\Queue\QueueManager,
-            'queue.connection' instanceof \Illuminate\Queue\SyncQueue,
+            'queue.connection' instanceof \Illuminate\Queue\DatabaseQueue,
             'command.queue.work' instanceof \Illuminate\Queue\Console\WorkCommand,
             'command.queue.restart' instanceof \Illuminate\Queue\Console\RestartCommand,
             'queue.worker' instanceof \Illuminate\Queue\Worker,
@@ -413,7 +413,7 @@ namespace PHPSTORM_META {
             'mailer' instanceof \Illuminate\Mail\Mailer,
             'Illuminate\Contracts\Pipeline\Hub' instanceof \Illuminate\Pipeline\Hub,
             'queue' instanceof \Illuminate\Queue\QueueManager,
-            'queue.connection' instanceof \Illuminate\Queue\SyncQueue,
+            'queue.connection' instanceof \Illuminate\Queue\DatabaseQueue,
             'command.queue.work' instanceof \Illuminate\Queue\Console\WorkCommand,
             'command.queue.restart' instanceof \Illuminate\Queue\Console\RestartCommand,
             'queue.worker' instanceof \Illuminate\Queue\Worker,
@@ -553,7 +553,7 @@ namespace PHPSTORM_META {
             'mailer' instanceof \Illuminate\Mail\Mailer,
             'Illuminate\Contracts\Pipeline\Hub' instanceof \Illuminate\Pipeline\Hub,
             'queue' instanceof \Illuminate\Queue\QueueManager,
-            'queue.connection' instanceof \Illuminate\Queue\SyncQueue,
+            'queue.connection' instanceof \Illuminate\Queue\DatabaseQueue,
             'command.queue.work' instanceof \Illuminate\Queue\Console\WorkCommand,
             'command.queue.restart' instanceof \Illuminate\Queue\Console\RestartCommand,
             'queue.worker' instanceof \Illuminate\Queue\Worker,

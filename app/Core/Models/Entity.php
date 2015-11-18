@@ -3,6 +3,7 @@
 namespace App\Core\Models;
 
 use Illuminate\Database\Eloquent\Model;
+
 /**
  * Class BaseEntity
  *
@@ -10,5 +11,4 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Entity extends Model
 {
-
 }

@@ -60,7 +60,8 @@ class Project extends UUIDBaseEntity
      *
      * @return mixed
      */
-    public function getCompletedTasksAttribute() {
+    public function getCompletedTasksAttribute()
+    {
         return $this->tasks->where('completed', 1);
     }
 
