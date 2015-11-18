@@ -220,4 +220,245 @@ class TaskTest extends TestCase
             'task' => 'Updated task'
         ]);
     }
+
+    /**
+     * @test
+     */
+    public function a_logged_out_user_cannot_update_the_completed_field_of_a_task()
+    {
+        $project = factory(Project::class)->create();
+        $host = factory(User::class)->create();
+        $task = factory(Task::class)->create([
+            'project_id' => $project->id,
+            'host_id' => $host->id,
+            'completed' => false
+        ]);
+
+        $this->patch(route('api.v1.projects.tasks.complete', [$project->id, $task->id]), [], [
+            'X-Requested-With' => 'XMLHttpRequest'
+        ]);
+
+        $this->assertResponseStatus(403);
+        $this->seeInDatabase('tasks', [
+            'project_id' => $project->id,
+            'host_id' => $host->id,
+            'completed' => false
+        ]);
+    }
+
+    /**
+     * @test
+     */
+    public function a_logged_in_user_without_permission_cannot_update_the_completed_field_of_a_task()
+    {
+        $this->setUpPermissions();
+        $user = factory(User::class)->create();
+        $project = factory(Project::class)->create();
+        $project->users()->attach($user, ['role' => '']);
+        $host = factory(User::class)->create();
+        $task = factory(Task::class)->create([
+            'project_id' => $project->id,
+            'host_id' => $host->id,
+            'completed' => false
+        ]);
+        $this->actingAs($user);
+
+        $this->patch(route('api.v1.projects.tasks.complete', [$project->id, $task->id]), [], [
+            'X-Requested-With' => 'XMLHttpRequest'
+        ]);
+
+        $this->assertResponseStatus(403);
+        $this->seeInDatabase('tasks', [
+            'project_id' => $project->id,
+            'host_id' => $host->id,
+            'completed' => false
+        ]);
+    }
+
+    /**
+     * @test
+     */
+    public function a_logged_in_user_with_permission_but_not_in_group_cannot_update_the_completed_field_of_a_task()
+    {
+        $this->setUpPermissions();
+        $user = factory(User::class)->create();
+        $this->giveUserPermission($user, 'projects.task.complete');
+        $project = factory(Project::class)->create();
+        $host = factory(User::class)->create();
+        $task = factory(Task::class)->create([
+            'project_id' => $project->id,
+            'host_id' => $host->id,
+            'completed' => false
+        ]);
+        $this->actingAs($user);
+
+        $this->patch(route('api.v1.projects.tasks.complete', [$project->id, $task->id]), [], [
+            'X-Requested-With' => 'XMLHttpRequest'
+        ]);
+
+        $this->assertResponseStatus(403);
+        $this->seeInDatabase('tasks', [
+            'project_id' => $project->id,
+            'host_id' => $host->id,
+            'completed' => false
+        ]);
+    }
+
+    /**
+     * @test
+     */
+    public function a_logged_in_user_with_permission_and_in_group_cannot_update_the_completed_field_of_a_task_if_it_is_not_assigned_to_him(
+    )
+    {
+        $this->setUpPermissions();
+        $user = factory(User::class)->create();
+        $this->giveUserPermission($user, 'projects.task.complete');
+        $project = factory(Project::class)->create();
+        $project->users()->attach($user, ['role' => '']);
+        $host = factory(User::class)->create();
+        $task = factory(Task::class)->create([
+            'project_id' => $project->id,
+            'host_id' => $host->id,
+            'completed' => false
+        ]);
+        $this->actingAs($user);
+
+        $this->patch(route('api.v1.projects.tasks.complete', [$project->id, $task->id]), [], [
+            'X-Requested-With' => 'XMLHttpRequest'
+        ]);
+
+        $this->assertResponseStatus(403);
+        $this->seeInDatabase('tasks', [
+            'project_id' => $project->id,
+            'host_id' => $host->id,
+            'completed' => false
+        ]);
+    }
+
+    /**
+     * @test
+     */
+    public function a_user_with_permission_and_in_group_can_update_the_completed_field_of_a_task_if_it_is_assigned_to_him()
+    {
+        $this->setUpPermissions();
+        $user = factory(User::class)->create();
+        $this->giveUserPermission($user, 'projects.task.complete');
+        $project = factory(Project::class)->create();
+        $project->users()->attach($user, ['role' => '']);
+        $host = factory(User::class)->create();
+        $task = factory(Task::class)->create([
+            'project_id' => $project->id,
+            'host_id' => $host->id,
+            'employee_id' => $user->id,
+            'completed' => false
+        ]);
+        $this->actingAs($user);
+
+        $this->patch(route('api.v1.projects.tasks.complete', [$project->id, $task->id]), [], [
+            'X-Requested-With' => 'XMLHttpRequest'
+        ]);
+
+        $this->assertResponseOk();
+        $this->seeJsonContains(['id' => $task->id, 'completed' => true]);
+        $this->seeInDatabase('tasks', [
+            'project_id' => $project->id,
+            'host_id' => $host->id,
+            'employee_id' => $user->id,
+            'completed' => true
+        ]);
+    }
+
+    /**
+     * @test
+     */
+    public function a_project_leader_with_permission_can_update_the_completed_field_of_a_task()
+    {
+        $this->setUpPermissions();
+        $user = factory(User::class)->create();
+        $otherUser = factory(User::class)->create();
+        $this->giveUserPermission($user, 'projects.task.complete');
+        $project = factory(Project::class)->create();
+        $project->users()->attach($user, ['role' => 'leader']);
+        $project->users()->attach($otherUser, ['role' => '']);
+        $employee = factory(User::class)->create();
+        $task = factory(Task::class)->create([
+            'project_id' => $project->id,
+            'host_id' => $otherUser->id,
+            'employee_id' => $employee->id,
+            'completed' => false
+        ]);
+        $this->actingAs($user);
+
+        $this->patch(route('api.v1.projects.tasks.complete', [$project->id, $task->id]), [], [
+            'X-Requested-With' => 'XMLHttpRequest'
+        ]);
+
+        $this->assertResponseOk();
+        $this->seeJsonContains(['id' => $task->id, 'completed' => true]);
+        $this->seeInDatabase('tasks', [
+            'project_id' => $project->id,
+            'host_id' => $otherUser->id,
+            'employee_id' => $employee->id,
+            'completed' => true
+        ]);
+    }
+
+    /**
+     * @test
+     */
+    public function a_project_leader_with_permission_can_delete_a_task()
+    {
+        $this->setUpPermissions();
+        $user = factory(User::class)->create();
+        $otherUser = factory(User::class)->create();
+        $this->giveUserPermission($user, 'projects.task.destroy');
+        $project = factory(Project::class)->create();
+        $project->users()->attach($user, ['role' => 'leader']);
+        $project->users()->attach($otherUser, ['role' => '']);
+        $employee = factory(User::class)->create();
+        $task = factory(Task::class)->create([
+            'project_id' => $project->id,
+            'host_id' => $otherUser->id,
+            'employee_id' => $employee->id
+        ]);
+        $this->actingAs($user);
+
+        $this->delete(route('api.v1.projects.tasks.destroy', [$project->id, $task->id]), [], [
+            'X-Requested-With' => 'XMLHttpRequest'
+        ]);
+
+        $this->assertResponseOk();
+        $this->seeJsonContains(['deleted' => true]);
+        $count = \DB::table('tasks')->where('id', $task->id)->whereNotNull('deleted_at')->count();
+        $this->assertEquals(1, $count);
+    }
+
+    /**
+     * @test
+     */
+    public function a_user_with_permission_cannot_delete_a_task()
+    {
+        $this->setUpPermissions();
+        $user = factory(User::class)->create();
+        $otherUser = factory(User::class)->create();
+        $this->giveUserPermission($user, 'projects.task.destroy');
+        $project = factory(Project::class)->create();
+        $project->users()->attach($user, ['role' => '']);
+        $project->users()->attach($otherUser, ['role' => '']);
+        $employee = factory(User::class)->create();
+        $task = factory(Task::class)->create([
+            'project_id' => $project->id,
+            'host_id' => $otherUser->id,
+            'employee_id' => $employee->id
+        ]);
+        $this->actingAs($user);
+
+        $this->delete(route('api.v1.projects.tasks.destroy', [$project->id, $task->id]), [], [
+            'X-Requested-With' => 'XMLHttpRequest'
+        ]);
+
+        $this->assertResponseStatus(403);
+        $count = \DB::table('tasks')->where('id', $task->id)->whereNull('deleted_at')->count();
+        $this->assertEquals(1, $count);
+    }
 }

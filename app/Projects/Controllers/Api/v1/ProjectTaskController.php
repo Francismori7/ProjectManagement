@@ -7,8 +7,12 @@ use App\Contracts\Projects\TaskRepository;
 use App\Core\Controllers\Controller;
 use App\Projects\Http\Requests\CompleteTaskRequest;
 use App\Projects\Http\Requests\CreateTaskRequest;
+use App\Projects\Http\Requests\DeleteTaskRequest;
+use App\Projects\Http\Requests\RestoreTaskRequest;
 use App\Projects\Http\Requests\UpdateTaskRequest;
 use App\Projects\Jobs\CreateNewTask;
+use App\Projects\Jobs\DeleteTask;
+use App\Projects\Jobs\RestoreTask;
 use App\Projects\Jobs\UpdateTask;
 
 class ProjectTaskController extends Controller
@@ -48,7 +52,7 @@ class ProjectTaskController extends Controller
      */
     public function index($project)
     {
-        if (!auth()->user()->projects->contains('id', $project)) {
+        if (! auth()->user()->projects->contains('id', $project)) {
             return response()->json(['not_in_project'], 403);
         }
 
@@ -58,6 +62,44 @@ class ProjectTaskController extends Controller
             'completedTasks' => $project->completedTasks,
             'tasks' => $project->tasks,
         ];
+    }
+
+    /**
+     * Deletes a task.
+     *
+     * DELETE /api/v1/projects/{project}/tasks/{task}
+     *
+     * @param $project
+     * @param $task
+     * @param DeleteTaskRequest $request
+     * @return array
+     */
+    public function destroy($project, $task, DeleteTaskRequest $request)
+    {
+        $task = $this->tasks->findByUUID($task);
+
+        return $this->dispatch(new DeleteTask(
+            $task
+        ));
+    }
+
+    /**
+     * Restores a task.
+     *
+     * PATCH /api/v1/projects/{project}/tasks/{task}/restore
+     *
+     * @param $project
+     * @param $task
+     * @param RestoreTaskRequest $request
+     * @return array
+     */
+    public function restore($project, $task, RestoreTaskRequest $request)
+    {
+        $task = $this->tasks->findByUUID($task);
+
+        return $this->dispatch(new RestoreTask(
+            $task
+        ));
     }
 
     /**
@@ -112,7 +154,7 @@ class ProjectTaskController extends Controller
         $task = $this->tasks->findByUUID($task);
 
         return $this->dispatch(
-            new UpdateTask($task, ['completed' => !$task->completed])
+            new UpdateTask($task, ['completed' => ! $task->completed])
         );
     }
 }

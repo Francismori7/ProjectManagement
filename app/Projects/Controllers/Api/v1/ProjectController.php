@@ -6,9 +6,11 @@ use App\Contracts\Projects\ProjectRepository;
 use App\Core\Controllers\Controller;
 use App\Projects\Http\Requests\CreateProjectRequest;
 use App\Projects\Http\Requests\DeleteProjectRequest;
+use App\Projects\Http\Requests\RestoreProjectRequest;
 use App\Projects\Http\Requests\UpdateProjectRequest;
 use App\Projects\Jobs\CreateNewProject;
 use App\Projects\Jobs\DeleteProject;
+use App\Projects\Jobs\RestoreProject;
 use App\Projects\Jobs\UpdateProject;
 use App\Projects\Models\Project;
 use Illuminate\Http\Request;
@@ -82,6 +84,7 @@ class ProjectController extends Controller
      *
      * DELETE /api/v1/projects/{project}
      *
+     * @param $project
      * @param DeleteProjectRequest $request
      * @return Project
      */
@@ -91,6 +94,25 @@ class ProjectController extends Controller
 
         return $this->dispatch(
             new DeleteProject($project)
+        );
+    }
+
+    /**
+     * Restores a project.
+     *
+     * PATCH /api/v1/projects/{project}/restore
+     *
+     * @param $project
+     * @param RestoreProjectRequest $request
+     * @return Project
+     */
+    public function restore($project, RestoreProjectRequest $request)
+    {
+        /** @var Project $project */
+        $project = Project::withTrashed()->where('id', $project)->first();
+
+        return $this->dispatch(
+            new RestoreProject($project)
         );
     }
 

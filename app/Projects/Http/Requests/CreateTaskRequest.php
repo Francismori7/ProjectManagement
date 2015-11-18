@@ -26,6 +26,13 @@ class CreateTaskRequest extends Request
         $project = $projects->findByUUID($this->route('project'), ['users']);
 
         /*
+         * The project is deleted. Keep everything as it is.
+         */
+        if($project->deleted_at) {
+            return false;
+        }
+
+        /*
          * Can the user create a task? (ie: is he part of the group?)
          */
         if (!$project->users->contains('id', $this->user()->id)) {

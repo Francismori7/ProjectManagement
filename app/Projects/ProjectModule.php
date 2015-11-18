@@ -53,6 +53,8 @@ class ProjectModule extends Module
                         $router->post('/', ['as' => 'store', 'uses' => 'ProjectTaskController@store']);
                         $router->patch('{task}', ['as' => 'update', 'uses' => 'ProjectTaskController@update']);
                         $router->patch('{task}/complete', ['as' => 'complete', 'uses' => 'ProjectTaskController@complete']);
+                        $router->delete('{task}', ['as' => 'destroy', 'uses' => 'ProjectTaskController@destroy']);
+                        $router->patch('{task}/restore', ['as' => 'restore', 'uses' => 'ProjectTaskController@restore']);
                     });
 
 //                    TODO: Add comments
@@ -85,6 +87,8 @@ class ProjectModule extends Module
             'projects.task.create' => 'Create tasks',
             'projects.task.update' => 'Update tasks',
             'projects.task.complete' => 'Complete tasks',
+            'projects.task.destroy' => 'Remove tasks',
+            'projects.task.restore' => 'Restore tasks',
             'projects.task.assign' => 'Assign tasks',
         ];
     }

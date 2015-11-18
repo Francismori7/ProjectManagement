@@ -34,6 +34,13 @@ class CompleteTaskRequest extends Request
         }
 
         /*
+         * The project is deleted. Keep everything as it is.
+         */
+        if($project->deleted_at) {
+            return false;
+        }
+
+        /*
          * Can the user update the task? (is he the creator of the task?)
          */
         $tasks = app()->make(TaskRepository::class);

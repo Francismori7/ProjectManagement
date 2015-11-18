@@ -2,12 +2,11 @@
 
 namespace App\Projects\Http\Requests;
 
-use App\Contracts\Auth\UserRepository;
 use App\Contracts\Projects\ProjectRepository;
+use App\Contracts\Projects\TaskRepository;
 use App\Core\Requests\Request;
-use App\Projects\Models\Project;
 
-class DemoteUserRequest extends Request
+class DeleteTaskRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -20,7 +19,7 @@ class DemoteUserRequest extends Request
             return false;
         }
 
-        if (!$this->user()->hasPermission('projects.project.promote_user')) {
+        if (!$this->user()->hasPermission('projects.task.destroy')) {
             return false;
         }
 
@@ -35,30 +34,23 @@ class DemoteUserRequest extends Request
         }
 
         /*
-         * Can the user demote another user? (ie: is he the project creator?)
+         * Can the user delete the task? (is he the creator of the task?)
          */
-        if($project->creator->id !== $this->user()->id) {
-            return false;
-        }
+        $tasks = app()->make(TaskRepository::class);
+        $task = $tasks->findByUUID($this->route('task'), ['host']);
 
-        $users = app()->make(UserRepository::class);
-        $user = $users->findByUUID($this->route('user'));
-
-        /*
-         * We don't want to be able to demote the project's creator.
-         */
-        if($user->id === $project->creator->id) {
-            return false;
+        if ($task->host->id === $this->user()->id) {
+            return true;
         }
 
         /*
-         * We cannot demote a user if he's not in the project's leaders.
+         * Can the user delete the task (is he a leader of the project?)
          */
-        if (!$project->leader->contains('id', $user->id)) {
-            return false;
+        if ($project->leaders->contains('id', $this->user()->id)) {
+            return true;
         }
 
-        return true;
+        return false;
     }
 
     /**

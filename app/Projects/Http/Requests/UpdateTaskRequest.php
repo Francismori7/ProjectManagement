@@ -23,12 +23,19 @@ class UpdateTaskRequest extends Request
             return false;
         }
 
-        /*
-         * Can the user update the task (is he part of the project?)
-         */
         $projects = app()->make(ProjectRepository::class);
         $project = $projects->findByUUID($this->route('project'), ['users']);
 
+        /*
+         * The project is deleted. Keep everything as it is.
+         */
+        if($project->deleted_at) {
+            return false;
+        }
+
+        /*
+         * Can the user update the task (is he part of the project?)
+         */
         if(!$project->users->contains('id', $this->user()->id))
         {
             return false;

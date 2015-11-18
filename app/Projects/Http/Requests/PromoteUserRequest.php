@@ -28,6 +28,13 @@ class PromoteUserRequest extends Request
         $project = $projects->findByUUID($this->route('project'), ['users']);
 
         /*
+         * The project is deleted. Keep everything as it is.
+         */
+        if($project->deleted_at) {
+            return false;
+        }
+
+        /*
          * Can the user promote another user? (ie: is he the project creator?)
          */
         if($project->creator->id !== $this->user()->id) {
