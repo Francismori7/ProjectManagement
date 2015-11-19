@@ -2,14 +2,9 @@
 
 namespace App\Employees;
 
-use App\Contracts\Projects\InvitationRepository;
-use App\Contracts\Projects\TaskRepository;
+use App\Auth\Models\User;
 use App\Core\Module;
-use App\Projects\Repositories\EloquentInvitationRepository;
-use App\Projects\Repositories\EloquentProjectRepository;
-use App\Projects\Repositories\EloquentTaskRepository;
 use Illuminate\Routing\Router;
-use App\Contracts\Projects\ProjectRepository;
 
 class EmployeeModule extends Module
 {
@@ -52,4 +47,18 @@ class EmployeeModule extends Module
     public function bootModule()
     {
     }
+
+    /**
+     * Binds the route model bindings for the module.
+     *
+     * @param Router $router
+     */
+    public function bindModuleRouteBindings(Router $router)
+    {
+        $router->bind('employee', function($id) {
+            return User::withTrashed()->where('id', $id)->firstOrFail();
+        });
+    }
+
+
 }
