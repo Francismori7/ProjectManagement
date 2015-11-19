@@ -44,7 +44,10 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        return auth()->user()->projects;
+        /** @var User $user */
+        $user = auth()->user();
+
+        return $user->projects;
     }
 
     /**
@@ -57,7 +60,10 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        if (!auth()->user()->projects->contains('id', $project->id)) {
+        /** @var User $user */
+        $user = auth()->user();
+
+        if (! $user->projects->contains('id', $project->id)) {
             return response()->json(['not_in_project'], 403);
         }
 
