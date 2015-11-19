@@ -55,10 +55,8 @@ class EmployeeModule extends Module
      */
     public function bindModuleRouteBindings(Router $router)
     {
-        $router->bind('employee', function($id) {
+        $router->bind('employee', function ($id) {
             return User::withTrashed()->where('id', $id)->firstOrFail();
         });
     }
-
-
 }
