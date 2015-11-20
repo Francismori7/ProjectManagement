@@ -2,11 +2,26 @@
 
 namespace App\Core;
 
+use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 
 abstract class Module extends ServiceProvider
 {
+    /**
+     * The event handler mappings for the application.
+     *
+     * @var array
+     */
+    protected $listen = [];
+
+    /**
+     * The subscriber classes to register.
+     *
+     * @var array
+     */
+    protected $subscribe = [];
+
     /**
      * Binds the route model bindings for the module.
      *
@@ -24,6 +39,24 @@ abstract class Module extends ServiceProvider
     public function getModulePermissions()
     {
         return [];
+    }
+
+    /**
+     * Boots up the events dispatcher to listen for events.
+     *
+     * @param Dispatcher $events
+     */
+    public function bootEventDispatcher(Dispatcher $events)
+    {
+        foreach ($this->listen as $event => $listeners) {
+            foreach ($listeners as $listener) {
+                $events->listen($event, $listener);
+            }
+        }
+
+        foreach ($this->subscribe as $subscriber) {
+            $events->subscribe($subscriber);
+        }
     }
 
     /**
@@ -65,5 +98,15 @@ abstract class Module extends ServiceProvider
      */
     public function bootModule()
     {
+    }
+
+    /**
+     * Get the events and handlers.
+     *
+     * @return array
+     */
+    public function listens()
+    {
+        return $this->listen;
     }
 }
