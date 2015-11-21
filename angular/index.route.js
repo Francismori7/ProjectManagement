@@ -118,7 +118,7 @@
 
             function getView(name, baseFolder) {
                 baseFolder = baseFolder || name;
-                return '/views/components/' + baseFolder + '/' + name + '.html';
+                return '/components/' + baseFolder + '/' + name + '.html';
             }
         }
 

@@ -8,19 +8,19 @@
     /* @ngInject */
     function SidebarCtrl($scope, $element, SidenavSvc, scrollbar) {
         var vm = this;
-        var scrollContainer = null;
+        // var scrollContainer = null;
 
         (function() {
             SidenavSvc.isMaximized(function(maximized) {
                 vm.isMaximized = maximized;
             });
 
-            scrollContainer = $element.children().first()[0];
-            scrollbar.initialize(scrollContainer);
+            // scrollContainer = $element.children().first()[0];
+            // scrollbar.initialize(scrollContainer);
         })();
 
-        $scope.$on("$destroy", function() {
-            scrollbar.destroy(scrollContainer);
-        });
+        // $scope.$on("$destroy", function() {
+        //     scrollbar.destroy(scrollContainer);
+        // });
     }
 })();

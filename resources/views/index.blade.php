@@ -8,7 +8,8 @@
 
     <link rel="icon" type="image/png" href="{{ asset('images/icon.png') }}"/>
 
-    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/vendor.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/index.css') }}">
 </head>
 <body style="display:flex;">
     <!--[if lt IE 10]>
@@ -25,5 +26,6 @@
 
     <script src="{{ asset('js/vendor.js') }}" charset="utf-8"></script>
     <script src="{{ asset('js/app.js') }}" charset="utf-8"></script>
+    <script src="{{ asset('views/templateCacheHtml.js') }}" charset="utf-8"></script>
 </body>
 </html>

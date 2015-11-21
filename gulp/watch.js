@@ -11,19 +11,21 @@ gulp.task('watch', function () {
     gulp.watch(['bower.json'], ['bower']);
 
     gulp.watch([
-        path.join(conf.paths.src, '/app/**/*.css'),
-        path.join(conf.paths.src, '/app/**/*.scss')
+        path.join(conf.paths.src, '/**/*.css'),
+        path.join(conf.paths.src, '/**/*.scss')
     ], function(event) {
         if(isOnlyChange(event)) {
             gulp.start('styles');
         }
     });
 
+    gulp.watch([
+        path.join(conf.paths.src, '/**/*.html')
+    ], function(event) {
+        gulp.start('partials');
+    });
+
     gulp.watch(path.join(conf.paths.src, '/**/*.js'), function(event) {
-        if(isOnlyChange(event)) {
-            gulp.start('scripts');
-        } else {
-            gulp.start('inject');
-        }
+        gulp.start('scripts');
     });
 });

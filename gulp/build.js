@@ -17,16 +17,16 @@ gulp.task('partials', function () {
     }))
     .pipe($.angularTemplatecache('templateCacheHtml.js', {
         module: 'creaperio',
-        root: 'app'
+        root: '/'
     }))
-    .pipe(gulp.dest(conf.paths.views));
+    .pipe(gulp.dest(conf.paths.viewsOut));
 });
 
 gulp.task('fonts', function () {
-    return gulp.src($.mainBowerFiles().concat('bower_components/material-design-iconfont/iconfont/*'))
+    return gulp.src('bower_components/material-design-iconfont/iconfont/*')
         .pipe($.filter('**/*.{eot,svg,ttf,woff,woff2}'))
         .pipe($.flatten())
         .pipe(gulp.dest(conf.paths.fontsOut));
 });
 
-gulp.task('build', ['bower', 'scripts', 'styles', 'fonts']);
+gulp.task('build', ['bower', 'scripts', 'styles', 'fonts', 'partials']);

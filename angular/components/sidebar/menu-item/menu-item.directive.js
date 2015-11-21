@@ -14,7 +14,7 @@
                 title: "@",
                 link: "@"
             },
-            templateUrl: 'app/components/sidebar/menu-item/menu-item.html',
+            templateUrl: '/components/sidebar/menu-item/menu-item.html',
             link: function(scope, element) {
                 element.on('click', function() {
                     SidenavSvc.toggleNav('navigation');
