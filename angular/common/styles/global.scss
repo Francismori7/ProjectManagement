@@ -1,3 +1,8 @@
+body {
+    height: auto;
+    min-height: 100vh !important;
+}
+
 :focus {
     outline: none;
 }
