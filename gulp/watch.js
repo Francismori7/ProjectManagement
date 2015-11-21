@@ -6,7 +6,7 @@ var $ = require('gulp-load-plugins')();
 
 var browserSync = require('browser-sync');
 
-gulp.task('watch', function () {
+gulp.task('watch', ['build'], function () {
 
     gulp.watch(['bower.json'], ['bower']);
 
