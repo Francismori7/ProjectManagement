@@ -10,13 +10,8 @@ gulp.task('watch', function () {
 
     gulp.watch(['bower.json'], ['bower']);
 
-    gulp.watch([
-        path.join(conf.paths.src, '/**/*.css'),
-        path.join(conf.paths.src, '/**/*.scss')
-    ], function(event) {
-        if(isOnlyChange(event)) {
-            gulp.start('styles');
-        }
+    gulp.watch(path.join(conf.paths.src, '/**/*.scss'), function(event) {
+        gulp.start('styles');
     });
 
     gulp.watch([
