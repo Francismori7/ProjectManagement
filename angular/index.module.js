@@ -1,4 +1,4 @@
-(function() {
+(function(angular) {
     'use strict';
 
     angular
@@ -18,6 +18,7 @@
             'creaperio.projects',
             'creaperio.clients',
             'creaperio.billing',
+            'creaperio.auth.login',
             'creaperio.dashboard'
         ]);
 
@@ -28,4 +29,8 @@
     angular.module('creaperio.projects', ['ngMaterial', 'creaperio.common']);
     angular.module('creaperio.clients', ['ngMaterial', 'creaperio.common']);
     angular.module('creaperio.billing', ['ngMaterial', 'creaperio.common']);
-})();
+
+    angular.module('creaperio.auth.login', ['ngMaterial', 'creaperio.common']);
+    angular.module('creaperio.auth.create', ['ngMaterial', 'creaperio.common']);
+
+})(window.angular);

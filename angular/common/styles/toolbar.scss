@@ -7,12 +7,22 @@ md-toolbar:not(.md-menu-toolbar) {
 
     .md-button {
         height: 64px;
-        width: 64px;
         margin: 0;
         border-radius: 0;
 
-        &:not(.no-right-border) {
-            border-right: 1px solid rgba(0, 0, 0, .12);
+        &.md-icon-button {
+            width: 64px;
         }
+
+        &:not(.md-icon-button) {
+            padding: 0 10px;
+        }
+    }
+
+    .left-menu .md-button:not(.no-right-border) {
+        border-right: 1px solid rgba(0, 0, 0, .12);
+    }
+    .right-menu .md-button:not(.no-left-border) {
+        border-left: 1px solid rgba(0, 0, 0, .12);
     }
 }

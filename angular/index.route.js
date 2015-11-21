@@ -19,6 +19,34 @@
                         }
                     }
                 })
+
+                // Authentication States
+                .state('app.auth', {
+                    abstract: true,
+                    url: '/auth',
+                    views: {
+                        'sidenav@': {},
+                        'topnav@': {}
+                    }
+                })
+                .state('app.auth.login', {
+                    url: '/login',
+                    views: {
+                        'main@': {
+                            templateUrl: getView('login', 'auth/login')
+                        }
+                    }
+                })
+                .state('app.auth.create', {
+                    url: '/create',
+                    views: {
+                        'main@': {
+                            templateUrl: getView('create', 'auth/create')
+                        }
+                    }
+                })
+
+                // Application States
                 .state('app.dashboard', {
                     url: '/',
                     views: {

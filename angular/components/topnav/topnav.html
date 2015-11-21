@@ -1,7 +1,7 @@
 <div ng-controller="TopnavCtrl as vm" class="topnav">
-    <md-toolbar>
-        <div layout="row" layout-align="start center">
-            <div layout="row" layout-align="start center" flex>
+    <md-toolbar layout="row">
+        <div layout="row" layout-align="space-between center" flex>
+            <div layout="row" layout-align="start center" class="left-menu" flex>
                 <md-button class="md-icon-button sidebar-toggle" ng-click="vm.toggleNavigation()" hide-gt-md>
                     <md-icon>menu</md-icon>
                 </md-button>
@@ -11,6 +11,24 @@
                 <md-button class="md-icon-button sidebar-toggle" ng-click="vm.minMaxNavigation()" ng-if="!vm.isMaximized" hide-md hide-sm>
                     <md-icon>arrow_forward</md-icon>
                 </md-button>
+            </div>
+            <div class="right-menu" layout="row">
+                <md-menu md-position-mode="target-right target">
+                    <md-button aria-label="Open Account Menu" ng-click="$mdOpenMenu($event)">
+                        <span>Welcome Muukrls</span>
+                        <md-icon>arrow_drop_down</md-icon>
+                    </md-button>
+                    <md-menu-content width="4" class="navmenu">
+                        <md-menu-item>
+                            <md-button>
+                                <div layout="row">
+                                    <p flex>Logout</p>
+                                    <md-icon md-menu-align-target>exit_to_app</md-icon>
+                                </div>
+                            </md-button>
+                        </md-menu-item>
+                    </md-menu-content>
+                </md-menu>
             </div>
         </div>
     </md-toolbar>
