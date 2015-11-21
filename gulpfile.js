@@ -1,26 +1,21 @@
-var elixir = require('laravel-elixir');
-require('./tasks/bower.task');
-require('./tasks/angular.task');
-require('laravel-elixir-livereload');
+var gulp = require('gulp');
+var wrench = require('wrench');
 
-elixir(function (mix) {
-    mix.bowerCss()
-        .bowerJs()
-        .angular('./angular/', 'app.js', 'public/js')
-        .sass('./angular/main.scss', 'public/css', {
-            includePaths: [
-                './bower_components'
-            ]
-        })
-        .copy('./bower_components/font-awesome/fonts', 'public/fonts')
-        .copy('./angular/app/**/*.html', 'public/views/app/')
-        .copy('./angular/directives/**/*.html', 'public/views/directives/')
-        .copy('./angular/dialogs/**/*.html', 'public/views/dialogs/')
-        .livereload([
-            'public/js/vendor.js',
-            'public/js/app.js',
-            'public/css/vendor.css',
-            'public/css/main.css',
-            'public/views/**/*.html'
-        ], {liveCSS: true});
+/**
+ *  This will load all js or coffee files in the gulp directory
+ *  in order to load all gulp tasks
+ */
+wrench.readdirSyncRecursive('./gulp').filter(function(file) {
+	return (/\.(js|coffee)$/i).test(file);
+}).map(function(file) {
+  	require('./gulp/' + file);
+});
+
+
+/**
+ *  Default task clean temporaries directories and launch the
+ *  main optimization build task
+ */
+gulp.task('default', function () {
+	gulp.start('build');
 });

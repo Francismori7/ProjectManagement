@@ -2,27 +2,30 @@
 <html lang="en" ng-app="creaperio">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
-    <title>Creaperio</title>
+	<title>Creaperio</title>
+	<meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
 
     <link rel="icon" type="image/png" href="{{ asset('images/icon.png') }}"/>
 
-    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/vendor.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/index.css') }}">
 </head>
-<body class="site">
-    <div class="nav" ui-view="navigation"></div>
-    <div class="body">
-      <div class="sidebar" ui-view="sidebar">
-          <ul>
-              <li><a href="#" class="active"><span class="fa fa-compass fa-fw fa-lg"></span></a></li>
-              <li><a href="#"><span class="fa fa-trash fa-fw fa-lg"></span></a></li>
-          </ul>
-      </div>
-      <div class="main" ui-view="main"></div>
+<body style="display:flex;">
+    <!--[if lt IE 10]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <div class="dashboard" layout="row" flex>
+        <div ui-view="sidenav" layout="column"></div>
+        <div class="main" layout="column" flex>
+            <div ui-view="topnav"></div>
+            <div ui-view="main" layout="row" flex></div>
+        </div>
     </div>
-    <div class="footer" ui-view="footer"></div>
 
     <script src="{{ asset('js/vendor.js') }}" charset="utf-8"></script>
     <script src="{{ asset('js/app.js') }}" charset="utf-8"></script>
+    <script src="{{ asset('views/templateCacheHtml.js') }}" charset="utf-8"></script>
 </body>
 </html>

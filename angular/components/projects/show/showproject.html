@@ -1,0 +1,16 @@
+<div ng-controller="ShowProjectCtrl as vm" layout="column" flex>
+    <div class="header">
+        <h1><a ui-sref="app.projects">Projects</a> / {{ vm.project.title }}</h1>
+    </div>
+
+    <md-tabs md-dynamic-height>
+        <md-tab
+            ng-repeat="tab in vm.tabs"
+            label="{{ tab.label }}"
+            md-on-select="vm.switchTab(tab.state)"
+            md-active="tab.isActive">
+        </md-tab>
+    </md-tabs>
+
+    <div class="md-padding content-container" ui-view="tab" flex></div>
+</div>

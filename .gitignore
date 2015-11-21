@@ -169,6 +169,7 @@ bower_components
 ### Gulp Build Output ###
 /public/css
 /public/js
+/.tmp
 
 ### Laravel Cache ###
 /bootstrap/cache

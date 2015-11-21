@@ -1,0 +1,41 @@
+<div layout="column">
+    <md-card>
+        <div class="md-header">
+            <h2 class="md-title">Project Leader</h2>
+        </div>
+        <md-card-content class="md-padding">
+            {{ vm.getAssigneeFromId(vm.project.projectLeader).name }}
+        </md-card-content>
+    </md-card>
+    <md-card>
+        <div class="md-header">
+            <h2 class="md-title">Assigned Members</h2>
+        </div>
+        <md-card-content layout="row" layout-align="start center" layout-sm="column" layout-align-sm="start start">
+            <md-button class="md-primary" type="button">
+                <md-icon>add</md-icon>
+                Add Employee
+            </md-button>
+            <div flex></div>
+            <md-input-container class="md-icon-float" flex="34" flex-sm="100">
+                <label>Search</label>
+                <md-icon>search</md-icon>
+                <input type="text" ng-model="search">
+            </md-input-container>
+        </md-card-content>
+        <table class="table-list">
+            <thead>
+                <tr class="table-header">
+                    <th>Name</th>
+                    <th>Position</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="assignee in vm.project.assignees">
+                    <td>{{ assignee.name }}</td>
+                    <td>{{ assignee.position }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </md-card>
+</div>

@@ -1,0 +1,30 @@
+md-tabs {
+    border-radius: 0;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2),
+                0 1px 1px 0 rgba(0, 0, 0, 0.14),
+                0 2px 1px -1px rgba(0, 0, 0, 0.12);
+    z-index: 1;
+    background: white;
+
+    & > md-tabs-wrapper {
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2),
+                    0 1px 1px 0 rgba(0, 0, 0, 0.14),
+                    0 2px 1px -1px rgba(0, 0, 0, 0.12);
+        z-index: 1;
+        padding: 0 20px;
+
+        & > md-tabs-canvas > md-pagination-wrapper > md-tab-item:not([disabled]),
+        & > md-tabs-canvas > md-pagination-wrapper > md-tab-item:not([disabled]).md-active {
+            color: rgba(0, 0, 0, 0.7);
+        }
+    }
+
+    & > md-tabs-content-wrapper {
+        background-color: #e0e0e0;
+
+        md-content {
+            background: transparent;
+        }
+    }
+
+}

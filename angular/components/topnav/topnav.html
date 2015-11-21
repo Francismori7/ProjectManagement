@@ -1,0 +1,17 @@
+<div ng-controller="TopnavCtrl as vm" class="topnav">
+    <md-toolbar>
+        <div layout="row" layout-align="start center">
+            <div layout="row" layout-align="start center" flex>
+                <md-button class="md-icon-button sidebar-toggle" ng-click="vm.toggleNavigation()" hide-gt-md>
+                    <md-icon>menu</md-icon>
+                </md-button>
+                <md-button class="md-icon-button sidebar-toggle" ng-click="vm.minMaxNavigation()" ng-if="vm.isMaximized" hide-md hide-sm>
+                    <md-icon>arrow_back</md-icon>
+                </md-button>
+                <md-button class="md-icon-button sidebar-toggle" ng-click="vm.minMaxNavigation()" ng-if="!vm.isMaximized" hide-md hide-sm>
+                    <md-icon>arrow_forward</md-icon>
+                </md-button>
+            </div>
+        </div>
+    </md-toolbar>
+</div>

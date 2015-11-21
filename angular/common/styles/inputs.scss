@@ -1,0 +1,14 @@
+md-input-container.md-icon-float,
+md-input-container.md-icon-float.md-input-focused {
+    margin-top: 0;
+}
+
+textarea.status-text {
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    resize: vertical;
+    padding: 20px;
+    font-size: 14px;
+    height: 100px;
+    max-height: 200px;
+}
