@@ -4,13 +4,13 @@
     angular
         .module('creaperio', [
             'ngAnimate',
-            'ngCookies',
             'ngTouch',
             'ngSanitize',
             'ngMessages',
             'ngAria',
             'ui.router',
             'ngMaterial',
+            'ngStorage',
             'toastr',
 
             'creaperio.sidebar',
@@ -19,10 +19,11 @@
             'creaperio.clients',
             'creaperio.billing',
             'creaperio.auth.login',
+            'creaperio.auth.create',
             'creaperio.dashboard'
         ]);
 
-    angular.module('creaperio.common', ['ngMaterial']);
+    angular.module('creaperio.common', ['ngStorage', 'ngMaterial']);
     angular.module('creaperio.sidebar', ['ngMaterial', 'creaperio.common']);
     angular.module('creaperio.topnav', ['ngMaterial', 'creaperio.common']);
     angular.module('creaperio.dashboard', ['ngMaterial']);

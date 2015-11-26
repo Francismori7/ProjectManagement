@@ -38,7 +38,7 @@
                     }
                 })
                 .state('app.auth.create', {
-                    url: '/create',
+                    url: '/register',
                     views: {
                         'main@': {
                             templateUrl: getView('create', 'auth/create')

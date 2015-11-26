@@ -6,8 +6,20 @@
         .controller('CreateCtrl', CreateCtrl);
 
     /* @ngInject */
-    function CreateCtrl() {
+    function CreateCtrl(AuthSvc) {
         var vm = this;
+
+        vm.register = register;
+
+        function register(user) {
+        	AuthSvc.register(user)
+        		.then(function() {
+        			
+        		})
+        		.catch(function(errors) {
+        			
+        		});
+        }
     }
 
 })(window.angular);

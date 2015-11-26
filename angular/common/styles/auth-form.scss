@@ -1,0 +1,31 @@
+$form-card-width: 500px;
+
+.auth-form {
+	background-color: #e0e0e0;
+
+	md-card {
+		width: $form-card-width;
+
+		@media (max-width: $form-card-width) {
+			width: 100%;
+		}
+
+		.auth-header {
+			padding: 50px 0 30px 30px;
+			background-color: $active-color;
+			color: white;
+			font-size: 25px;
+		}
+
+		md-card-content {
+			padding: 30px;
+			md-input-container {
+				width: 100%;
+			}
+
+			.md-button {
+				margin: 0;
+			}
+		}
+	}
+}
