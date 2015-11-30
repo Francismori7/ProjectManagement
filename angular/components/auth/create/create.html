@@ -4,6 +4,7 @@
     		Register an Account
     	</div>
 		<md-card-content>
+			<error-bag errors="vm.errors"></error-bag>
 			<md-input-container>
 				<label>Username</label>
 				<input type="text" ng-model="user.username">
@@ -24,7 +25,8 @@
 				<label>Confirm Password</label>
 				<input type="password" ng-model="user.password_confirmation">
 			</md-input-container>
-			<md-button class="md-primary md-raised" ng-click="vm.login(user)">
+			<md-progress-linear md-mode="indeterminate" ng-if="vm.isLoading"></md-progress-linear>
+			<md-button class="md-primary md-raised" ng-click="vm.register(user)" ng-if="!vm.isLoading">
 				Create Account
 			</md-button>
 		</md-card-content>

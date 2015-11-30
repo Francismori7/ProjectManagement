@@ -3,7 +3,8 @@
     	<div class="auth-header">
     		Login
     	</div>
-		<md-card-content>
+    	<md-card-content>
+			<error-bag errors="vm.errors"></error-bag>
 			<md-input-container>
 				<label for="username">Username</label>
 				<input type="text" ng-model="user.username">
@@ -12,7 +13,8 @@
 				<label for="username">Password</label>
 				<input type="password" ng-model="user.password">
 			</md-input-container>
-			<md-button class="md-primary md-raised" ng-click="vm.login(user)">
+			<md-progress-linear md-mode="indeterminate" ng-show="vm.isLoading"></md-progress-linear>
+			<md-button class="md-primary md-raised" ng-click="vm.login(user)" layout="row" layout-align="center center" ng-show="!vm.isLoading">
 				Log In
 			</md-button>
 		</md-card-content>

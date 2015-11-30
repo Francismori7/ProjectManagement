@@ -19,6 +19,12 @@ $form-card-width: 500px;
 
 		md-card-content {
 			padding: 30px;
+
+			.error-bag,
+			md-progress-linear {
+				margin-bottom: 18px !important;
+			}
+
 			md-input-container {
 				width: 100%;
 			}

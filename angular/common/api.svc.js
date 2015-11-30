@@ -21,11 +21,13 @@
         }
 
         function postMethod(url, data, opts) {
+            opts = opts || {};
             opts.data = data;
             return query('POST', url, opts);
         }
 
         function putMethod(url, data, opts) {
+            opts = opts || {};
             opts.data = angular.merge({
                 _method: 'PUT'
             }, data);
@@ -34,6 +36,7 @@
         }
 
         function deleteMethod(url, opts) {
+            opts = opts || {};
             opts.data = {
                 _method: 'DELETE'
             };
@@ -43,7 +46,7 @@
 
         function query(method, url, options) {
             var opts = angular.merge({
-                url: url,
+                url: baseUrl + url,
                 method: method
             }, options);
 

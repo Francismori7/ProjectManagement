@@ -6,27 +6,51 @@
 		.factory('AuthSvc', AuthSvc);
 
 	/* @ngInject */
-	function AuthSvc(ApiSvc, $localStorage) {
+	function AuthSvc($q, ApiSvc, $localStorage) {
 		var STORE_KEY = "token";
 
 		return {
 			login: login,
 			logout: logout,
+			register: register,
 			isLoggedIn: isLoggedIn
 		};
 
 		function login(user) {
-			return ApiSvc.post('auth/login', user)
+			var deferred = $q.defer();
+
+			ApiSvc.post('auth/login', user)
 				.then(function(response) {
 					$localStorage[STORE_KEY] = response.data.token;
+					deferred.resolve();
+				})
+				.catch(function(response) {
+					// Return the statuscode as well to allow the consumer
+					// to distinguish between validation and server error.
+					deferred.reject({
+						status: response.status,
+						data: response.data
+					});
 				});
+
+			return deferred.promise;
 		}
 
 		function register(user) {
-			return ApiSvc.post('auth/register', user)
+			var deferred = $q.defer();
+
+			ApiSvc.post('auth/register', user)
 				.then(function(response) {
 					return response.data.user;
+				})
+				.catch(function(response) {
+					deferred.reject({
+						status: response.status,
+						data: response.data
+					});
 				});
+
+			return deferred.promise;
 		}
 
 		function logout() {
