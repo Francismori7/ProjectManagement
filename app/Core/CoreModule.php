@@ -78,12 +78,11 @@ class CoreModule extends Module
          * where we could figure out N+1 queries, we'll be using the logs for
          * each query.
          */
-        $events->listen('illuminate.query', function ($query, $bindings, $time, $connectionName) {
-            if (env('APP_DEBUG', false)) {
+        if (env('APP_DEBUG', false)) {
+            $events->listen('illuminate.query', function ($query, $bindings, $time, $connectionName) {
                 \Log::info("[$connectionName@$time] $query (" . implode(', ', $bindings) . ")");
-                return false;
-            }
-        });
+            });
+        }
     }
 
     /**

@@ -6,6 +6,7 @@ use App\Auth\Repositories\EloquentRoleRepository;
 use App\Auth\Repositories\EloquentUserRepository;
 use App\Contracts\Auth\RoleRepository;
 use App\Core\Module;
+use App\Projects\Models\Invitation;
 use Illuminate\Routing\Router;
 use App\Contracts\Auth\UserRepository;
 
@@ -31,7 +32,8 @@ class AuthModule extends Module
             function (Router $router) {
                 $router->group(['prefix' => 'auth', 'as' => 'auth.'], function (Router $router) {
                     $router->post('login', ['as' => 'login', 'uses' => 'AuthenticationController@login']);
-                    $router->post('register', ['as' => 'register', 'uses' => 'AuthenticationController@register']);
+                    $router->post('register/{invitation}',
+                        ['as' => 'register', 'uses' => 'AuthenticationController@register']);
 
                     $router->get('me', ['as' => 'me', 'uses' => 'AuthenticationController@me']);
                     $router->get('logout', ['as' => 'logout', 'uses' => 'AuthenticationController@logout']);
@@ -49,6 +51,18 @@ class AuthModule extends Module
                     $router->post('update', ['as' => 'update', 'uses' => 'ProfileController@update']);
                 });
             });
+    }
+
+    /**
+     * Binds the route model bindings for the module.
+     *
+     * @param Router $router
+     */
+    public function bindModuleRouteBindings(Router $router)
+    {
+        $router->bind('invitation', function ($id) {
+            return Invitation::query()->where('id', $id)->firstOrFail();
+        });
     }
 
     /**

@@ -9,6 +9,8 @@ use App\Auth\Jobs\CreateNewUser;
 use App\Auth\Models\User;
 use App\Contracts\Auth\UserRepository;
 use App\Core\Controllers\Controller;
+use App\Projects\Models\Invitation;
+use DB;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
 use Illuminate\Mail\Message;
@@ -61,18 +63,51 @@ class AuthenticationController extends Controller
     /**
      * Registers a new user and returns its JSON web token.
      *
-     * POST /api/v1/auth/register
+     * POST /api/v1/auth/register/{invitation}
      *
+     * @param Invitation $invitation
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function register(Request $request)
+    public function register(Invitation $invitation, Request $request)
     {
         $this->validate($request, self::getValidatorRules());
 
+        /**
+         * We make sure this is the right email for the invitation, we do not
+         * want to allow another user to register with an invitation code.
+         */
+        $email = $request->input('email');
+        if ($email !== $invitation->email) {
+            return response()->json(['error' => 'wrong_email_for_invitation'], 401);
+        }
+
+        $user = $this->create($request->all());
         $token = JWTAuth::fromUser(
-            $this->create($request->all())
+            $user
         );
+
+        /**
+         * Adding the user to the project he was invited for.
+         *
+         * First, we need to retrieve all invitations for this email.
+         */
+        $invitations = Invitation::query()->where('email', $email)->get()
+            ->pluck('id')->transform(function ($item, $key) {
+                $item['role'] = '';
+                return $item;
+            });
+
+        /**
+         * We'll sync the projects for the newly created user, essentially assigning the
+         * user as a project user for every invitations he got.
+         */
+        $user->projects()->sync($invitations);
+
+        /**
+         * We not longer need the invitations for that user.
+         */
+        DB::table($invitation->getTable())->whereIn('id', $invitations->keys())->delete();
 
         return response()->json(compact('token'));
     }
@@ -93,17 +128,22 @@ class AuthenticationController extends Controller
         return [
             'first_name' => 'required|max:50',
             'last_name' => 'required|max:50',
-            'username' => 'required|alpha_dash|max:30|unique:' . User::class . ',username,' . $user->getId(),
-            'email' => 'required|email|max:255|unique:' . User::class . ',email,' . $user->getId(),
+            'username' => 'required|alpha_dash|max:30|unique:' . $user->getTable() . ',username,' . $user->id,
+            'email' => 'required|email|confirmed|max:255|unique:' . $user->getTable() . ',email,' . $user->id,
             'password' => 'sometimes|required|min:8|confirmed',
-            /*
-             * Not always required, because update profile does not need it.
-             *
-             * Query looks like this...
-             * SELECT id FROM invitations WHERE id = 'invitation-string'
-             */
-            'invitation' => 'sometimes|required|exists:invitations,id',
         ];
+    }
+
+    /**
+     * Create a new user instance after a valid registration.
+     *
+     * @param array $data
+     *
+     * @return User
+     */
+    protected function create(array $data)
+    {
+        return $this->dispatch(new CreateNewUser($data));
     }
 
     /**
@@ -159,6 +199,16 @@ class AuthenticationController extends Controller
     }
 
     /**
+     * Get the e-mail subject line to be used for the reset link email.
+     *
+     * @return string
+     */
+    protected function getEmailSubject()
+    {
+        return 'Your password reset link';
+    }
+
+    /**
      * Resets the user's password with a valid password reset token.
      *
      * POST /api/v1/auth/reset
@@ -188,28 +238,6 @@ class AuthenticationController extends Controller
     }
 
     /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param array $data
-     *
-     * @return User
-     */
-    protected function create(array $data)
-    {
-        return $this->dispatch(new CreateNewUser($data));
-    }
-
-    /**
-     * Get the e-mail subject line to be used for the reset link email.
-     *
-     * @return string
-     */
-    protected function getEmailSubject()
-    {
-        return 'Your password reset link';
-    }
-
-    /**
      * Reset the given user's password.
      *
      * @param  User $user
@@ -218,9 +246,8 @@ class AuthenticationController extends Controller
      */
     protected function resetPassword($user, $password)
     {
-        $user->setPassword($password);
+        $user->password = bcrypt($password);
 
         $this->userRepository->save($user);
-        $this->userRepository->flush();
     }
 }
