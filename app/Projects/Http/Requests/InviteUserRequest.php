@@ -20,7 +20,7 @@ class InviteUserRequest extends Request
             return false;
         }
 
-        if (!$this->user()->hasPermission('projects.project.invite_user')) {
+        if (!$this->user()->hasPermission('projects.project.invite')) {
             return false;
         }
 
