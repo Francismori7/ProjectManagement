@@ -6,7 +6,7 @@
         .controller('CreateCtrl', CreateCtrl);
 
     /* @ngInject */
-    function CreateCtrl(AuthSvc) {
+    function CreateCtrl($state, RegisterSvc) {
         var vm = this;
 
         vm.register = register;
@@ -15,9 +15,9 @@
 
         function register(user) {
             vm.isLoading = true;
-        	AuthSvc.register(user)
+        	RegisterSvc.register(user)
         		.then(function() {
-        			
+        			$state.go('app.dashboard');
         		})
         		.catch(function(response) {
                     var errors = [];

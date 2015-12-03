@@ -36,11 +36,12 @@
 			return deferred.promise;
 		}
 
-		function register(user) {
+		function register(token, user) {
 			var deferred = $q.defer();
 
-			ApiSvc.post('auth/register', user)
+			ApiSvc.post('auth/register/' + token, user)
 				.then(function(response) {
+					$localStorage[STORE_KEY] = response.data.token;
 					return response.data.user;
 				})
 				.catch(function(response) {

@@ -38,7 +38,7 @@
                     }
                 })
                 .state('app.auth.create', {
-                    url: '/register',
+                    url: '/register/:token',
                     views: {
                         'main@': {
                             templateUrl: getView('create', 'auth/create')
@@ -53,6 +53,9 @@
                         'main@': {
                             templateUrl: getView('dashboard')
                         }
+                    },
+                    data: {
+                        authState: 'auth'
                     }
                 })
 
@@ -63,6 +66,9 @@
                         'main@': {
                             templateUrl: getView('projects')
                         }
+                    },
+                    data: {
+                        authState: 'auth'
                     }
                 })
                 .state('app.projects.add', {
@@ -129,6 +135,9 @@
                         'main@': {
                             templateUrl: getView('clients')
                         }
+                    },
+                    data: {
+                        authState: 'auth'
                     }
                 })
 
@@ -139,6 +148,9 @@
                         'main@': {
                             templateUrl: getView('billing')
                         }
+                    },
+                    data: {
+                        authState: 'auth'
                     }
                 });
 
