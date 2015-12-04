@@ -5,7 +5,11 @@ namespace App\Core\Controllers;
 use App\Auth\Jobs\CreateNewUser;
 use App\Auth\Models\User;
 use App\Contracts\Auth\UserRepository;
+use App\Projects\Models\Invitation;
+use Auth;
 use Faker\Factory;
+use Illuminate\Mail\Message;
+use Mail;
 
 class IndexController extends Controller
 {
