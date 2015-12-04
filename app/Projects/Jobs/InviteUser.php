@@ -7,9 +7,12 @@ use App\Core\Jobs\Job;
 use App\Projects\Models\Invitation;
 use App\Projects\Models\Project;
 use Illuminate\Contracts\Bus\SelfHandling;
+use Illuminate\Foundation\Bus\DispatchesJobs;
 
 class InviteUser extends Job implements SelfHandling
 {
+    use DispatchesJobs;
+
     /**
      * @var string
      */
@@ -46,10 +49,12 @@ class InviteUser extends Job implements SelfHandling
     {
         $invitation = new Invitation();
         $invitation->host_id = $this->user->id;
+        $invitation->email = $this->email;
 
         $this->project->invitations()->save($invitation);
 
         // TODO: Send email.
+        $this->dispatch(new SendInvitationEmail($invitation));
 
         return [$invitation];
     }
