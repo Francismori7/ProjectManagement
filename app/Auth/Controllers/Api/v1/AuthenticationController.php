@@ -51,7 +51,7 @@ class AuthenticationController extends Controller
     {
         try {
             if (!$token = JWTAuth::attempt($request->only('username', 'password'))) {
-                return response()->json(['error' => 'invalid_credentials'], 402);
+                return response()->json(['error' => 'invalid_credentials'], 401);
             }
         } catch (JWTException $e) {
             return response()->json(['error' => 'could_not_create_token'], 500);
@@ -82,10 +82,32 @@ class AuthenticationController extends Controller
             return response()->json(['error' => 'wrong_email_for_invitation'], 401);
         }
 
-        $user = $this->create($request->all(), $invitation);
+        $user = $this->create($request->all());
         $token = JWTAuth::fromUser(
             $user
         );
+
+        /**
+         * Adding the user to the project he was invited for.
+         *
+         * First, we need to retrieve all invitations for this email.
+         */
+        $invitations = Invitation::query()->where('email', $email)->get()
+            ->pluck('id')->transform(function ($item, $key) {
+                $item['role'] = '';
+                return $item;
+            });
+
+        /**
+         * We'll sync the projects for the newly created user, essentially assigning the
+         * user as a project user for every invitations he got.
+         */
+        $user->projects()->sync($invitations);
+
+        /**
+         * We not longer need the invitations for that user.
+         */
+        DB::table($invitation->getTable())->whereIn('id', $invitations->keys())->delete();
 
         return response()->json(compact('token'));
     }
@@ -117,12 +139,11 @@ class AuthenticationController extends Controller
      *
      * @param array $data
      *
-     * @param Invitation $invitation
      * @return User
      */
-    protected function create(array $data, Invitation $invitation)
+    protected function create(array $data)
     {
-        return $this->dispatch(new CreateNewUser($data, $invitation));
+        return $this->dispatch(new CreateNewUser($data));
     }
 
     /**

@@ -2,17 +2,13 @@
 
 namespace App\Core;
 
-use App\Auth\Models\User;
 use App\Contracts\ACL\PermissionRepository;
 use App\Contracts\Core\BaseRepository;
 use App\Core\ACL\Repositories\EloquentPermissionRepository;
 use App\Core\Repositories\EloquentBaseRepository;
-use Auth;
 use Illuminate\Contracts\Events\Dispatcher;
-use Illuminate\Mail\Message;
 use Illuminate\Routing\Router;
 use Log;
-use Mail;
 
 class CoreModule extends Module
 {
@@ -84,10 +80,10 @@ class CoreModule extends Module
          * each query.
          */
         if (env('APP_DEBUG', false)) {
-            /*$events->listen('illuminate.query', function ($query, $bindings, $time, $connectionName) {
+            $events->listen('illuminate.query', function ($query, $bindings, $time, $connectionName) {
                 Log::info("[$connectionName@$time] $query (" . implode(', ', $bindings) . ")");
                 return false;
-            });*/
+            });
         }
     }
 
