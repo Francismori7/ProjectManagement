@@ -5,33 +5,23 @@ namespace App\Auth\Jobs;
 use App\Auth\Models\User;
 use App\Contracts\Auth\UserRepository;
 use App\Core\Jobs\Job;
-use App\Projects\Models\Invitation;
 use Illuminate\Contracts\Bus\SelfHandling;
-use Illuminate\Foundation\Bus\DispatchesJobs;
 
 class CreateNewUser extends Job implements SelfHandling
 {
-    use DispatchesJobs;
-
     /**
      * @var array
      */
     private $data;
-    /**
-     * @var Invitation
-     */
-    private $invitation;
 
     /**
      * Create a new job instance.
      *
      * @param array|User $data
-     * @param Invitation $invitation
      */
-    public function __construct($data, Invitation $invitation)
+    public function __construct($data)
     {
         $this->data = $data;
-        $this->invitation = $invitation;
     }
 
     /**
@@ -46,10 +36,7 @@ class CreateNewUser extends Job implements SelfHandling
         $user = new User($this->data);
         $user->password = bcrypt($this->data['password']);
 
-        $users->save($user);
-
-        $this->dispatch(new HandleInvitationsOnceRegistered($user, $this->invitation));
-        $this->dispatch(new SendRegistrationEmail($user));
+        $users->save($user)->flush();
 
         return $user;
     }
