@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Trycia Turgeon
- * Date: 2015-12-03
- * Time: 17:34
- */
 
 namespace App\Projects\Jobs;
-
 
 use App\Core\Jobs\Job;
 use App\Projects\Models\Invitation;
