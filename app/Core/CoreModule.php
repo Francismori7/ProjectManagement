@@ -8,6 +8,7 @@ use App\Core\ACL\Repositories\EloquentPermissionRepository;
 use App\Core\Repositories\EloquentBaseRepository;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Routing\Router;
+use Log;
 
 class CoreModule extends Module
 {
@@ -80,7 +81,7 @@ class CoreModule extends Module
          */
         if (env('APP_DEBUG', false)) {
             $events->listen('illuminate.query', function ($query, $bindings, $time, $connectionName) {
-                \Log::info("[$connectionName@$time] $query (" . implode(', ', $bindings) . ")");
+                Log::info("[$connectionName@$time] $query (" . implode(', ', $bindings) . ")");
                 return false;
             });
         }
