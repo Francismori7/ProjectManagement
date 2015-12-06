@@ -42,11 +42,10 @@ class SendInvitationEmail extends Job implements ShouldQueue, SelfHandling
         $project = $this->invitation->project;
         $invitation = $this->invitation;
 
-        \Mail::send('emails.projects.invite', compact('invitation', 'invitee', 'host', 'project'), function (Message $m) {
-            $fullName = "{$this->invitation->host->first_name} {$this->invitation->host->last_name}";
-            $m->sender($this->invitation->host->email, $fullName);
-
-            $m->to($this->invitation->email)->subject('Your Reminder!');
-        });
+        \Mail::send('emails.projects.invite', compact('invitation', 'invitee', 'host', 'project'),
+            function (Message $m) {
+                $m->to($this->invitation->email);
+                $m->subject("Invitation to {$this->invitation->project->name} from {$this->invitation->host->first_name}");
+            });
     }
 }
