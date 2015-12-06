@@ -8,12 +8,15 @@
 	/* @ngInject */
 	function AuthSvc($q, ApiSvc, $localStorage) {
 		var STORE_KEY = "token";
-
+		var intended_state = 'app.dashboard';
+		
 		return {
 			login: login,
 			logout: logout,
 			register: register,
-			isLoggedIn: isLoggedIn
+			isLoggedIn: isLoggedIn,
+			getIntendedState: getIntendedState,
+			setIntendedState: setIntendedState
 		};
 
 		function login(user) {
@@ -61,6 +64,17 @@
 
 		function isLoggedIn() {
 			return $localStorage[STORE_KEY] !== undefined;
+		}
+
+		function getIntendedState() {
+			return intended_state;
+		}
+
+		function setIntendedState(state) {
+			if (typeof state === 'string')
+				intended_state = state;
+			else if (typeof state === 'object')
+				intended_state = state.name;
 		}
 	}
 

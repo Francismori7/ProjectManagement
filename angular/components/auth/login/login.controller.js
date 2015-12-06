@@ -6,7 +6,7 @@
         .controller('LoginCtrl', LoginCtrl);
 
     /* @ngInject */
-    function LoginCtrl(AuthSvc, $state) {
+    function LoginCtrl(LoginSvc) {
         var vm = this;
 
         vm.login = login;
@@ -15,9 +15,8 @@
 
         function login(user) {
             vm.isLoading = true;
-            AuthSvc.login(user)
+            LoginSvc.login(user)
         		.then(function() {
-        			$state.go('app.dashboard');
         		})
         		.catch(function() {
                     vm.errors = ["Invalid Credentials"];
@@ -27,5 +26,4 @@
                 });
         }
     }
-
 })(window.angular);

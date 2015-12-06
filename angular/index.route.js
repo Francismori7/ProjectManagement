@@ -24,6 +24,9 @@
                 .state('app.auth', {
                     abstract: true,
                     url: '/auth',
+                    data: {
+                        authState: 'guest'
+                    },
                     views: {
                         'sidenav@': {},
                         'topnav@': {}
