@@ -14,6 +14,7 @@
         (function() {
             ProjectsSvc.getAll()
                 .then(function(projects) {
+                    console.log(projects);
                     vm.projects = projects;
                 });
         })();
