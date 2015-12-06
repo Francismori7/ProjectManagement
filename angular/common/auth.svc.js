@@ -6,8 +6,7 @@
 		.factory('AuthSvc', AuthSvc);
 
 	/* @ngInject */
-	function AuthSvc($q, ApiSvc, $localStorage) {
-		var STORE_KEY = "token";
+	function AuthSvc($q, ApiSvc, TokenSvc) {
 		var intended_state = 'app.dashboard';
 		
 		return {
@@ -16,7 +15,7 @@
 			register: register,
 			isLoggedIn: isLoggedIn,
 			getIntendedState: getIntendedState,
-			setIntendedState: setIntendedState
+			setIntendedState: setIntendedState,
 		};
 
 		function login(user) {
@@ -24,7 +23,7 @@
 
 			ApiSvc.post('auth/login', user)
 				.then(function(response) {
-					$localStorage[STORE_KEY] = response.data.token;
+					TokenSvc.setToken(response.data.token);
 					deferred.resolve();
 				})
 				.catch(function(response) {
@@ -44,7 +43,7 @@
 
 			ApiSvc.post('auth/register/' + token, user)
 				.then(function(response) {
-					$localStorage[STORE_KEY] = response.data.token;
+					TokenSvc.setToken(response.data.token);
 					return response.data.user;
 				})
 				.catch(function(response) {
@@ -59,11 +58,11 @@
 
 		function logout() {
 			ApiSvc.get('auth/logout');
-			delete $localStorage[STORE_KEY];
+			TokenSvc.deleteToken();
 		}
 
 		function isLoggedIn() {
-			return $localStorage[STORE_KEY] !== undefined;
+			return TokenSvc.hasToken();
 		}
 
 		function getIntendedState() {
