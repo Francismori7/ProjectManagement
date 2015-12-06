@@ -14,7 +14,7 @@
         vm.isLoading = false;
 
         function login(user) {
-            toggleIsLoading();
+            vm.isLoading = true;
             AuthSvc.login(user)
         		.then(function() {
         			$state.go('app.dashboard');
@@ -23,12 +23,8 @@
                     vm.errors = ["Invalid Credentials"];
         		})
                 .finally(function() {
-                    toggleIsLoading();
+                    vm.isLoading = false;
                 });
-        }
-
-        function toggleIsLoading() {
-            vm.isLoading = !vm.isLoading;
         }
     }
 
