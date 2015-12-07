@@ -17,7 +17,7 @@ use Mail;
 class CoreModule extends Module
 {
     /**
-     * The event handler mappings for the application.
+     * The event handler mappings for the module.
      *
      * @var array
      */

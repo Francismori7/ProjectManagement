@@ -6,11 +6,9 @@ use App\Auth\Models\User;
 use App\Core\Events\Event;
 use App\Projects\Models\Project;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
-use Illuminate\Foundation\Bus\DispatchesJobs;
 
 class UserWasAddedToProject extends Event implements ShouldBroadcast
 {
-    use DispatchesJobs;
     /**
      * @var User
      */

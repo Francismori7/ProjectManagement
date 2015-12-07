@@ -5,6 +5,7 @@ namespace App\Projects\Listeners;
 use App\Auth\Models\User;
 use App\Core\Events\Event;
 use App\Core\Jobs\Job;
+use App\Projects\Events\UserWasAddedToProject;
 use App\Projects\Models\Project;
 use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Contracts\Mail\Mailer;
@@ -43,7 +44,7 @@ class SendUserAddedToProjectEmail extends Job implements ShouldQueue, SelfHandli
     /**
      * Handle the job.
      *
-     * @param Event $event
+     * @param Event|UserWasAddedToProject $event
      */
     public function handle(Event $event) {
         $user = $event->user;
@@ -51,9 +52,11 @@ class SendUserAddedToProjectEmail extends Job implements ShouldQueue, SelfHandli
         $host = $event->host;
 
         $view = 'emails.project.user_added_to_project';
+        $data = compact('user', 'project', 'host');
 
-        $this->mailer->send($view, compact('user', 'project', 'host'), function(Message $m) use ($user, $project, $host) {
+        $this->mailer->send($view, $data, function(Message $m) use ($user, $project, $host) {
             $m->to($user->email);
+            $m->subject("You were added to project {$project->name}!");
         });
     }
 }

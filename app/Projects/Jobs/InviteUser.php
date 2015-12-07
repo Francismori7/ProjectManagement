@@ -4,12 +4,12 @@ namespace App\Projects\Jobs;
 
 use App\Auth\Models\User;
 use App\Core\Jobs\Job;
+use App\Projects\Events\EmailWasInvitedToProject;
 use App\Projects\Events\UserWasAddedToProject;
 use App\Projects\Models\Invitation;
 use App\Projects\Models\Project;
 use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Foundation\Bus\DispatchesJobs;
-use Projects\Events\UserWasAddedToProject;
 
 class InviteUser extends Job implements SelfHandling
 {
@@ -52,7 +52,7 @@ class InviteUser extends Job implements SelfHandling
         /**
          * Verify if the user already exists, if so, just add the user to the project there.
          */
-        if($user = User::whereEmail($this->email)->first()) {
+        if ($user = User::whereEmail($this->email)->first()) {
             $user->projects()->attach($this->project->id, ['role' => '']);
 
             event(new UserWasAddedToProject($user, $this->project, $this->user));
@@ -60,14 +60,16 @@ class InviteUser extends Job implements SelfHandling
             return ['user_added_to_project'];
         }
 
-        $invitation = new Invitation();
+        /**
+         * User does not exist, let's send an email to allow registration.
+         */
+        $invitation = new Invitation;
         $invitation->host_id = $this->user->id;
         $invitation->email = $this->email;
 
         $this->project->invitations()->save($invitation);
 
-        // TODO: Send email.
-        $this->dispatch(new SendInvitationEmail($invitation));
+        event(new EmailWasInvitedToProject($invitation));
 
         return [$invitation];
     }
