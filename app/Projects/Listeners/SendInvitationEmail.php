@@ -44,11 +44,12 @@ class SendInvitationEmail extends Job implements ShouldQueue, SelfHandling
         $view = 'emails.projects.invite';
         $data = compact('invitation', 'invitee', 'host', 'project');
 
-        \Mail::send($view, $data, function (Message $m) use ($project, $host, $invitation) {
-            $fullName = "{$host->first_name} {$host->last_name}";
-            $m->sender($host->email, $fullName);
+        \Mail::send($view, $data, function (Message $m) use ($data) {
+            $fullName = "{$data['host']->first_name} {$data['host']->last_name} (Creaperio)";
+            $m->sender(config('mail.from.address'), $fullName);
 
-            $m->to($invitation->email)->subject("You were invited to project {$project->name}!");
+            $m->to($data['invitee']);
+            $m->subject("You were invited to join a project: {$data['project']->name}!");
         });
     }
 }

@@ -54,9 +54,12 @@ class SendUserAddedToProjectEmail extends Job implements ShouldQueue, SelfHandli
         $view = 'emails.project.user_added_to_project';
         $data = compact('user', 'project', 'host');
 
-        $this->mailer->send($view, $data, function(Message $m) use ($user, $project, $host) {
-            $m->to($user->email);
-            $m->subject("You were added to project {$project->name}!");
+        $this->mailer->send($view, $data, function(Message $m) use ($data) {
+            $fullName = "{$data['host']->first_name} {$data['host']->last_name} (Creaperio)";
+            $m->sender(config('mail.from.address'), $fullName);
+
+            $m->to($data['user']->email);
+            $m->subject("You were added to a project: {$data['project']->name}!");
         });
     }
 }
