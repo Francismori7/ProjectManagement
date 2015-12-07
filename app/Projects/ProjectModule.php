@@ -6,16 +6,35 @@ use App\Auth\Models\User;
 use App\Contracts\Projects\InvitationRepository;
 use App\Contracts\Projects\TaskRepository;
 use App\Core\Module;
+use App\Projects\Events\EmailWasInvitedToProject;
+use App\Projects\Events\UserWasAddedToProject;
+use App\Projects\Jobs\SendInvitationEmail;
+use App\Projects\Listeners\SendUserAddedToProjectEmail;
 use App\Projects\Models\Project;
 use App\Projects\Models\Task;
 use App\Projects\Repositories\EloquentInvitationRepository;
 use App\Projects\Repositories\EloquentProjectRepository;
 use App\Projects\Repositories\EloquentTaskRepository;
+use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Routing\Router;
 use App\Contracts\Projects\ProjectRepository;
 
 class ProjectModule extends Module
 {
+    /**
+     * The event handler mappings for the module.
+     *
+     * @var array
+     */
+    protected $listen = [
+        EmailWasInvitedToProject::class => [
+            SendInvitationEmail::class,
+        ],
+        UserWasAddedToProject::class => [
+            SendUserAddedToProjectEmail::class,
+        ],
+    ];
+
     /**
      * Register all the bindings on the service container.
      */
@@ -44,20 +63,23 @@ class ProjectModule extends Module
                     $router->delete('{project}', ['as' => 'destroy', 'uses' => 'ProjectController@destroy']);
                     $router->patch('{project}/restore', ['as' => 'restore', 'uses' => 'ProjectController@restore']);
 
-                    $router->group(['prefix' =>'{project}/users', 'as' => 'users.'], function (Router $router) {
+                    $router->group(['prefix' => '{project}/users', 'as' => 'users.'], function (Router $router) {
                         $router->get('/', ['as' => 'index', 'uses' => 'ProjectUserController@index']);
-                        $router->patch('{user}/promote', ['as' => 'promote', 'uses' => 'ProjectUserController@promote']);
+                        $router->patch('{user}/promote',
+                            ['as' => 'promote', 'uses' => 'ProjectUserController@promote']);
                         $router->patch('{user}/demote', ['as' => 'demote', 'uses' => 'ProjectUserController@demote']);
                         $router->post('invite', ['as' => 'invite', 'uses' => 'ProjectUserController@invite']);
                     });
 
-                    $router->group(['prefix' =>'{project}/tasks', 'as' => 'tasks.'], function (Router $router) {
+                    $router->group(['prefix' => '{project}/tasks', 'as' => 'tasks.'], function (Router $router) {
                         $router->get('/', ['as' => 'index', 'uses' => 'ProjectTaskController@index']);
                         $router->post('/', ['as' => 'store', 'uses' => 'ProjectTaskController@store']);
                         $router->patch('{task}', ['as' => 'update', 'uses' => 'ProjectTaskController@update']);
-                        $router->patch('{task}/complete', ['as' => 'complete', 'uses' => 'ProjectTaskController@complete']);
+                        $router->patch('{task}/complete',
+                            ['as' => 'complete', 'uses' => 'ProjectTaskController@complete']);
                         $router->delete('{task}', ['as' => 'destroy', 'uses' => 'ProjectTaskController@destroy']);
-                        $router->patch('{task}/restore', ['as' => 'restore', 'uses' => 'ProjectTaskController@restore']);
+                        $router->patch('{task}/restore',
+                            ['as' => 'restore', 'uses' => 'ProjectTaskController@restore']);
                     });
 
 //                    TODO: Add comments
