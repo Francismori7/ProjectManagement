@@ -5,18 +5,20 @@
     	</div>
     	<md-card-content>
 			<error-bag errors="vm.errors"></error-bag>
-			<md-input-container>
-				<label for="username">Username</label>
-				<input type="text" ng-model="user.username">
-			</md-input-container>
-			<md-input-container>
-				<label for="username">Password</label>
-				<input type="password" ng-model="user.password">
-			</md-input-container>
-			<md-progress-linear md-mode="indeterminate" ng-show="vm.isLoading"></md-progress-linear>
-			<md-button class="md-primary md-raised" ng-click="vm.login(user)" layout="row" layout-align="center center" ng-show="!vm.isLoading">
-				Log In
-			</md-button>
+			<form ng-submit="vm.login(user)">
+				<md-input-container>
+					<label for="username">Username</label>
+					<input type="text" ng-model="user.username">
+				</md-input-container>
+				<md-input-container>
+					<label for="username">Password</label>
+					<input type="password" ng-model="user.password">
+				</md-input-container>
+				<md-progress-linear md-mode="indeterminate" ng-show="vm.isLoading"></md-progress-linear>
+				<md-button class="md-primary md-raised" type="submit" layout="row" layout-align="center center" ng-show="!vm.isLoading">
+					Log In
+				</md-button>
+			</form>
 		</md-card-content>
     </md-card>
 </div>

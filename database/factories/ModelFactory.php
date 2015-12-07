@@ -31,6 +31,16 @@ $factory->define(User::class, function (Generator $faker) {
     ];
 });
 
+$factory->defineAs(User::class, 'admin', function (Generator $faker) {
+    return [
+        'username' => 'admin',
+        'first_name' => $faker->firstName,
+        'last_name' => $faker->lastName,
+        'email' => $faker->email,
+        'password' => bcrypt('password'),
+    ];
+});
+
 $factory->define(Permission::class, function (Generator $faker) {
     return [
         'name' => $faker->sentence(3),

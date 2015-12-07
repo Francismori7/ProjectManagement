@@ -10,7 +10,7 @@
         $mdIconProvider
             .defaultFontSet('material-icons');
 
-        $localStorageProvider.setKeyPrefix("creaperio");
+        $localStorageProvider.setKeyPrefix("creaperio_");
     }
 
 })();
