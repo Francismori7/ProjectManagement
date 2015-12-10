@@ -24,7 +24,7 @@
 
     angular.module('creaperio.common', ['ngStorage', 'ngMaterial']);
     angular.module('creaperio.sidebar', ['ngMaterial', 'creaperio.common']);
-    angular.module('creaperio.topnav', ['ngMaterial', 'creaperio.common']);
+    angular.module('creaperio.topnav', ['ngMaterial', 'creaperio.common', 'creaperio.auth']);
     angular.module('creaperio.dashboard', ['ngMaterial']);
     angular.module('creaperio.projects', ['ngMaterial', 'creaperio.common']);
     angular.module('creaperio.clients', ['ngMaterial', 'creaperio.common']);
