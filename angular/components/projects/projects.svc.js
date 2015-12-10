@@ -56,6 +56,19 @@
                 .then(function(response) {
                     _projects.unsift(response.data.project);
                     deferred.resolve(response.data.project);
+                })
+                .catch(function(response) {
+                    if (response.status !== 422) {
+                        deferred.reject(["An error occured."]);
+                    } else {
+                        var errors = angular.forEach(response.data, function(value, key) {
+                            angular.forEach(value, function(err, index) {
+                                this.push(err);
+                            }, this);
+                        }, []);
+
+                        deferred.reject(errors);
+                    }
                 });
 
             return deferred.promise;
