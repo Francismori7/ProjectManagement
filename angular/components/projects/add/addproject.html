@@ -6,7 +6,7 @@
             <md-icon>close</md-icon>
         </md-button>
     </md-toolbar>
-    <form ng-submit="vm.addProject()" name="projectForm">
+    <form ng-submit="vm.addProject(project)" name="projectForm">
         <md-dialog-content>
             <div class="md-padding" layout="column">
                 <error-bag errors="vm.errors"></error-bag>
@@ -30,7 +30,7 @@
             <md-button type="button" ng-click="vm.cancel()">
                 Cancel
             </md-button>
-            <md-button class="md-primary md-raised" type="submit">
+            <md-button class="md-primary md-raised" type="submit" ng-disabled="vm.isLoading">
                 Save
             </md-button>
         </md-dialog-actions>

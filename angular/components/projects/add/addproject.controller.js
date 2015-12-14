@@ -11,8 +11,10 @@
 
         vm.cancel     = cancel;
         vm.addProject = addProject;
+        vm.isLoading  = false;
 
         function addProject(project) {
+            vm.isLoading = true;
             vm.errors = [];
             ProjectsSvc.create(project)
                 .then(function() {
@@ -20,6 +22,9 @@
                 })
                 .catch(function(errors) {
                     vm.errors = errors;
+                })
+                .finally(function() {
+                    vm.isLoading = false;
                 });
         }
 

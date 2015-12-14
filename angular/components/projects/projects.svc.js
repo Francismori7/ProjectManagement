@@ -20,7 +20,6 @@
 
             ApiSvc.get('projects')
                 .then(function(response) {
-                    console.log(response.data);
                     deferred.resolve(response.data.projects);
                 })
                 .catch(function(response) {
@@ -52,7 +51,7 @@
         function create(project) {
             var deferred = $q.defer();
 
-            ApiSvc.post('projects', project)
+            ApiSvc.post('projects', project || {})
                 .then(function(response) {
                     _projects.unsift(response.data.project);
                     deferred.resolve(response.data.project);
