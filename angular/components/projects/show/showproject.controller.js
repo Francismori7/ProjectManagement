@@ -17,7 +17,8 @@
         ];
 
         vm.switchTab = switchTab;
-        vm.getAssigneeFromId = getAssigneeFromId;
+        vm.getUserFromId = getUserFromId;
+        vm.getNameFromUser = getNameFromUser;
 
         (function() {
             var i, state;
@@ -51,7 +52,7 @@
         }
 
         function getNameFromUser(user) {
-            return user.first_name + " " user.last_name;
+            return user.first_name + " " + user.last_name;
         }
     }
 
