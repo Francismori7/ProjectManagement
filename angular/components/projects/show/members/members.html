@@ -1,10 +1,10 @@
-<div layout="column">
+<div layout="column" ng-controllers="ProjectMembersCtrl as vm">
     <md-card>
         <div class="md-header">
             <h2 class="md-title">Project Leader</h2>
         </div>
         <md-card-content class="md-padding">
-            {{ vm.getAssigneeFromId(vm.project.projectLeader).name }}
+            {{ vm.getNameFromUser(vm.getUserFromId(vm.project.created_by)) }}
         </md-card-content>
     </md-card>
     <md-card>
@@ -12,7 +12,7 @@
             <h2 class="md-title">Assigned Members</h2>
         </div>
         <md-card-content layout="row" layout-align="start center" layout-sm="column" layout-align-sm="start start">
-            <md-button class="md-primary" type="button">
+            <md-button class="md-primary" type="button" layout="row" layout-align="start center">
                 <md-icon>add</md-icon>
                 Add Employee
             </md-button>
@@ -31,8 +31,8 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="assignee in vm.project.assignees">
-                    <td>{{ assignee.name }}</td>
+                <tr ng-repeat="assignee in vm.project.users">
+                    <td>{{ assignee.first_name }} {{ assignee.last_name }}</td>
                     <td>{{ assignee.position }}</td>
                 </tr>
             </tbody>
