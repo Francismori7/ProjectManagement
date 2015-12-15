@@ -9,10 +9,13 @@
     <form ng-submit="vm.addProject(project)" name="projectForm">
         <md-dialog-content>
             <div class="md-padding" layout="column">
-                <error-bag errors="vm.errors"></error-bag>
-                <md-input-container>
-                    <label>Title</label>
-                    <input type="text" ng-model="project.title" name="title">
+                <error-bag errors="vm.alertErrors"></error-bag>
+                <md-input-container ng-class="{'md-input-invalid': vm.errors.name.length > 0}">
+                    <label>Name</label>
+                    <input type="text" ng-model="project.name" name="name">
+                    <div ng-repeat="error in vm.errors.name track by $index">
+                        <div class="error-hint">{{ error }}</div>
+                    </div>
                 </md-input-container>
                 <md-input-container>
                     <label>Description</label>
@@ -21,7 +24,7 @@
                 <div layout="row">
                     <div layout="row" layout-align="start center" flex="50" flex-sm="100">
                         <div>Due Date:</div>
-                        <md-datepicker ng-model="project.due" md-placeholder="Due Date"></md-datepicker>
+                        <md-datepicker ng-model="project.due_at" md-placeholder="Due Date"></md-datepicker>
                     </div>
                 </div>
             </div>

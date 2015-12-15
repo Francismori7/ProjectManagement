@@ -9,6 +9,7 @@
     function ProjectsCtrl(ProjectsSvc, SidenavSvc) {
         var vm = this;
 
+        vm.projects = [];
         vm.toggleSidebar = toggleSidebar;
 
         (function() {

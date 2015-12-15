@@ -16,12 +16,16 @@
         function addProject(project) {
             vm.isLoading = true;
             vm.errors = [];
+            vm.alertErrors = [];
             ProjectsSvc.create(project)
                 .then(function() {
                     $mdDialog.hide();
                 })
-                .catch(function(errors) {
-                    vm.errors = errors;
+                .catch(function(response) {
+                    if (response.status === 422)
+                        vm.errors = response.errors;
+                    else
+                        vm.alertErrors = response.errors;
                 })
                 .finally(function() {
                     vm.isLoading = false;

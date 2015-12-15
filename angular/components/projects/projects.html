@@ -12,15 +12,15 @@
                     <md-button class="md-icon-button">
                         <md-icon>search</md-icon>
                     </md-button>
-                    <input type="text" placeholder="Search" ng-model="search.title" flex>
+                    <input type="text" placeholder="Search" ng-model="search.name" flex>
                 </div>
             </md-toolbar>
             <md-content class="md-whiteframe-z1">
                 <md-list>
                     <md-list-item class="md-2-line" ng-repeat="project in vm.projects | filter:search:strict" ui-sref="app.projects.show.general({projectId: project.id})" layout="column" layout-align="start center">
                         <div class="md-list-item-text" layout="column">
-                            <h3>{{ project.title }}</h3>
-                            <p>3 / 30 Tasks Completed</p>
+                            <h3>{{ project.name }}</h3>
+                            <p>{{ project.completedTasks.length }} / {{ project.tasks.length }} Tasks Completed</p>
                         </div>
                     </md-list-item>
                 </md-list>
