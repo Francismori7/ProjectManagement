@@ -3,11 +3,11 @@
 
     angular
         .module('creaperio.projects')
-        .controller('ShowProjectCtrl', ShowProjectCtrl);
+        .controller('ProjectMembersCtrl', ProjectMembersCtrl);
 
     /* @ngInject */
-    function ShowProjectCtrl() {
+    function ProjectMembersCtrl() {
         var vm = this;
     }
 
-})();
+})(window.angular);

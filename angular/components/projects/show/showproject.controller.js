@@ -36,7 +36,10 @@
             $state.go('app.projects.show.' + childState);
         }
 
-        function getAssigneeFromId(id) {
+        function getUserFromId(id) {
+            if (id === undefined)
+                return {};
+
             var i, assignees = vm.project.users;
 
             for (i = 0; i < assignees.length; i++) {
@@ -46,6 +49,10 @@
 
             return null;
         }
+
+        function getNameFromUser(user) {
+            return user.first_name + " " user.last_name;
+        }
     }
 
-})();
+})(window.angular);
