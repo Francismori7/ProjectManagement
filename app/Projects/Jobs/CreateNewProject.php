@@ -42,9 +42,10 @@ class CreateNewProject extends Job implements SelfHandling
     {
         $project = new Project($this->data);
 
+        $project->created_by = $this->leader->id;
+
         $projects->save($project);
 
-        $project->creator()->associate($this->leader);
         $project->users()->attach($this->leader, ['role' => 'leader']);
 
         return $project;
