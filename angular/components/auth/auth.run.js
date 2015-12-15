@@ -6,10 +6,11 @@
 		.run(RunAuth);
 
 	/* @ngInject */
-	function RunAuth($rootScope, $state, $timeout, TokenSvc, AuthSvc, AuthState) {
+	function RunAuth($rootScope, $state, $timeout, $mdDialog, TokenSvc, AuthSvc, AuthState) {
 		$rootScope.$on("unauthorized", function() {
 			AuthSvc.logout();
 			AuthSvc.setIntendedState($state.current);
+			$mdDialog.hide();
 			$state.go('app.auth.login');
 		});
 

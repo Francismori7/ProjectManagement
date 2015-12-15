@@ -6,11 +6,12 @@
         .controller('TopnavCtrl', TopnavCtrl);
 
     /* @ngInject */
-    function TopnavCtrl(SidenavSvc) {
+    function TopnavCtrl(SidenavSvc, AuthSvc, $state) {
         var vm = this;
 
         vm.toggleNavigation = toggleNavigation;
         vm.minMaxNavigation = minMaxNavigation;
+        vm.logout           = logout;
 
         (function() {
             SidenavSvc.isMaximized(function(maximized) {
@@ -24,6 +25,11 @@
 
         function minMaxNavigation() {
             SidenavSvc.minMax();
+        }
+
+        function logout() {
+            AuthSvc.logout();
+            $state.go('app.auth.login');
         }
     }
 

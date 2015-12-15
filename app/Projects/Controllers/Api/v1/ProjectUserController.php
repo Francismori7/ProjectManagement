@@ -37,7 +37,7 @@ class ProjectUserController extends Controller
         $this->projects = $projects;
 
         $this->middleware('jwt.auth');
-        $this->middleware('jwt.refresh');
+        $this->middleware('jwt.refresh', ['only' => 'store']);
     }
 
     /**

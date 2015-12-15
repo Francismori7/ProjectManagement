@@ -20,8 +20,7 @@
 
             ApiSvc.get('projects')
                 .then(function(response) {
-                    console.log(response.data);
-                    deferred.resolve(response.data.projects);
+                    deferred.resolve(response.data);
                 })
                 .catch(function(response) {
                     deferred.reject("An error occured.");
@@ -31,16 +30,17 @@
         }
 
         function get(id) {
-            for (var i = 0; i < _projects.length; i++) {
-                if (_projects[i].id == id)
-                    return $q.resolve(_projects[i]);
+            for (var i = 0; i < projects.length; i++) {
+                if (projects[i].id == id) {
+                    return $q.resolve(projects[i]);
+                }
             }
 
             var deferred = $q.defer();
 
             ApiSvc.get('projects/' + id)
                 .then(function(response) {
-                    deferred.resolve(response.data.project);
+                    deferred.resolve(response.data);
                 })
                 .catch(function(response) {
                     deferred.reject();
@@ -52,10 +52,28 @@
         function create(project) {
             var deferred = $q.defer();
 
-            ApiSvc.post('projects', project)
+            ApiSvc.post('projects', project || {})
                 .then(function(response) {
-                    _projects.unsift(response.data.project);
-                    deferred.resolve(response.data.project);
+                    projects.unshift(response.data);
+                    deferred.resolve(response.data);
+                })
+                .catch(function(response) {
+                    var errors;
+
+                    if (response.status !== 422) {
+                        errors = ["An error occured on the server."];
+                    } else {
+                        errors = angular.forEach(response.data, function(value, key) {
+                            angular.forEach(value, function(err, index) {
+                                this.push(err);
+                            }, this);
+                        }, []);
+                    }
+
+                    deferred.reject({
+                        status: response.status,
+                        errors: errors
+                    });
                 });
 
             return deferred.promise;

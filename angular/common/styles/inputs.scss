@@ -12,3 +12,10 @@ textarea.status-text {
     height: 100px;
     max-height: 200px;
 }
+
+.md-input-invalid .error-hint {
+	color: rgb(244,67,54);
+	margin-top: 4px;
+    font-size: 12px;
+    line-height: 14px;
+}
