@@ -23,7 +23,7 @@ class EmployeeController extends Controller
         $this->users = $users;
 
         $this->middleware('jwt.auth');
-        $this->middleware('jwt.refresh');
+        $this->middleware('jwt.refresh', ['only' => 'store']);
     }
 
     /**

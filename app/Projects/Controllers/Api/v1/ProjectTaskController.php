@@ -30,6 +30,19 @@ class ProjectTaskController extends Controller
     protected $tasks;
 
     /**
+     * ProjectTaskController constructor.
+     *
+     * @param ProjectRepository $projects
+     * @param TaskRepository $tasks
+     */
+    public function __construct(ProjectRepository $projects, TaskRepository $tasks)
+    {
+        $this->middleware('jwt.auth');
+        $this->middleware('jwt.refresh', ['only' => 'store']);
+        $this->tasks = $tasks;
+    }
+
+    /**
      * Gets a list of tasks and completed tasks.
      *
      * GET /api/v1/projects/{project}/tasks
@@ -133,18 +146,5 @@ class ProjectTaskController extends Controller
         return $this->dispatch(
             new UpdateTask($task, ['completed' => ! $task->completed])
         );
-    }
-
-    /**
-     * ProjectTaskController constructor.
-     *
-     * @param ProjectRepository $projects
-     * @param TaskRepository $tasks
-     */
-    public function __construct(ProjectRepository $projects, TaskRepository $tasks)
-    {
-        $this->middleware('jwt.auth');
-        $this->middleware('jwt.refresh');
-        $this->tasks = $tasks;
     }
 }

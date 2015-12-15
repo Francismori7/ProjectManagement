@@ -2,6 +2,7 @@
 
 namespace App\Projects\Controllers\Api\v1;
 
+use App\Auth\Models\User;
 use App\Contracts\Projects\ProjectRepository;
 use App\Core\Controllers\Controller;
 use App\Projects\Http\Requests\CreateProjectRequest;
@@ -13,7 +14,6 @@ use App\Projects\Jobs\DeleteProject;
 use App\Projects\Jobs\RestoreProject;
 use App\Projects\Jobs\UpdateProject;
 use App\Projects\Models\Project;
-use Illuminate\Http\Request;
 
 class ProjectController extends Controller
 {
@@ -32,7 +32,7 @@ class ProjectController extends Controller
         $this->projects = $projects;
 
         $this->middleware('jwt.auth');
-        $this->middleware('jwt.refresh');
+        $this->middleware('jwt.refresh', ['only' => 'store']);
     }
 
     /**

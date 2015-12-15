@@ -33,7 +33,6 @@ class AuthenticationController extends Controller
     public function __construct(UserRepository $userRepository)
     {
         $this->middleware('guest', ['only' => ['login', 'register', 'email', 'reset']]);
-        $this->middleware('jwt.refresh', ['only' => ['me']]);
         $this->middleware('jwt.auth', ['only' => ['logout', 'me']]);
 
         $this->userRepository = $userRepository;
