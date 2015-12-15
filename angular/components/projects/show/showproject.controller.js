@@ -15,6 +15,7 @@
             {label: "Project Members", state: "members"},
             {label: "Settings", state: "settings"}
         ];
+
         vm.switchTab = switchTab;
         vm.getAssigneeFromId = getAssigneeFromId;
 
@@ -25,7 +26,10 @@
                 vm.tabs[i].isActive = $state.current.name == state;
             }
 
-            vm.project = ProjectsSvc.get($stateParams.projectId);
+            ProjectsSvc.get($stateParams.projectId)
+                .then(function(project) {
+                    vm.project = project;
+                });
         })();
 
         function switchTab(childState) {
@@ -33,7 +37,7 @@
         }
 
         function getAssigneeFromId(id) {
-            var i, assignees = vm.project.assignees;
+            var i, assignees = vm.project.users;
 
             for (i = 0; i < assignees.length; i++) {
                 if (assignees[i].id === id)

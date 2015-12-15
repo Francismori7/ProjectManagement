@@ -1,5 +1,5 @@
 <div class="error-bag" ng-if="errors.length > 0">
-	<div class="error-message" ng-repeat="error in errors">
+	<div class="error-message" ng-repeat="error in errors track by $index">
 		<p>{{ error }}</p>
 	</div>
 </div>

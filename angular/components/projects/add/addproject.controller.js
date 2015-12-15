@@ -9,36 +9,27 @@
     function AddProjectsCtrl($mdDialog, ProjectsSvc) {
         var vm = this;
 
-        vm.cancel      = cancel;
+        vm.cancel     = cancel;
+        vm.addProject = addProject;
+        vm.isLoading  = false;
 
-        vm.project     = {todos: [], assignees: []};
-        vm.todoName    = '';
-
-        vm.addTodoItem     = addTodoItem;
-        vm.handleTodoEnter = handleTodoEnter;
-        vm.addProject      = addProject;
-
-        function addTodoItem() {
-            vm.project.todos.push({
-                name: vm.todoName,
-                complete: false
-            });
-
-            vm.todoName = '';
-        }
-
-        function handleTodoEnter(ev) {
-            if (ev.keyCode === 13) {
-                ev.preventDefault();
-
-                if (vm.todoName !== '')
-                    addTodoItem();
-            }
-        }
-
-        function addProject() {
-            ProjectsSvc.create(vm.project);
-            $mdDialog.hide();
+        function addProject(project) {
+            vm.isLoading = true;
+            vm.errors = [];
+            vm.alertErrors = [];
+            ProjectsSvc.create(project)
+                .then(function() {
+                    $mdDialog.hide();
+                })
+                .catch(function(response) {
+                    if (response.status === 422)
+                        vm.errors = response.errors;
+                    else
+                        vm.alertErrors = response.errors;
+                })
+                .finally(function() {
+                    vm.isLoading = false;
+                });
         }
 
         function cancel() {
