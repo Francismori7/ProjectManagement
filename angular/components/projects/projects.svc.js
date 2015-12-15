@@ -31,15 +31,16 @@
 
         function get(id) {
             for (var i = 0; i < projects.length; i++) {
-                if (projects[i].id == id)
+                if (projects[i].id == id) {
                     return $q.resolve(projects[i]);
+                }
             }
 
             var deferred = $q.defer();
 
             ApiSvc.get('projects/' + id)
                 .then(function(response) {
-                    deferred.resolve(response.data.project);
+                    deferred.resolve(response.data);
                 })
                 .catch(function(response) {
                     deferred.reject();
@@ -53,8 +54,8 @@
 
             ApiSvc.post('projects', project || {})
                 .then(function(response) {
-                    projects.unshift(response.data.project);
-                    deferred.resolve(response.data.project);
+                    projects.unshift(response.data);
+                    deferred.resolve(response.data);
                 })
                 .catch(function(response) {
                     var errors;
