@@ -52,6 +52,9 @@
         }
 
         function getNameFromUser(user) {
+            if (user.first_name === undefined)
+                return "Loading...";
+
             return user.first_name + " " + user.last_name;
         }
     }
