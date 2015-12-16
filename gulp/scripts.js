@@ -1,8 +1,7 @@
 var path = require('path');
 var gulp = require('gulp');
 var conf = require('./conf');
-
-var browserSync = require('browser-sync');
+var gulpIf = require('gulp-if');
 
 var $ = require('gulp-load-plugins')();
 
@@ -12,11 +11,10 @@ gulp.task('scripts', function () {
         .pipe($.eslint.format())
         .pipe($.ngAnnotate())
         .pipe($.angularFilesort())
-        .pipe($.sourcemaps.init())
-        .pipe($.uglify({ preserveComments: $.uglifySaveLicense })).on('error', conf.errorHandler('Uglify'))
+        .pipe(gulpIf(!conf.isProduction, $.sourcemaps.init()))
+        .pipe(gulpIf(conf.isProduction, $.uglify({ preserveComments: $.uglifySaveLicense })).on('error', conf.errorHandler('Uglify')))
         .pipe($.concat('app.js'))
-        .pipe($.sourcemaps.write('maps'))
+        .pipe(gulpIf(!conf.isProduction, $.sourcemaps.write('maps')))
         .pipe(gulp.dest(conf.paths.jsOut))
-        .pipe(browserSync.reload({ stream: true }))
         .pipe($.size());
 });

@@ -1,8 +1,7 @@
 var path = require('path');
 var gulp = require('gulp');
 var conf = require('./conf');
-
-var browserSync = require('browser-sync');
+var gulpIf = require('gulp-if');
 
 var $ = require('gulp-load-plugins')();
 
@@ -30,10 +29,9 @@ gulp.task('styles', function () {
     return gulp.src([
         path.join(conf.paths.src, '/index.scss')
     ]).pipe($.inject(injectFiles, injectOptions))
-        .pipe($.sourcemaps.init())
+        .pipe(gulpIf(!conf.isProduction, $.sourcemaps.init()))
         .pipe($.sass(sassOptions)).on('error', conf.errorHandler('Sass'))
         .pipe($.autoprefixer()).on('error', conf.errorHandler('Autoprefixer'))
-        .pipe($.sourcemaps.write())
-        .pipe(gulp.dest(conf.paths.cssOut))
-        .pipe(browserSync.reload({ stream: true }));
+        .pipe(gulpIf(!conf.isProduction, $.sourcemaps.write()))
+        .pipe(gulp.dest(conf.paths.cssOut));
 });
