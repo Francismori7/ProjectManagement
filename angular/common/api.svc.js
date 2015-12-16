@@ -1,4 +1,4 @@
-(function() {
+(function(angular) {
     'use strict';
 
     angular
@@ -53,4 +53,4 @@
             return $http(opts);
         }
     }
-})();
+})(window.angular);

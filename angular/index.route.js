@@ -92,43 +92,45 @@
                     abstract: true,
                     views: {
                         'main@': {
-                            templateUrl: getView('showproject', 'projects/show')
-                        }
-                    }
-                })
-                .state('app.projects.show.general', {
-                    url: '/general',
-                    views: {
-                        'tab@app.projects.show': {
-                            templateUrl: getView('general', 'projects/show/general')
-                        }
-                    }
-                })
-                .state('app.projects.show.tasks', {
-                    url: '/tasks',
-                    views: {
-                        'tab@app.projects.show': {
-                            templateUrl: getView('tasks', 'projects/show/tasks')
-                        }
-                    }
-                })
-                .state('app.projects.show.members', {
-                    url: '/members',
-                    views: {
-                        'tab@app.projects.show': {
-                            templateUrl: getView('members', 'projects/show/members'),
+                            templateUrl: getView('showproject', 'projects/show'),
                             controller: 'ShowProjectCtrl',
                             controllerAs: 'vm'
                         }
                     }
                 })
+                .state('app.projects.show.general', {
+                    url: '/general'//,
+                    // views: {
+                    //     'tab@app.projects.show': {
+                    //         templateUrl: getView('general', 'projects/show/general')
+                    //     }
+                    // }
+                })
+                .state('app.projects.show.tasks', {
+                    url: '/tasks'//,
+                    // views: {
+                    //     'tab@app.projects.show': {
+                    //         templateUrl: getView('tasks', 'projects/show/tasks')
+                    //     }
+                    // }
+                })
+                .state('app.projects.show.members', {
+                    url: '/members'//,
+                    // views: {
+                    //     'tab@app.projects.show': {
+                    //         templateUrl: getView('members', 'projects/show/members'),
+                    //         controller: 'ShowProjectCtrl',
+                    //         controllerAs: 'vm'
+                    //     }
+                    // }
+                })
                 .state('app.projects.show.settings', {
-                    url: '/settings',
-                    views: {
-                        'tab@app.projects.show': {
-                            templateUrl: getView('settings', 'projects/show/settings')
-                        }
-                    }
+                    url: '/settings'//,
+                    // views: {
+                    //     'tab@app.projects.show': {
+                    //         templateUrl: getView('settings', 'projects/show/settings')
+                    //     }
+                    // }
                 })
 
                 // Client states

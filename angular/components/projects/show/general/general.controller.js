@@ -1,4 +1,4 @@
-(function() {
+(function(angular) {
     'use strict';
 
     angular
@@ -6,8 +6,8 @@
         .controller('GeneralProjectDetailCtrl', GeneralProjectDetailCtrl);
 
     /* @ngInject */
-    function GeneralProjectDetailCtrl($stateParams, ProjectsSvc) {
-        var vm = this;
+    function GeneralProjectDetailCtrl() {
+        
     }
 
-})();
+})(window.angular);
