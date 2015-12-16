@@ -9,6 +9,7 @@ use App\Core\Module;
 use App\Projects\Models\Invitation;
 use Illuminate\Routing\Router;
 use App\Contracts\Auth\UserRepository;
+use Illuminate\Cache\Repository as CacheRepository;
 
 class AuthModule extends Module
 {
@@ -17,7 +18,9 @@ class AuthModule extends Module
      */
     public function registerContainerBindings()
     {
-        $this->app->bind(UserRepository::class, EloquentUserRepository::class);
+        $this->app->bind(UserRepository::class, function () {
+            return new EloquentUserRepository($this->app->make(CacheRepository::class));
+        });
         $this->app->bind(RoleRepository::class, EloquentRoleRepository::class);
     }
 

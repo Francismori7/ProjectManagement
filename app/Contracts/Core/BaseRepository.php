@@ -2,39 +2,64 @@
 
 namespace App\Contracts\Core;
 
-use App\Core\Models\Entity;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 interface BaseRepository
 {
     /**
-     * Saves a Entity to the database.
+     * Saves a model to the database.
      *
-     * @param Entity $entity
-     * @return Entity
+     * @param Model $model
+     * @return Model
      */
-    public function save(Entity $entity);
+    public function save(Model $model);
 
     /**
-     * Creates and saves an Entity to the database.
+     * Creates and saves an model to the database.
      *
-     * @param Entity $entity
-     * @return Entity
+     * @param Model $model
+     * @return Model
      */
-    public function create(Entity $entity);
+    public function create(Model $model);
 
     /**
-     * Soft-deletes/removes a User.
+     * Soft-deletes/removes an model.
      *
-     * @param Entity $entity The BaseEntity to delete.
+     * @param Model $model The BaseModel to delete.
      * @return bool|null
      */
-    public function delete(Entity $entity);
+    public function delete(Model $model);
 
     /**
-     * Soft-deletes/removes a User.
+     * Soft-deletes/removes an model.
      *
-     * @param Entity $entity The BaseEntity to delete.
+     * @param Model $model The BaseModel to delete.
      * @return bool|null
      */
-    public function remove(Entity $entity);
+    public function remove(Model $model);
+
+    /**
+     * Stores the model in the cache.
+     *
+     * @param Model|null $model
+     * @return mixed
+     */
+    public function storeModelInCache($model);
+
+    /**
+     * Stores the collection of entities in the cache.
+     *
+     * @param Collection $collection
+     * @return Collection
+     */
+    public function storeCollectionInCache(Collection $collection);
+
+    /**
+     * Invalidates the cache for the model, essentially forcing a new fetch.
+     *
+     * @param Model $model
+     * @return bool
+     */
+    public function invalidateCacheFor(Model $model);
 }

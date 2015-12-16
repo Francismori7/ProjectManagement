@@ -6,9 +6,17 @@ use App\Auth\Models\User;
 use App\Contracts\Auth\UserRepository;
 use App\Core\Repositories\EloquentBaseRepository;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Cache\Repository as CacheRepository;
 
 class EloquentUserRepository extends EloquentBaseRepository implements UserRepository
 {
+    /**
+     * The base entity name used for caching.
+     *
+     * @var string
+     */
+    protected $entityName = 'user';
+
     /**
      * Returns all the Users.
      *
@@ -27,7 +35,9 @@ class EloquentUserRepository extends EloquentBaseRepository implements UserRepos
      */
     public function all(array $relations = [])
     {
-        return User::with($relations)->get();
+        return $this->storeCollectionInCache(
+            User::with($relations)->get()
+        );
     }
 
     /**
@@ -51,7 +61,9 @@ class EloquentUserRepository extends EloquentBaseRepository implements UserRepos
      */
     public function findByUUID($uuid, array $relations = [])
     {
-        return User::where('id', $uuid)->with($relations)->first();
+        return $this->storeModelInCache(
+            User::whereId($uuid)->with($relations)->first()
+        );
     }
 
     /**
@@ -63,7 +75,9 @@ class EloquentUserRepository extends EloquentBaseRepository implements UserRepos
      */
     public function findByUsername($username, array $relations = [])
     {
-        return User::where('username', $username)->with($relations)->first();
+        return $this->storeModelInCache(
+            User::whereUsername($username)->with($relations)->first()
+        );
     }
 
     /**
@@ -75,6 +89,18 @@ class EloquentUserRepository extends EloquentBaseRepository implements UserRepos
      */
     public function findByEmail($email, array $relations = [])
     {
-        return User::where('email', $email)->with($relations)->first();
+        return $this->storeModelInCache(
+            User::whereEmail($email)->with($relations)->first()
+        );
+    }
+
+    /**
+     * EloquentUserRepository constructor.
+     *
+     * @param CacheRepository $cache
+     */
+    public function __construct(CacheRepository $cache)
+    {
+        parent::__construct($cache);
     }
 }
