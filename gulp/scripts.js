@@ -16,5 +16,6 @@ gulp.task('scripts', function () {
         .pipe($.concat('app.js'))
         .pipe(gulpIf(!conf.isProduction, $.sourcemaps.write('maps')))
         .pipe(gulp.dest(conf.paths.jsOut))
-        .pipe($.size());
+        .pipe($.size())
+        .pipe($.livereload());
 });

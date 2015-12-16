@@ -7,7 +7,7 @@ var $ = require('gulp-load-plugins')();
 
 gulp.task('styles', function () {
     var sassOptions = {
-        style: 'expanded'
+        outputStyle: conf.isProduction ? 'compressed' : 'expanded'
     };
 
     var injectFiles = gulp.src([
@@ -33,5 +33,6 @@ gulp.task('styles', function () {
         .pipe($.sass(sassOptions)).on('error', conf.errorHandler('Sass'))
         .pipe($.autoprefixer()).on('error', conf.errorHandler('Autoprefixer'))
         .pipe(gulpIf(!conf.isProduction, $.sourcemaps.write()))
-        .pipe(gulp.dest(conf.paths.cssOut));
+        .pipe(gulp.dest(conf.paths.cssOut))
+        .pipe($.livereload());
 });

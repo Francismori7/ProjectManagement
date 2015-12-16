@@ -19,14 +19,16 @@ gulp.task('partials', function () {
         module: 'creaperio',
         root: '/'
     }))
-    .pipe(gulp.dest(conf.paths.viewsOut));
+    .pipe(gulp.dest(conf.paths.viewsOut))
+    .pipe($.livereload());
 });
 
 gulp.task('fonts', function () {
     return gulp.src('bower_components/material-design-iconfont/iconfont/*')
         .pipe($.filter('**/*.{eot,svg,ttf,woff,woff2}'))
         .pipe($.flatten())
-        .pipe(gulp.dest(conf.paths.fontsOut));
+        .pipe(gulp.dest(conf.paths.fontsOut))
+        .pipe($.livereload());
 });
 
 gulp.task('build', ['bower', 'scripts', 'styles', 'fonts', 'partials']);
