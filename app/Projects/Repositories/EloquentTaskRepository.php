@@ -13,6 +13,13 @@ use Illuminate\Database\Eloquent\Collection;
 class EloquentTaskRepository extends EloquentBaseRepository implements TaskRepository
 {
     /**
+     * The base model name used for caching.
+     *
+     * @var string
+     */
+    protected $modelName = 'task';
+
+    /**
      * Returns all the Tasks.
      *
      * @return Collection All tasks.

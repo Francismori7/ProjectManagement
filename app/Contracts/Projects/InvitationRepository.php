@@ -47,7 +47,7 @@ interface InvitationRepository extends BaseRepository
      *
      * @param string $email The email to look for in the database.
      * @param array $relations
-     * @return Invitation|null The invitation.
+     * @return Collection The invitation.
      */
     public function findByEmail($email, array $relations = []);
 

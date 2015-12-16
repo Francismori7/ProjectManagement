@@ -89,7 +89,7 @@ class PermissionRepositoryTest extends TestCase
 
         $foundPermission = $this->permissions->findById($this->fakePermission->id);
 
-        $this->assertEquals($this->fakePermission->fresh(), $foundPermission);
+        $this->assertEquals($this->fakePermission, $foundPermission);
         $this->assertNotNull($foundPermission);
     }
 
@@ -118,7 +118,7 @@ class PermissionRepositoryTest extends TestCase
 
         $foundPermission = $this->permissions->findByPattern($this->fakePermission->pattern);
 
-        $this->assertEquals($this->fakePermission->fresh(), $foundPermission);
+        $this->assertEquals($this->fakePermission, $foundPermission);
         $this->assertNotNull($foundPermission);
     }
 

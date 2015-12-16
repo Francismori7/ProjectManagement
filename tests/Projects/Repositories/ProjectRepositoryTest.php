@@ -89,7 +89,7 @@ class ProjectRepositoryTest extends TestCase
 
         $foundProject = $this->projects->findByUUID($this->fakeProject->id);
 
-        $this->assertEquals($this->fakeProject->fresh(), $foundProject);
+        $this->assertEquals($this->fakeProject, $foundProject);
         $this->assertNotNull($foundProject);
     }
 

@@ -10,6 +10,7 @@ namespace App\Auth\Jobs;
 
 
 use App\Auth\Models\User;
+use App\Contracts\Projects\InvitationRepository;
 use App\Core\Jobs\Job;
 use App\Projects\Models\Invitation;
 use DB;
@@ -28,8 +29,10 @@ class HandleInvitationsOnceRegistered extends Job implements SelfHandling
 
     /**
      * Handle the job.
+     *
+     * @param InvitationRepository $invitationRepository
      */
-    public function handle()
+    public function handle(InvitationRepository $invitationRepository)
     {
         /**
          * Adding the user to the project he was invited for.
@@ -37,10 +40,8 @@ class HandleInvitationsOnceRegistered extends Job implements SelfHandling
          * First, we need to retrieve all invitations for this email.
          */
         $invitations = [];
-        foreach (Invitation::query()
-                     ->where('email', $this->invitation->email)
-                     ->get()
-                     ->pluck('project_id') as $invitation) {
+
+        foreach ($invitationRepository->findByEmail($this->invitation->email)->pluck('project_id') as $invitation) {
             /**
              * We'll make sure the role we add is a simple user, not a leader. They can
              * promote the user later if they need to.

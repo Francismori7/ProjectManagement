@@ -4,6 +4,7 @@ namespace Tests\Auth\Repositories;
 
 use App\Auth\Models\User;
 use App\Contracts\Auth\UserRepository;
+use Cache;
 use DB;
 use Faker\Factory;
 use Illuminate\Foundation\Testing\DatabaseTransactions;

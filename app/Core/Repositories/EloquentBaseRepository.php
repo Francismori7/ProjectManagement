@@ -76,18 +76,18 @@ class EloquentBaseRepository implements BaseRepository
     }
 
     /**
-     * Returns the key name for the caching of collections (all)
+     * Returns the key name for the caching of collections (all).
      *
      * @return string
      * @throws \Exception
      */
-    protected function getCollectionCacheKey()
+    protected function getCollectionCacheKey($keyOverride = null)
     {
         if($this->modelName === "base") {
             throw new \Exception("Please rename the \$modelName property in " . __CLASS__);
         }
 
-        return str_plural($this->modelName);
+        return ($keyOverride ? "$keyOverride:" : '') . str_plural($this->modelName);
     }
 
     /**
@@ -162,14 +162,14 @@ class EloquentBaseRepository implements BaseRepository
      * @param Collection $collection
      * @return Collection
      */
-    public function storeCollectionInCache(Collection $collection)
+    public function storeCollectionInCache(Collection $collection, $keyOverride = null)
     {
         if (! $this->caching) {
             return $collection;
         }
 
         return $this->cache->remember(
-            $this->getCollectionCacheKey(), self::DEFAULT_CACHING_TIME,
+            $this->getCollectionCacheKey($keyOverride), self::DEFAULT_CACHING_TIME,
             function () use ($collection) {
                 return $collection;
             }

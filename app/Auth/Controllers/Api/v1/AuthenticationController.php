@@ -10,12 +10,11 @@ use App\Auth\Models\User;
 use App\Contracts\Auth\UserRepository;
 use App\Core\Controllers\Controller;
 use App\Projects\Models\Invitation;
-use DB;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
 use Illuminate\Mail\Message;
-use Password;
 use JWTAuth;
+use Password;
 use Tymon\JWTAuth\Exceptions\JWTException;
 
 class AuthenticationController extends Controller
@@ -24,19 +23,6 @@ class AuthenticationController extends Controller
      * @var UserRepository
      */
     protected $userRepository;
-
-    /**
-     * AuthenticationController constructor.
-     *
-     * @param UserRepository $userRepository
-     */
-    public function __construct(UserRepository $userRepository)
-    {
-        $this->middleware('guest', ['only' => ['login', 'register', 'email', 'reset']]);
-        $this->middleware('jwt.auth', ['only' => ['logout', 'me']]);
-
-        $this->userRepository = $userRepository;
-    }
 
     /**
      * Authenticates the user and returns its JSON web token.
@@ -49,7 +35,7 @@ class AuthenticationController extends Controller
     public function login(LoginUserRequest $request)
     {
         try {
-            if (!$token = JWTAuth::attempt($request->only('username', 'password'))) {
+            if (! $token = JWTAuth::attempt($request->only('username', 'password'))) {
                 return response()->json(['error' => 'invalid_credentials'], 402);
             }
         } catch (JWTException $e) {
@@ -227,5 +213,18 @@ class AuthenticationController extends Controller
         $user->password = bcrypt($password);
 
         $this->userRepository->save($user);
+    }
+
+    /**
+     * AuthenticationController constructor.
+     *
+     * @param UserRepository $userRepository
+     */
+    public function __construct(UserRepository $userRepository)
+    {
+        $this->middleware('guest', ['only' => ['login', 'register', 'email', 'reset']]);
+        $this->middleware('jwt.auth', ['only' => ['logout', 'me']]);
+
+        $this->userRepository = $userRepository;
     }
 }

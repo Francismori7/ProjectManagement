@@ -2,13 +2,20 @@
 
 namespace App\Core\ACL\Repositories;
 
-use App\Core\ACL\Models\Permission;
 use App\Contracts\ACL\PermissionRepository;
+use App\Core\ACL\Models\Permission;
 use App\Core\Repositories\EloquentBaseRepository;
 use Illuminate\Database\Eloquent\Collection;
 
 class EloquentPermissionRepository extends EloquentBaseRepository implements PermissionRepository
 {
+    /**
+     * The base model name used for caching.
+     *
+     * @var string
+     */
+    protected $modelName = 'permission';
+
     /**
      * Returns all the Permissions.
      *
@@ -26,7 +33,9 @@ class EloquentPermissionRepository extends EloquentBaseRepository implements Per
      */
     public function all()
     {
-        return Permission::all();
+        return $this->storeCollectionInCache(
+            Permission::all()
+        );
     }
 
     /**
@@ -38,7 +47,9 @@ class EloquentPermissionRepository extends EloquentBaseRepository implements Per
      */
     public function findById($id)
     {
-        return Permission::where('id', $id)->first();
+        return $this->storeModelInCache(
+            Permission::whereId($id)->first()
+        );
     }
 
     /**
@@ -50,6 +61,8 @@ class EloquentPermissionRepository extends EloquentBaseRepository implements Per
      */
     public function findByPattern($pattern)
     {
-        return Permission::where('pattern', $pattern)->first();
+        return $this->storeModelInCache(
+            Permission::wherePattern($pattern)->first()
+        );
     }
 }

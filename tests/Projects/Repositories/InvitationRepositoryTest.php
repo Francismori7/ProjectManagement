@@ -105,7 +105,7 @@ class InvitationRepositoryTest extends TestCase
 
         $foundInvitation = $this->invitations->findByUUID($this->fakeInvitation->id);
 
-        $this->assertEquals($this->fakeInvitation->fresh(), $foundInvitation);
+        $this->assertEquals($this->fakeInvitation, $foundInvitation);
         $this->assertNotNull($foundInvitation);
     }
 

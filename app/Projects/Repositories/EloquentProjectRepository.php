@@ -2,13 +2,21 @@
 
 namespace App\Projects\Repositories;
 
+use App\Auth\Models\User;
 use App\Contracts\Projects\ProjectRepository;
 use App\Core\Repositories\EloquentBaseRepository;
 use App\Projects\Models\Project;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection;
 
 class EloquentProjectRepository extends EloquentBaseRepository implements ProjectRepository
 {
+    /**
+     * The base model name used for caching.
+     *
+     * @var string
+     */
+    protected $modelName = 'project';
+
     /**
      * Returns all the Projects.
      *
@@ -27,7 +35,9 @@ class EloquentProjectRepository extends EloquentBaseRepository implements Projec
      */
     public function all(array $relations = [])
     {
-        return Project::with($relations)->get();
+        return $this->storeCollectionInCache(
+            Project::with($relations)->get()
+        );
     }
 
     /**
@@ -51,6 +61,8 @@ class EloquentProjectRepository extends EloquentBaseRepository implements Projec
      */
     public function findByUUID($uuid, array $relations = [])
     {
-        return Project::with($relations)->where('id', $uuid)->first();
+        return $this->storeModelInCache(
+            Project::with($relations)->whereId($uuid)->first()
+        );
     }
 }

@@ -11,6 +11,13 @@ use Illuminate\Database\Eloquent\Collection;
 class EloquentInvitationRepository extends EloquentBaseRepository implements InvitationRepository
 {
     /**
+     * The base model name used for caching.
+     *
+     * @var string
+     */
+    protected $modelName = 'invitation';
+
+    /**
      * Returns all the Invitations.
      *
      * @return Collection All invitations.
@@ -28,7 +35,9 @@ class EloquentInvitationRepository extends EloquentBaseRepository implements Inv
      */
     public function all(array $relations = [])
     {
-        return Invitation::with($relations)->get();
+        return $this->storeCollectionInCache(
+            Invitation::with($relations)->get()
+        );
     }
 
     /**
@@ -52,7 +61,9 @@ class EloquentInvitationRepository extends EloquentBaseRepository implements Inv
      */
     public function findByUUID($uuid, array $relations = [])
     {
-        return Invitation::where('id', $uuid)->with($relations)->first();
+        return $this->storeModelInCache(
+            Invitation::whereId($uuid)->with($relations)->first()
+        );
     }
 
     /**
@@ -60,11 +71,14 @@ class EloquentInvitationRepository extends EloquentBaseRepository implements Inv
      *
      * @param string $email The email to look for in the database.
      * @param array $relations
-     * @return Invitation|null The invitation.
+     * @return Collection The invitations for the email.
      */
     public function findByEmail($email, array $relations = [])
     {
-        return Invitation::where('email', $email)->with($relations)->first();
+        return $this->storeCollectionInCache(
+            Invitation::whereEmail($email)->with($relations)->get(),
+            "email:$email"
+        );
     }
 
     /**
@@ -76,6 +90,9 @@ class EloquentInvitationRepository extends EloquentBaseRepository implements Inv
      */
     public function findByProject(Project $project, array $relations = [])
     {
-        return $project->invitations->load($relations);
+        return $this->storeCollectionInCache(
+            Invitation::whereProjectId($project->id)->with($relations)->get(),
+            "project:{$project->getKey()}"
+        );
     }
 }
