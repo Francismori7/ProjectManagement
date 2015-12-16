@@ -24,7 +24,7 @@ interface RoleRepository extends BaseRepository
     public function all(array $relations = []);
 
     /**
-     * Find a role entity by ID.
+     * Find a role model by ID.
      *
      * @param int $id The identifier to look for in the database.
      * @param array $relations
@@ -33,7 +33,7 @@ interface RoleRepository extends BaseRepository
     public function find($id, array $relations = []);
 
     /**
-     * Find a role entity by ID.
+     * Find a role model by ID.
      *
      * @param int $id The identifier to look for in the database.
      * @param array $relations

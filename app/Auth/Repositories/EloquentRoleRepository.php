@@ -9,6 +9,11 @@ use Illuminate\Database\Eloquent\Collection;
 
 class EloquentRoleRepository extends EloquentBaseRepository implements RoleRepository
 {
+    /**
+     * The base model name used for caching.
+     *
+     * @var string
+     */
     protected $modelName = 'role';
 
     /**
@@ -29,11 +34,13 @@ class EloquentRoleRepository extends EloquentBaseRepository implements RoleRepos
      */
     public function all(array $relations = [])
     {
-        return Role::with($relations)->get();
+        return $this->storeCollectionInCache(
+            Role::with($relations)->get()
+        );
     }
 
     /**
-     * Find a role entity by ID.
+     * Find a role model by ID.
      *
      * @param int $id The identifier to look for in the database.
      * @param array $relations
@@ -45,7 +52,7 @@ class EloquentRoleRepository extends EloquentBaseRepository implements RoleRepos
     }
 
     /**
-     * Find a role entity by ID.
+     * Find a role model by ID.
      *
      * @param int $id The identifier to look for in the database.
      * @param array $relations
@@ -53,6 +60,8 @@ class EloquentRoleRepository extends EloquentBaseRepository implements RoleRepos
      */
     public function findById($id, array $relations = [])
     {
-        return Role::where('id', $id)->with($relations)->first();
+        return $this->storeModelInCache(
+            Role::whereId($id)->with($relations)->first()
+        );
     }
 }
