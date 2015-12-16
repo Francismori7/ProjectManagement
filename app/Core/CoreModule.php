@@ -84,10 +84,10 @@ class CoreModule extends Module
          * each query.
          */
         if (env('APP_DEBUG', false)) {
-            /*$events->listen('illuminate.query', function ($query, $bindings, $time, $connectionName) {
+            $events->listen('illuminate.query', function ($query, $bindings, $time, $connectionName) {
                 Log::info("[$connectionName@$time] $query (" . implode(', ', $bindings) . ")");
                 return false;
-            });*/
+            });
         }
     }
 

@@ -151,9 +151,6 @@ class EloquentBaseRepository implements BaseRepository
         return $this->cache->remember(
             $this->getCacheKey($model), self::DEFAULT_CACHING_TIME,
             function () use ($model) {
-                if ($model->isDirty()) {
-                    $model = $model->fresh(array_keys($model->getRelations()));
-                }
                 return $model;
             }
         );

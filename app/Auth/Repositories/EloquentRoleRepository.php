@@ -15,7 +15,6 @@ class EloquentRoleRepository extends EloquentBaseRepository implements RoleRepos
      * @var string
      */
     protected $modelName = 'role';
-
     /**
      * Returns all the Roles.
      *

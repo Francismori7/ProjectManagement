@@ -90,7 +90,7 @@ class UserRepositoryTest extends TestCase
 
         $foundUser = $this->users->findByUUID($this->fakeUser->id);
 
-        $this->assertEquals($this->fakeUser, $foundUser);
+        $this->assertEquals($this->fakeUser->attributesToArray(), $foundUser->attributesToArray());
         $this->assertNotNull($foundUser);
     }
 
@@ -119,7 +119,7 @@ class UserRepositoryTest extends TestCase
 
         $foundUser = $this->users->findByUsername($this->fakeUser->username);
 
-        $this->assertEquals($this->fakeUser, $foundUser);
+        $this->assertEquals($this->fakeUser->attributesToArray(), $foundUser->attributesToArray());
         $this->assertNotNull($foundUser);
     }
 
@@ -132,7 +132,7 @@ class UserRepositoryTest extends TestCase
 
         $foundUser = $this->users->findByEmail($this->fakeUser->email);
 
-        $this->assertEquals($this->fakeUser, $foundUser);
+        $this->assertEquals($this->fakeUser->attributesToArray(), $foundUser->attributesToArray());
         $this->assertNotNull($foundUser);
     }
 

@@ -90,7 +90,7 @@ class RoleRepositoryTest extends TestCase
 
         $foundRole = $this->roles->findById($this->fakeRole->id);
 
-        $this->assertEquals($this->fakeRole, $foundRole);
+        $this->assertEquals($this->fakeRole->attributesToArray(), $foundRole->attributesToArray());
         $this->assertNotNull($foundRole);
     }
 

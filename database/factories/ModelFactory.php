@@ -28,6 +28,7 @@ $factory->define(User::class, function (Generator $faker) {
         'last_name' => $faker->lastName,
         'email' => $faker->email,
         'password' => bcrypt($faker->password(8)),
+        'deleted_at' => null,
     ];
 });
 
@@ -50,6 +51,7 @@ $factory->define(Project::class, function (Generator $faker) {
         'name' => $faker->sentence(3),
         'description' => $faker->text,
         'created_by' => $createdBy->id,
+        'deleted_at' => null,
     ];
 });
 
@@ -75,5 +77,6 @@ $factory->define(Task::class, function (Generator $faker) {
         'host_id' => $host->id,
         'completed' => $faker->boolean(),
         'due_at' => $faker->dateTimeBetween('+1 day', '+ 1 month'),
+        'deleted_at' => null,
     ];
 });
