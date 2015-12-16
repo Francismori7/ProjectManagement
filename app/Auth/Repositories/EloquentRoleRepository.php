@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Collection;
 
 class EloquentRoleRepository extends EloquentBaseRepository implements RoleRepository
 {
+    protected $modelName = 'role';
+
     /**
      * Returns all the Roles.
      *

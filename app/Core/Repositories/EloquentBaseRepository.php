@@ -79,9 +79,14 @@ class EloquentBaseRepository implements BaseRepository
      * Returns the key name for the caching of collections (all)
      *
      * @return string
+     * @throws \Exception
      */
     protected function getCollectionCacheKey()
     {
+        if($this->modelName === "base") {
+            throw new \Exception("Please rename the \$modelName property in " . __CLASS__);
+        }
+
         return str_plural($this->modelName);
     }
 
@@ -90,9 +95,14 @@ class EloquentBaseRepository implements BaseRepository
      *
      * @param Model $model
      * @return string
+     * @throws \Exception
      */
     protected function getCacheKey(Model $model)
     {
+        if($this->modelName === "base") {
+            throw new \Exception("Please rename the \$modelName property in " . __CLASS__);
+        }
+
         return "{$this->modelName}:{$model->getKey()}";
     }
 

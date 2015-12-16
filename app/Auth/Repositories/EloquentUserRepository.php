@@ -11,11 +11,11 @@ use Illuminate\Cache\Repository as CacheRepository;
 class EloquentUserRepository extends EloquentBaseRepository implements UserRepository
 {
     /**
-     * The base entity name used for caching.
+     * The base model name used for caching.
      *
      * @var string
      */
-    protected $entityName = 'user';
+    protected $modelName = 'user';
 
     /**
      * Returns all the Users.
