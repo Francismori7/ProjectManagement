@@ -82,9 +82,8 @@ class AuthenticationController extends Controller
         }
 
         $user = $this->create($request->all(), $invitation);
-        $token = JWTAuth::fromUser(
-            $user
-        );
+
+        $token = JWTAuth::fromUser($user);
 
         return response()->json(compact('token'));
     }
@@ -96,17 +95,13 @@ class AuthenticationController extends Controller
      */
     public static function getValidatorRules()
     {
-        /** @var User $user */
-        $user = new User;
-        if (JWTAuth::getToken()) {
-            $user = JWTAuth::parseToken()->authenticate();
-        }
+        $user = JWTAuth::getToken() ? JWTAuth::parseToken()->authenticate() : new User;
 
         return [
             'first_name' => 'required|max:50',
             'last_name' => 'required|max:50',
-            'username' => 'required|alpha_dash|max:30|unique:' . $user->getTable() . ',username,' . $user->id,
-            'email' => 'required|email|confirmed|max:255|unique:' . $user->getTable() . ',email,' . $user->id,
+            'username' => 'required|alpha_dash|max:30|unique:' . $user->getTable() . ',username,' . $user->getKey(),
+            'email' => 'required|email|confirmed|max:255|unique:' . $user->getTable() . ',email,' . $user->getKey(),
             'password' => 'sometimes|required|min:8|confirmed',
         ];
     }
