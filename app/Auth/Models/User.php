@@ -3,6 +3,7 @@
 namespace App\Auth\Models;
 
 use App\Auth\Traits\HasRoles;
+use App\Core\ACL\Models\Permission;
 use App\Core\ACL\Traits\HasPermissions;
 use App\Core\Models\UUIDBaseEntity;
 use App\Projects\Models\Invitation;
