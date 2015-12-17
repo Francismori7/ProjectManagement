@@ -124,15 +124,9 @@ class ProjectModule extends Module
      */
     public function bindModuleRouteBindings(Router $router)
     {
-        $router->bind('project', function ($id) {
-            return Project::withTrashed()->where('id', $id)->firstOrFail();
-        });
-        $router->bind('task', function ($id) {
-            return Task::withTrashed()->where('id', $id)->firstOrFail();
-        });
-        $router->bind('user', function ($id) {
-            return User::withTrashed()->where('id', $id)->firstOrFail();
-        });
+        $router->bind('project', 'App\Projects\Binders\RouteModelBinder@project');
+        $router->bind('task', 'App\Projects\Binders\RouteModelBinder@task');
+        $router->bind('user', 'App\Projects\Binders\RouteModelBinder@user');
     }
 
     /**
