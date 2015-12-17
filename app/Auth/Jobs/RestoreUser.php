@@ -23,7 +23,7 @@ class RestoreUser extends Job implements SelfHandling
      */
     public function handle(UserRepository $users)
     {
-        $this->user->restore();
+        return $users->restore($this->user);
     }
 
     /**

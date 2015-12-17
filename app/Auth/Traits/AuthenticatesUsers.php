@@ -40,7 +40,7 @@ trait AuthenticatesUsers
      */
     public function getAuthIdentifier()
     {
-        return $this->id;
+        return $this->getKey();
     }
 
     /**
@@ -50,7 +50,7 @@ trait AuthenticatesUsers
      */
     public function getAuthPassword()
     {
-        return $this->password;
+        return $this->getPassword();
     }
 
     /**
@@ -90,6 +90,6 @@ trait AuthenticatesUsers
      */
     public function getAuthIdentifierName()
     {
-        return 'id';
+        return $this->getKeyName();
     }
 }

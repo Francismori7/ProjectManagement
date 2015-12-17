@@ -21,10 +21,7 @@ class HandleInvitationsOnceRegistered extends Job implements SelfHandling
      * @var User
      */
     private $user;
-    /**
-     * @var Invitation
-     */
-    private $invitation;
+
 
     /**
      * Handle the job.
@@ -37,6 +34,7 @@ class HandleInvitationsOnceRegistered extends Job implements SelfHandling
          * First, we need to retrieve all invitations for this email.
          */
         $invitations = [];
+
         foreach (Invitation::query()
                      ->where('email', $this->invitation->email)
                      ->get()
@@ -58,17 +56,16 @@ class HandleInvitationsOnceRegistered extends Job implements SelfHandling
          * We no longer need the invitations for that user (based on email) since we added
          * the user to all the projects he was invited to.
          */
-        DB::table('invitations')->where('email', $this->invitation->email)->delete();
+        DB::table('invitations')->where('email', $this->user->email)->delete();
     }
 
     /**
      * HandleInvitationsOnceRegistered constructor.
+     *
      * @param User $user
-     * @param Invitation $invitation
      */
-    public function __construct(User $user, Invitation $invitation)
+    public function __construct(User $user)
     {
         $this->user = $user;
-        $this->invitation = $invitation;
     }
 }

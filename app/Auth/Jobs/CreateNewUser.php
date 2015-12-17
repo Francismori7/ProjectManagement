@@ -48,7 +48,7 @@ class CreateNewUser extends Job implements SelfHandling
 
         $users->save($user);
 
-        $this->dispatch(new HandleInvitationsOnceRegistered($user, $this->invitation));
+        $this->dispatch(new HandleInvitationsOnceRegistered($user));
         $this->dispatch(new SendRegistrationEmail($user));
 
         return $user;

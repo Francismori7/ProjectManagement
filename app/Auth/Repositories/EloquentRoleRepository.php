@@ -31,7 +31,7 @@ class EloquentRoleRepository extends EloquentBaseRepository implements RoleRepos
     }
 
     /**
-     * Find a role entity by ID.
+     * Find a role model by ID.
      *
      * @param int $id The identifier to look for in the database.
      * @param array $relations
@@ -43,7 +43,7 @@ class EloquentRoleRepository extends EloquentBaseRepository implements RoleRepos
     }
 
     /**
-     * Find a role entity by ID.
+     * Find a role model by ID.
      *
      * @param int $id The identifier to look for in the database.
      * @param array $relations

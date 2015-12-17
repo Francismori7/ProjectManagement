@@ -2,6 +2,7 @@
 
 namespace App\Auth;
 
+use App\Auth\Binders\RouteModelBinder;
 use App\Auth\Repositories\EloquentRoleRepository;
 use App\Auth\Repositories\EloquentUserRepository;
 use App\Contracts\Auth\RoleRepository;
@@ -62,14 +63,7 @@ class AuthModule extends Module
      */
     public function bindModuleRouteBindings(Router $router)
     {
-        $router->bind('invitation', function ($id) {
-            $invitation = $this->app->make(InvitationRepository::class)->findByUUID($id);
-
-            if(!$invitation) {
-                throw (new ModelNotFoundException)->setModel(Invitation::class);
-            }
-            return $invitation;
-        });
+        $router->bind('invitation', 'App\Auth\Binders\RouteModelBinder@invitation');
     }
 
     /**

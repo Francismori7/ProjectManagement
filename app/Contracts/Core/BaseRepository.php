@@ -37,4 +37,12 @@ interface BaseRepository
      * @return bool|null
      */
     public function remove(Entity $entity);
+
+    /**
+     * Restores the soft-deleted model.
+     *
+     * @param Model $model
+     * @return bool|null Success restoring the model.
+     */
+    public function restore(Model $model);
 }
