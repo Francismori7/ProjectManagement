@@ -5,9 +5,8 @@ namespace App\Projects\Jobs;
 use App\Contracts\Projects\TaskRepository;
 use App\Core\Jobs\Job;
 use App\Projects\Models\Task;
-use Illuminate\Contracts\Bus\SelfHandling;
 
-class DeleteTask extends Job implements SelfHandling
+class DeleteTask extends Job
 {
     /**
      * @var Task

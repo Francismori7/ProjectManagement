@@ -1,22 +1,13 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: 1494770
- * Date: 2015-12-04
- * Time: 10:08
- */
 
 namespace App\Auth\Jobs;
-
 
 use App\Auth\Models\User;
 use App\Contracts\Projects\InvitationRepository;
 use App\Core\Jobs\Job;
-use App\Projects\Models\Invitation;
 use DB;
-use Illuminate\Contracts\Bus\SelfHandling;
 
-class HandleInvitationsOnceRegistered extends Job implements SelfHandling
+class HandleInvitationsOnceRegistered extends Job
 {
     /**
      * @var User
