@@ -5,8 +5,10 @@ namespace App\Auth;
 use App\Auth\Repositories\EloquentRoleRepository;
 use App\Auth\Repositories\EloquentUserRepository;
 use App\Contracts\Auth\RoleRepository;
+use App\Contracts\Projects\InvitationRepository;
 use App\Core\Module;
 use App\Projects\Models\Invitation;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Routing\Router;
 use App\Contracts\Auth\UserRepository;
 
@@ -61,7 +63,12 @@ class AuthModule extends Module
     public function bindModuleRouteBindings(Router $router)
     {
         $router->bind('invitation', function ($id) {
-            return Invitation::query()->where('id', $id)->firstOrFail();
+            $invitation = $this->app->make(InvitationRepository::class)->findByUUID($id);
+
+            if(!$invitation) {
+                throw (new ModelNotFoundException)->setModel(Invitation::class);
+            }
+            return $invitation;
         });
     }
 

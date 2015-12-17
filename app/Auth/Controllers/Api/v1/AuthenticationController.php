@@ -25,6 +25,19 @@ class AuthenticationController extends Controller
     protected $userRepository;
 
     /**
+     * AuthenticationController constructor.
+     *
+     * @param UserRepository $userRepository
+     */
+    public function __construct(UserRepository $userRepository)
+    {
+        $this->middleware('guest', ['only' => ['login', 'register', 'email', 'reset']]);
+        $this->middleware('jwt.auth', ['only' => ['logout', 'me']]);
+
+        $this->userRepository = $userRepository;
+    }
+
+    /**
      * Authenticates the user and returns its JSON web token.
      *
      * POST /api/v1/auth/login
@@ -35,7 +48,7 @@ class AuthenticationController extends Controller
     public function login(LoginUserRequest $request)
     {
         try {
-            if (! $token = JWTAuth::attempt($request->only('username', 'password'))) {
+            if (!$token = JWTAuth::attempt($request->only('username', 'password'))) {
                 return response()->json(['error' => 'invalid_credentials'], 402);
             }
         } catch (JWTException $e) {
@@ -68,9 +81,8 @@ class AuthenticationController extends Controller
         }
 
         $user = $this->create($request->all(), $invitation);
-        $token = JWTAuth::fromUser(
-            $user
-        );
+
+        $token = JWTAuth::fromUser($user);
 
         return response()->json(compact('token'));
     }
@@ -82,17 +94,13 @@ class AuthenticationController extends Controller
      */
     public static function getValidatorRules()
     {
-        /** @var User $user */
-        $user = new User;
-        if (JWTAuth::getToken()) {
-            $user = JWTAuth::parseToken()->authenticate();
-        }
+        $user = JWTAuth::getToken() ? JWTAuth::parseToken()->authenticate() : new User;
 
         return [
             'first_name' => 'required|max:50',
             'last_name' => 'required|max:50',
-            'username' => 'required|alpha_dash|max:30|unique:' . $user->getTable() . ',username,' . $user->id,
-            'email' => 'required|email|confirmed|max:255|unique:' . $user->getTable() . ',email,' . $user->id,
+            'username' => 'required|alpha_dash|max:30|unique:' . $user->getTable() . ',username,' . $user->getKey(),
+            'email' => 'required|email|confirmed|max:255|unique:' . $user->getTable() . ',email,' . $user->getKey(),
             'password' => 'sometimes|required|min:8|confirmed',
         ];
     }
@@ -213,18 +221,5 @@ class AuthenticationController extends Controller
         $user->password = bcrypt($password);
 
         $this->userRepository->save($user);
-    }
-
-    /**
-     * AuthenticationController constructor.
-     *
-     * @param UserRepository $userRepository
-     */
-    public function __construct(UserRepository $userRepository)
-    {
-        $this->middleware('guest', ['only' => ['login', 'register', 'email', 'reset']]);
-        $this->middleware('jwt.auth', ['only' => ['logout', 'me']]);
-
-        $this->userRepository = $userRepository;
     }
 }
