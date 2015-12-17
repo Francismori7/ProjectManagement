@@ -6,10 +6,10 @@
     "type": "project",
     "require": {
         "php": ">=5.6.5",
-        "laravel/framework": "5.2.*",
-        "barryvdh/laravel-debugbar": "^2.2",
-        "barryvdh/laravel-ide-helper": "^2.1",
-        "tymon/jwt-auth": "dev-master",
+        "laravel/framework": "5.2.0-beta1",
+        "barryvdh/laravel-debugbar": "2.2.x-dev@dev",
+        "barryvdh/laravel-ide-helper": "2.1.x-dev@dev",
+        "tymon/jwt-auth": "0.5.*",
         "webpatser/laravel-uuid": "2.*",
         "doctrine/dbal": "~2.3",
         "guzzlehttp/guzzle": "^6.1"
@@ -55,6 +55,5 @@
     },
     "config": {
         "preferred-install": "dist"
-    },
-    "minimum-stability": "dev"
+    }
 }
