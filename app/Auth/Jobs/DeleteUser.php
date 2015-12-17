@@ -23,7 +23,7 @@ class DeleteUser extends Job implements SelfHandling
      */
     public function handle(UserRepository $users)
     {
-        $users->delete($this->user);
+        return $users->delete($this->user);
     }
 
     /**

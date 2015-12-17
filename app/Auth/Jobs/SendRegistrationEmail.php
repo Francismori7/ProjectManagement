@@ -35,12 +35,15 @@ class SendRegistrationEmail extends Job implements ShouldQueue, SelfHandling
     /**
      * Handle the job.
      */
-    public function handle() {
-        if (!$this->user->trashed()) {
-            Mail::send('emails.auth.register', ['user' => $this->user->load('projects')], function(Message $m) {
-                $m->to($this->user->email);
-                $m->subject('Thank you for registering an account!');
-            });
+    public function handle()
+    {
+        if ($this->user->trashed()) {
+            return false;
         }
+
+        Mail::send('emails.auth.register', ['user' => $this->user->load('projects')], function (Message $m) {
+            $m->to($this->user->email);
+            $m->subject('Thank you for registering an account!');
+        });
     }
 }

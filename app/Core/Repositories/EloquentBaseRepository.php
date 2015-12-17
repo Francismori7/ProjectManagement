@@ -185,4 +185,20 @@ class EloquentBaseRepository implements BaseRepository
     {
         $this->cache = $cache;
     }
+
+    /**
+     * Restores the soft-deleted model.
+     *
+     * @param Model $model
+     * @return bool|null Success restoring the model.
+     */
+    public function restore(Model $model)
+    {
+        if(method_exists($model, "trashed") && !$model->trashed()) {
+            $this->invalidateCacheFor($model);
+
+            return $model->restore();
+        }
+        return false;
+    }
 }

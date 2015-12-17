@@ -62,4 +62,12 @@ interface BaseRepository
      * @return bool
      */
     public function invalidateCacheFor(Model $model);
+
+    /**
+     * Restores the soft-deleted model.
+     *
+     * @param Model $model
+     * @return bool|null Success restoring the model.
+     */
+    public function restore(Model $model);
 }

@@ -45,8 +45,6 @@ class UpdateUser extends Job implements SelfHandling
             $this->user->password = bcrypt($this->data['password']);
         }
 
-        $users->save($this->user)->flush();
-
-        return $this->user;
+        return $users->save($this->user);
     }
 }

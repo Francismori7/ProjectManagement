@@ -22,10 +22,6 @@ class HandleInvitationsOnceRegistered extends Job implements SelfHandling
      * @var User
      */
     private $user;
-    /**
-     * @var Invitation
-     */
-    private $invitation;
 
     /**
      * Handle the job.
@@ -41,7 +37,7 @@ class HandleInvitationsOnceRegistered extends Job implements SelfHandling
          */
         $invitations = [];
 
-        foreach ($invitationRepository->findByEmail($this->invitation->email)->pluck('project_id') as $invitation) {
+        foreach ($invitationRepository->findByEmail($this->user->email)->pluck('project_id') as $invitation) {
             /**
              * We'll make sure the role we add is a simple user, not a leader. They can
              * promote the user later if they need to.
@@ -59,17 +55,16 @@ class HandleInvitationsOnceRegistered extends Job implements SelfHandling
          * We no longer need the invitations for that user (based on email) since we added
          * the user to all the projects he was invited to.
          */
-        DB::table('invitations')->where('email', $this->invitation->email)->delete();
+        DB::table('invitations')->where('email', $this->user->email)->delete();
     }
 
     /**
      * HandleInvitationsOnceRegistered constructor.
+     *
      * @param User $user
-     * @param Invitation $invitation
      */
-    public function __construct(User $user, Invitation $invitation)
+    public function __construct(User $user)
     {
         $this->user = $user;
-        $this->invitation = $invitation;
     }
 }
