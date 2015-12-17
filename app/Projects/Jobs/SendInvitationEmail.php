@@ -1,10 +1,8 @@
 <?php
 
-namespace App\Projects\Listeners;
+namespace App\Projects\Jobs;
 
-use App\Core\Events\Event;
 use App\Core\Jobs\Job;
-use App\Projects\Events\EmailWasInvitedToProject;
 use App\Projects\Models\Invitation;
 use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -29,27 +27,18 @@ class SendInvitationEmail extends Job implements ShouldQueue, SelfHandling
 
     /**
      * Handle the job.
-     *
-     * @param Event|EmailWasInvitedToProject $event
      */
-    public function handle(Event $event)
+    public function handle()
     {
-        $this->invitation = $event->invitation;
-
         $invitee = $this->invitation->email;
         $host = $this->invitation->host;
         $project = $this->invitation->project;
         $invitation = $this->invitation;
 
-        $view = 'emails.projects.invite';
-        $data = compact('invitation', 'invitee', 'host', 'project');
-
-        \Mail::send($view, $data, function (Message $m) use ($data) {
-            $fullName = "{$data['host']->first_name} {$data['host']->last_name} (Creaperio)";
-            $m->sender(config('mail.from.address'), $fullName);
-
-            $m->to($data['invitee']);
-            $m->subject("You were invited to join a project: {$data['project']->name}!");
-        });
+        \Mail::send('emails.projects.invite', compact('invitation', 'invitee', 'host', 'project'),
+            function (Message $m) {
+                $m->to($this->invitation->email);
+                $m->subject("Invitation to {$this->invitation->project->name} from {$this->invitation->host->first_name}");
+            });
     }
 }

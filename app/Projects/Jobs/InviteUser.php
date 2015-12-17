@@ -8,9 +8,10 @@ use App\Projects\Events\EmailWasInvitedToProject;
 use App\Projects\Events\UserWasAddedToProject;
 use App\Projects\Models\Invitation;
 use App\Projects\Models\Project;
+use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 
-class InviteUser extends Job
+class InviteUser extends Job implements SelfHandling
 {
     use DispatchesJobs;
 

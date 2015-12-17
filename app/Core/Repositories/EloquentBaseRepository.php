@@ -3,54 +3,54 @@
 namespace App\Core\Repositories;
 
 use App\Contracts\Core\BaseRepository;
-use App\Core\Models\Entity;
+use Illuminate\Database\Eloquent\Model;
 
 class EloquentBaseRepository implements BaseRepository
 {
     /**
      * Soft-deletes/removes an entity.
      *
-     * @param Entity $entity The Entity to delete.
+     * @param Model $model The Entity to delete.
      * @return bool|null
      */
-    public function delete(Entity $entity)
+    public function delete(Model $model)
     {
-        return $entity->delete();
+        return $model->delete();
     }
 
     /**
      * Soft-deletes/removes an entity.
      *
-     * @param Entity $entity The Entity to delete.
+     * @param Model $model The Entity to delete.
      * @return bool|null
      */
-    public function remove(Entity $entity)
+    public function remove(Model $model)
     {
-        return $this->delete($entity);
+        return $this->delete($model);
     }
 
     /**
      * Creates and saves an Entity to the database.
      *
-     * @param Entity $entity
-     * @return Entity
+     * @param Model $model
+     * @return Model
      */
-    public function create(Entity $entity)
+    public function create(Model $model)
     {
-        $entity->save();
-        return $entity;
+        $model->save();
+        return $model;
     }
 
     /**
      * Saves a Entity to the database.
      *
-     * @param Entity $entity
-     * @return Entity
+     * @param Model $model
+     * @return Model
      */
-    public function save(Entity $entity)
+    public function save(Model $model)
     {
-        $entity->save();
-        return $entity;
+        $model->save();
+        return $model;
     }
 
     /**
@@ -62,8 +62,6 @@ class EloquentBaseRepository implements BaseRepository
     public function restore(Model $model)
     {
         if(method_exists($model, "trashed") && !$model->trashed()) {
-            $this->invalidateCacheFor($model);
-
             return $model->restore();
         }
         return false;

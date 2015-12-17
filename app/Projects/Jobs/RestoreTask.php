@@ -2,11 +2,14 @@
 
 namespace App\Projects\Jobs;
 
+use App\Contracts\Projects\ProjectRepository;
 use App\Contracts\Projects\TaskRepository;
 use App\Core\Jobs\Job;
+use App\Projects\Models\Project;
 use App\Projects\Models\Task;
+use Illuminate\Contracts\Bus\SelfHandling;
 
-class RestoreTask extends Job
+class RestoreTask extends Job implements SelfHandling
 {
     /**
      * @var Task

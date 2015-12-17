@@ -8,9 +8,7 @@ use App\Contracts\Core\BaseRepository;
 use App\Core\ACL\Repositories\EloquentPermissionRepository;
 use App\Core\Repositories\EloquentBaseRepository;
 use Auth;
-use DB;
 use Illuminate\Contracts\Events\Dispatcher;
-use Illuminate\Database\Events\QueryExecuted;
 use Illuminate\Mail\Message;
 use Illuminate\Routing\Router;
 use Log;
@@ -86,10 +84,10 @@ class CoreModule extends Module
          * each query.
          */
         if (env('APP_DEBUG', false)) {
-            $events->listen(QueryExecuted::class, function (QueryExecuted $event) {
-                Log::info("[{$event->connection->getName()}@{$event->time}] {$event->sql} (" . implode(', ', $event->bindings) . ")");
+            /*$events->listen('illuminate.query', function ($query, $bindings, $time, $connectionName) {
+                Log::info("[$connectionName@$time] $query (" . implode(', ', $bindings) . ")");
                 return false;
-            });
+            });*/
         }
     }
 

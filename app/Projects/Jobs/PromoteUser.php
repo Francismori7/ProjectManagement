@@ -5,8 +5,9 @@ namespace App\Projects\Jobs;
 use App\Auth\Models\User;
 use App\Core\Jobs\Job;
 use App\Projects\Models\Project;
+use Illuminate\Contracts\Bus\SelfHandling;
 
-class PromoteUser extends Job
+class PromoteUser extends Job implements SelfHandling
 {
     /**
      * @var Project
