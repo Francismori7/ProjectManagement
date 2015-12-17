@@ -88,7 +88,7 @@ class CoreModule extends Module
         if (env('APP_DEBUG', false)) {
             $events->listen(QueryExecuted::class, function (QueryExecuted $event) {
                 Log::info("[{$event->connection->getName()}@{$event->time}] {$event->sql} (" . implode(', ', $event->bindings) . ")");
-                return false;
+                //return false;
             });
         }
     }

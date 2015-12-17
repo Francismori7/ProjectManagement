@@ -125,7 +125,8 @@ class ProjectModule extends Module
     public function bindModuleRouteBindings(Router $router)
     {
         $router->bind('project', function ($id) {
-            return Project::withTrashed()->where('id', $id)->firstOrFail();
+            $projectRepository = app()->make(ProjectRepository::class);
+            return $projectRepository->findByUUID($id, ['users', 'invitations', 'tasks', 'creator']);
         });
         $router->bind('task', function ($id) {
             return Task::withTrashed()->where('id', $id)->firstOrFail();

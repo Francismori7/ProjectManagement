@@ -47,7 +47,7 @@ class ProjectController extends Controller
         /** @var User $user */
         $user = auth()->user();
 
-        return $user->projects;
+        return $this->projects->findByUser($user, ['tasks']);
     }
 
     /**
@@ -67,7 +67,7 @@ class ProjectController extends Controller
             return response()->json(['not_in_project'], 403);
         }
 
-        return $project->load(['users', 'invitations', 'tasks']);
+        return $project;
     }
 
     /**

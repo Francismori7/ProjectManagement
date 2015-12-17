@@ -43,7 +43,7 @@ class Project extends UUIDBaseEntity
 
     protected $dates = ['deleted_at'];
 
-    protected $appends = ['leaders', 'completedTasks'];
+    protected $appends = ['completedTasks'];
 
     /**
      * A Project can have many tasks.

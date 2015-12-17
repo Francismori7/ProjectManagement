@@ -61,8 +61,36 @@ class EloquentProjectRepository extends EloquentBaseRepository implements Projec
      */
     public function findByUUID($uuid, array $relations = [])
     {
-        return $this->storeModelInCache(
-            Project::with($relations)->whereId($uuid)->first()
+        if (! $this->caching) {
+            return Project::with($relations)->whereId($uuid)->first();
+        }
+
+        return $this->cache->remember(
+            $this->getCacheKey($uuid), self::DEFAULT_CACHING_TIME,
+            function () use ($uuid, $relations) {
+                return Project::with($relations)->whereId($uuid)->first();
+            }
+        );
+    }
+
+    /**
+     * Find all project models by user.
+     *
+     * @param User $user The user
+     * @param array $relations
+     * @return Collection Projects for the user.
+     */
+    public function findByUser(User $user, $relations = [])
+    {
+        if (! $this->caching) {
+            return $user->projects->load($relations);
+        }
+
+        return $this->cache->remember(
+            $this->getCollectionCacheKey("user:{$user->getKey()}"), self::DEFAULT_CACHING_TIME,
+            function () use ($user, $relations) {
+                return $user->projects->load($relations);
+            }
         );
     }
 }

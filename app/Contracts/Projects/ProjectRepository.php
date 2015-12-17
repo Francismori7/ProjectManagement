@@ -2,6 +2,7 @@
 
 namespace App\Contracts\Projects;
 
+use App\Auth\Models\User;
 use App\Contracts\Core\BaseRepository;
 use App\Projects\Models\Project;
 use Illuminate\Database\Eloquent\Collection;
@@ -40,4 +41,13 @@ interface ProjectRepository extends BaseRepository
      * @return Project|null The project.
      */
     public function findByUUID($uuid, array $relations = []);
+
+    /**
+     * Find all project models by user.
+     *
+     * @param User $user The user
+     * @param array $relations
+     * @return Collection Projects for the user.
+     */
+    public function findByUser(User $user, $relations = []);
 }

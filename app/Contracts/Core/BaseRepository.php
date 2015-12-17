@@ -51,9 +51,10 @@ interface BaseRepository
      * Stores the collection of entities in the cache.
      *
      * @param Collection $collection
+     * @param null $keyOverride
      * @return Collection
      */
-    public function storeCollectionInCache(Collection $collection);
+    public function storeCollectionInCache(Collection $collection, $keyOverride = null);
 
     /**
      * Invalidates the cache for the model, essentially forcing a new fetch.

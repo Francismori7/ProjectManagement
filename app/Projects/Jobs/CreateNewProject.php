@@ -47,6 +47,6 @@ class CreateNewProject extends Job
 
         $project->users()->attach($this->leader, ['role' => 'leader']);
 
-        return $project;
+        return $project->load('creator');
     }
 }
