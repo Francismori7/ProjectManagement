@@ -7,12 +7,11 @@ use App\Core\Events\Event;
 use App\Core\Jobs\Job;
 use App\Projects\Events\UserWasAddedToProject;
 use App\Projects\Models\Project;
-use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Contracts\Mail\Mailer;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Message;
 
-class SendUserAddedToProjectEmail extends Job implements ShouldQueue, SelfHandling
+class SendUserAddedToProjectEmail extends Job implements ShouldQueue
 {
     /**
      * @var User

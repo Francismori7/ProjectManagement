@@ -8,14 +8,13 @@ use App\Contracts\Projects\TaskRepository;
 use App\Core\Module;
 use App\Projects\Events\EmailWasInvitedToProject;
 use App\Projects\Events\UserWasAddedToProject;
-use App\Projects\Jobs\SendInvitationEmail;
+use App\Projects\Listeners\SendInvitationEmail;
 use App\Projects\Listeners\SendUserAddedToProjectEmail;
 use App\Projects\Models\Project;
 use App\Projects\Models\Task;
 use App\Projects\Repositories\EloquentInvitationRepository;
 use App\Projects\Repositories\EloquentProjectRepository;
 use App\Projects\Repositories\EloquentTaskRepository;
-use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Routing\Router;
 use App\Contracts\Projects\ProjectRepository;
 
