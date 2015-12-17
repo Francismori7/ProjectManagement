@@ -17,8 +17,8 @@
         <div class="md-header">
             <h2 class="md-title">General Information</h2>
         </div>
-        <form ng-submit="vm.updateInfo()" layout="column">
-            <textarea ng-model="vm.project.description" class="status-text" placeholder="Write something..."></textarea>
+        <form ng-submit="updateInfo()" layout="column">
+            <textarea ng-model="project.description" class="status-text" placeholder="Write something..."></textarea>
             <div layout="row" layout-align="end center">
                 <md-button class="md-primary md-raised">
                     Update
@@ -64,7 +64,7 @@
                 </md-list-item>
             </md-list>
             <md-divider></md-divider>
-            <form ng-submit="vm.addComment(newComment)" layout="column">
+            <form ng-submit="addComment(newComment)" layout="column">
                 <textarea ng-model="newComment" class="status-text" placeholder="Comment..." style="height:50px;"></textarea>
                 <div layout="row" layout-align="end center">
                     <md-button class="md-primary md-raised">

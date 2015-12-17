@@ -4,7 +4,7 @@
             <h2 class="md-title">Project Leader</h2>
         </div>
         <md-card-content class="md-padding">
-            {{ vm.getNameFromUser(vm.getUserFromId(vm.project.created_by)) }}
+            {{ vm.getNameFromUser(vm.getUserFromId(project.created_by)) }}
         </md-card-content>
     </md-card>
     <md-card>
@@ -31,7 +31,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="assignee in vm.project.users">
+                <tr ng-repeat="assignee in project.users">
                     <td>{{ assignee.first_name }} {{ assignee.last_name }}</td>
                     <td>{{ assignee.position }}</td>
                 </tr>

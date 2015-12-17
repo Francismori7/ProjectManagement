@@ -7,6 +7,7 @@
  */
 
 var gutil = require('gulp-util');
+var argv = require('yargs').argv;
 
 /**
  *  The main paths of your project handle these with care
@@ -21,6 +22,11 @@ exports.paths = {
   viewsOut: 'public/views',
   fontsOut: 'public/fonts'
 };
+
+/**
+ * The environment
+ */
+exports.isProduction = argv.production;
 
 /**
  *  Common implementation for an error handler of a Gulp plugin

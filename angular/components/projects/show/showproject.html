@@ -1,16 +1,37 @@
-<div ng-controller="ShowProjectCtrl as vm" layout="column" flex>
+<div layout="column" flex>
     <div class="header">
         <h1><a ui-sref="app.projects">Projects</a> / {{ vm.project.name }}</h1>
     </div>
 
-    <md-tabs md-dynamic-height>
-        <md-tab
+    <md-tabs flex>
+        <!-- <md-tab
             ng-repeat="tab in vm.tabs"
             label="{{ tab.label }}"
             md-on-select="vm.switchTab(tab.state)"
             md-active="tab.isActive">
+            <md-content>
+                
+            </md-content>
+        </md-tab> -->
+        <md-tab label="general">
+            <md-content class="md-padding">
+                <project-general project="vm.project"></project-general>
+            </md-content>
+        </md-tab>
+        <md-tab label="tasks">
+            <md-content class="md-padding">
+                
+            </md-content>
+        </md-tab>
+        <md-tab label="project members">
+            <md-content class="md-padding">
+                <project-members project="vm.project"></project-members>
+            </md-content>
+        </md-tab>
+        <md-tab label="settings">
+            <md-content class="md-padding">
+                
+            </md-content>
         </md-tab>
     </md-tabs>
-
-    <div class="md-padding content-container" ui-view="tab" flex></div>
 </div>
