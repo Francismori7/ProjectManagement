@@ -6,11 +6,10 @@ use App\Core\Events\Event;
 use App\Core\Jobs\Job;
 use App\Projects\Events\EmailWasInvitedToProject;
 use App\Projects\Models\Invitation;
-use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Message;
 
-class SendInvitationEmail extends Job implements ShouldQueue, SelfHandling
+class SendInvitationEmail extends Job implements ShouldQueue
 {
     /**
      * @var Invitation

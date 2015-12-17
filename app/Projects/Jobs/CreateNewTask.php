@@ -3,13 +3,11 @@
 namespace App\Projects\Jobs;
 
 use App\Auth\Models\User;
-use App\Contracts\Projects\ProjectRepository;
 use App\Core\Jobs\Job;
 use App\Projects\Models\Project;
 use App\Projects\Models\Task;
-use Illuminate\Contracts\Bus\SelfHandling;
 
-class CreateNewTask extends Job implements SelfHandling
+class CreateNewTask extends Job
 {
     /**
      * @var array

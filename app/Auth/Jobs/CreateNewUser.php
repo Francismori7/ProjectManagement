@@ -9,7 +9,7 @@ use App\Projects\Models\Invitation;
 use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 
-class CreateNewUser extends Job implements SelfHandling
+class CreateNewUser extends Job
 {
     use DispatchesJobs;
 

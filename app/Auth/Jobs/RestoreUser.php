@@ -5,9 +5,8 @@ namespace App\Auth\Jobs;
 use App\Auth\Models\User;
 use App\Contracts\Auth\UserRepository;
 use App\Core\Jobs\Job;
-use Illuminate\Contracts\Bus\SelfHandling;
 
-class RestoreUser extends Job implements SelfHandling
+class RestoreUser extends Job
 {
     /**
      * @var User

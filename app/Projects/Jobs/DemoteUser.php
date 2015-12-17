@@ -5,9 +5,8 @@ namespace App\Projects\Jobs;
 use App\Auth\Models\User;
 use App\Core\Jobs\Job;
 use App\Projects\Models\Project;
-use Illuminate\Contracts\Bus\SelfHandling;
 
-class DemoteUser extends Job implements SelfHandling
+class DemoteUser extends Job
 {
     /**
      * @var Project
