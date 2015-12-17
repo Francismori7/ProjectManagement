@@ -26,8 +26,8 @@ class ProfileController extends Controller
      */
     public function update(UpdateProfileRequest $request)
     {
-        $this->dispatch(new UpdateUser($request->user(), $request->all()));
+        $user = $this->dispatch(new UpdateUser($request->user(), $request->all()));
 
-        return response()->json(['updated']);
+        return response()->json(compact('user'));
     }
 }
