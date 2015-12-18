@@ -8,20 +8,12 @@ use App\Core\Controllers\Controller;
 
 class EmployeeController extends Controller
 {
-    /**
-     * @var UserRepository
-     */
-    protected $users;
 
     /**
      * ProjectController constructor.
-     *
-     * @param UserRepository $users
      */
-    public function __construct(UserRepository $users)
+    public function __construct()
     {
-        $this->users = $users;
-
         $this->middleware('jwt.auth');
         $this->middleware('jwt.refresh', ['only' => 'store']);
     }
@@ -31,11 +23,11 @@ class EmployeeController extends Controller
      *
      * GET /api/v1/employees/{employee}
      *
-     * @param $employee
+     * @param User $employee
      * @return User|null
      */
-    public function show($employee)
+    public function show(User $employee)
     {
-        return $this->users->findByUUID($employee, ['projects', 'tasks']);
+        return $employee->load(['projects', 'tasks']);
     }
 }
