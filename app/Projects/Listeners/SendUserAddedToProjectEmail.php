@@ -45,7 +45,8 @@ class SendUserAddedToProjectEmail extends Job implements ShouldQueue
      *
      * @param Event|UserWasAddedToProject $event
      */
-    public function handle(Event $event) {
+    public function handle(Event $event)
+    {
         $user = $event->user;
         $project = $event->project;
         $host = $event->host;
@@ -53,7 +54,7 @@ class SendUserAddedToProjectEmail extends Job implements ShouldQueue
         $view = 'emails.project.user_added_to_project';
         $data = compact('user', 'project', 'host');
 
-        $this->mailer->send($view, $data, function(Message $m) use ($data) {
+        $this->mailer->send($view, $data, function (Message $m) use ($data) {
             $fullName = "{$data['host']->first_name} {$data['host']->last_name} (Creaperio)";
             $m->sender(config('mail.from.address'), $fullName);
 

@@ -61,7 +61,7 @@ class EloquentBaseRepository implements BaseRepository
      */
     public function restore(Model $model)
     {
-        if(method_exists($model, "trashed") && !$model->trashed()) {
+        if (method_exists($model, "trashed") && !$model->trashed()) {
             return $model->restore();
         }
         return false;

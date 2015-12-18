@@ -8,7 +8,6 @@ use App\Core\Controllers\Controller;
 
 class EmployeeController extends Controller
 {
-
     /**
      * ProjectController constructor.
      */

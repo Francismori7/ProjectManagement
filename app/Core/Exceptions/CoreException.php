@@ -4,7 +4,7 @@ namespace App\Core\Exceptions;
 
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
-abstract class Exception extends HttpException
+abstract class CoreException extends HttpException
 {
     /**
      * Constructor.

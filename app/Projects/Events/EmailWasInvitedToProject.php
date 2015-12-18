@@ -31,8 +31,8 @@ class EmailWasInvitedToProject extends Event implements ShouldBroadcast
     public function broadcastOn()
     {
         return [
-            'projects.'.$this->invitation->project_id,
-            'users.'.$this->invitation->host_id
+            'projects.' . $this->invitation->project_id,
+            'users.' . $this->invitation->host_id
         ];
     }
 }

@@ -10,7 +10,7 @@ use App\Auth\Models\User;
 use App\Contracts\Auth\UserRepository;
 use App\Core\Controllers\Controller;
 use App\Projects\Models\Invitation;
-use App\Auth\Exceptions\EmailWasNotInvitedException;
+use App\Auth\Exceptions\EmailWasNotInvitedCoreException;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
 use Illuminate\Mail\Message;
@@ -78,7 +78,7 @@ class AuthenticationController extends Controller
          */
         $email = $request->input('email');
         if ($email !== $invitation->email) {
-            throw new EmailWasNotInvitedException();
+            throw new EmailWasNotInvitedCoreException();
         }
 
         $user = $this->create($request->all(), $invitation);

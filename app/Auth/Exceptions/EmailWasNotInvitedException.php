@@ -2,9 +2,9 @@
 
 namespace App\Auth\Exceptions;
 
-use App\Core\Exceptions\Exception;
+use App\Core\Exceptions\CoreException;
 
-class EmailWasNotInvitedException extends Exception
+class EmailWasNotInvitedException extends CoreException
 {
     /**
      * Constructor.

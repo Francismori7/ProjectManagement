@@ -2,9 +2,9 @@
 
 namespace App\Projects\Exceptions;
 
-use App\Core\Exceptions\Exception;
+use App\Core\Exceptions\CoreException;
 
-class UserNotInProjectException extends Exception
+class UserNotInProjectException extends CoreException
 {
     /**
      * Constructor.

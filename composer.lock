@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "cf27f08f46cd1e5ec61e4a7de924bba9",
-    "content-hash": "a31b28e169f9ee14d273eece87025b5b",
+    "hash": "93668c39a5c3b8f2a5a79e7441d0217e",
+    "content-hash": "a0cc5ace8944cc73370f214483f15535",
     "packages": [
         {
             "name": "barryvdh/laravel-debugbar",
@@ -998,16 +998,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.2.0-beta1",
+            "version": "5.2.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "c67883053a9f50228cf04a8268c3d174c36c2f4e"
+                "reference": "ad6e7c20df84d3be5b2ea2d360cd61d36377ff33"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/c67883053a9f50228cf04a8268c3d174c36c2f4e",
-                "reference": "c67883053a9f50228cf04a8268c3d174c36c2f4e",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/ad6e7c20df84d3be5b2ea2d360cd61d36377ff33",
+                "reference": "ad6e7c20df84d3be5b2ea2d360cd61d36377ff33",
                 "shasum": ""
             },
             "require": {
@@ -1123,7 +1123,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2015-12-17 20:36:26"
+            "time": "2015-12-18 19:15:11"
         },
         {
             "name": "league/flysystem",
@@ -4357,7 +4357,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "laravel/framework": 10,
+        "laravel/framework": 20,
         "barryvdh/laravel-debugbar": 20,
         "barryvdh/laravel-ide-helper": 20
     },

@@ -3,6 +3,8 @@
 namespace Test\Projects\Functional;
 
 use App\Auth\Models\User;
+use App\Core\Exceptions\Handler;
+use App\Projects\Exceptions\UserNotInProjectException;
 use App\Projects\Models\Project;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
@@ -147,9 +149,12 @@ class ProjectTest extends TestCase
 
         $this->seeJsonContains(['id' => $project->id]);
 
+        $expectedCode = Handler::$errorCodes[UserNotInProjectException::class];
+        $expectedMessage = Handler::$errorMessages[UserNotInProjectException::class];
+
         foreach ($projects as $dontSeeProject) {
             $this->get(route('api.v1.projects.show', [$dontSeeProject->id]), ['X-Requested-With' => 'XMLHttpRequest']);
-            $this->seeJson(['not_in_project']);
+            $this->seeJson(['code' => $expectedCode, 'message' => $expectedMessage]);
             $this->assertResponseStatus(403);
         }
     }
