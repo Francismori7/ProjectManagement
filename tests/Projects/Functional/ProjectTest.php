@@ -61,11 +61,13 @@ class ProjectTest extends TestCase
         $this->giveUserPermission($user, 'projects.project.create');
         $this->actingAs($user);
 
-        $this->post(route('api.v1.projects.store'), $this->overrides,
+        $attributes = $this->overrides + ['description' => 'Something'];
+
+        $this->post(route('api.v1.projects.store'), $attributes,
             ['X-Requested-With' => 'XMLHttpRequest'])->assertResponseStatus(200);
 
-        $this->seeJsonContains($this->overrides);
-        $this->seeInDatabase('projects', $this->overrides);
+        $this->seeJsonContains($attributes);
+        $this->seeInDatabase('projects', $attributes);
     }
 
     /**

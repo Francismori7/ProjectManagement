@@ -179,3 +179,4 @@ bower_components
 /.php_cs.cache
 /public/fonts/
 /public/views
+*.sqlite
