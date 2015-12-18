@@ -17,20 +17,12 @@ use App\Projects\Models\Project;
 
 class ProjectController extends Controller
 {
-    /**
-     * @var ProjectRepository
-     */
-    protected $projects;
 
     /**
      * ProjectController constructor.
-     *
-     * @param ProjectRepository $projects
      */
-    public function __construct(ProjectRepository $projects)
+    public function __construct()
     {
-        $this->projects = $projects;
-
         $this->middleware('jwt.auth');
         $this->middleware('jwt.refresh', ['only' => 'store']);
     }
