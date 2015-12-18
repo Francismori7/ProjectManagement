@@ -5,7 +5,7 @@ namespace App\Projects\Controllers\Api\v1;
 use App\Auth\Models\User;
 use App\Contracts\Projects\ProjectRepository;
 use App\Core\Controllers\Controller;
-use App\Projects\Exceptions\UserNotInProject;
+use App\Projects\Exceptions\UserNotInProjectException;
 use App\Projects\Http\Requests\CreateProjectRequest;
 use App\Projects\Http\Requests\DeleteProjectRequest;
 use App\Projects\Http\Requests\RestoreProjectRequest;
@@ -57,7 +57,7 @@ class ProjectController extends Controller
         $user = auth()->user()->load('projects');
 
         if (! $user->projects->contains('id', $project->id)) {
-            throw new UserNotInProject();
+            throw new UserNotInProjectException();
         }
 
         return $project->load(['users', 'invitations', 'tasks']);

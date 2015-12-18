@@ -1,17 +1,16 @@
 <?php
 
-namespace App\Projects\Exceptions;
+namespace App\Auth\Exceptions;
 
 use App\Core\Exceptions\Exception;
 
-class UserNotInProject extends Exception
+class EmailWasNotInvitedException extends Exception
 {
     /**
      * Constructor.
      */
     public function __construct()
     {
-        parent::__construct(403);
+        parent::__construct(422);
     }
-
 }

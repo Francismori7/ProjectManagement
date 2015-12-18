@@ -2,7 +2,8 @@
 
 namespace App\Core\Exceptions;
 
-use App\Projects\Exceptions\UserNotInProject;
+use App\Auth\Exceptions\EmailWasNotInvitedException;
+use App\Projects\Exceptions\UserNotInProjectException;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Validation\ValidationException;
@@ -19,7 +20,15 @@ class Handler extends ExceptionHandler
      * @var array
      */
     public static $errorCodes = [
-        UserNotInProject::class => 10001,
+        /* Core: 1000-1999 */
+
+        /* Auth: 2000-2999 */
+        EmailWasNotInvitedException::class => 2000,
+
+        /* Projects: 3000-3999 */
+        UserNotInProjectException::class => 3000,
+
+        /* Employees: 4000-4999 */
     ];
 
     /**
@@ -28,7 +37,8 @@ class Handler extends ExceptionHandler
      * @var array
      */
     public static $errorMessages = [
-        UserNotInProject::class => 'You are not in this project.',
+        EmailWasNotInvitedException::class => 'This email was not invited. Make sure you are using the right email address.',
+        UserNotInProjectException::class => 'You are not in this project.',
     ];
 
     /**
