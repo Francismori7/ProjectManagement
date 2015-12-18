@@ -3,7 +3,7 @@
 namespace App\Projects\Models;
 
 use App\Auth\Models\User;
-use App\Core\Models\UUIDBaseEntity;
+use App\Core\Models\UUIDBaseModel;
 
 /**
  * Class Invitation.
@@ -23,7 +23,7 @@ use App\Core\Models\UUIDBaseEntity;
  * @method static \Illuminate\Database\Query\Builder|\App\Projects\Models\Invitation whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Projects\Models\Invitation whereUpdatedAt($value)
  */
-class Invitation extends UUIDBaseEntity
+class Invitation extends UUIDBaseModel
 {
     protected $fillable = [
         'email',

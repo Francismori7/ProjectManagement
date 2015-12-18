@@ -9,6 +9,6 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @package App\Core\Models
  */
-class Entity extends Model
+class BaseModel extends Model
 {
 }

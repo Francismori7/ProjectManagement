@@ -5,7 +5,7 @@ namespace App\Auth\Models;
 use App\Auth\Traits\HasRoles;
 use App\Core\ACL\Models\Permission;
 use App\Core\ACL\Traits\HasPermissions;
-use App\Core\Models\UUIDBaseEntity;
+use App\Core\Models\UUIDBaseModel;
 use App\Projects\Models\Invitation;
 use App\Projects\Models\Project;
 use App\Projects\Models\Task;
@@ -46,7 +46,7 @@ use Illuminate\Foundation\Auth\Access\Authorizable;
  * @property-read \Illuminate\Database\Eloquent\Collection|Invitation[] $invitations
  * @property-read \Illuminate\Database\Eloquent\Collection|Task[] $tasks
  */
-class User extends UUIDBaseEntity implements AuthenticatableContract,
+class User extends UUIDBaseModel implements AuthenticatableContract,
     CanResetPasswordContract,
     AuthorizableContract,
     HasPermissionsContract,

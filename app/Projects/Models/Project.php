@@ -3,7 +3,7 @@
 namespace App\Projects\Models;
 
 use App\Auth\Models\User;
-use App\Core\Models\UUIDBaseEntity;
+use App\Core\Models\UUIDBaseModel;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -32,7 +32,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\Projects\Models\Project whereCreatedBy($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Projects\Models\Project whereDueAt($value)
  */
-class Project extends UUIDBaseEntity
+class Project extends UUIDBaseModel
 {
     use SoftDeletes;
 

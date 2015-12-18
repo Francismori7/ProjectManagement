@@ -9,7 +9,7 @@ use Uuid;
  *
  * @package App\Core\Models
  */
-class UUIDBaseEntity extends Entity
+class UUIDBaseModel extends BaseModel
 {
     /**
      * Indicates if the IDs are auto-incrementing.
@@ -31,7 +31,7 @@ class UUIDBaseEntity extends Entity
          * Attach to the 'creating' Model Event to provide a UUID
          * for the `id` field (provided by $model->getKeyName())
          */
-        static::creating(function (UUIDBaseEntity $model) {
+        static::creating(function (UUIDBaseModel $model) {
             $model->{$model->getKeyName()} = (string)$model->generateNewId();
         });
     }

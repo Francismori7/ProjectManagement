@@ -3,7 +3,7 @@
 namespace App\Projects\Models;
 
 use App\Auth\Models\User;
-use App\Core\Models\UUIDBaseEntity;
+use App\Core\Models\UUIDBaseModel;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -33,7 +33,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\Projects\Models\Task whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Projects\Models\Task whereDeletedAt($value)
  */
-class Task extends UUIDBaseEntity
+class Task extends UUIDBaseModel
 {
     use SoftDeletes;
 

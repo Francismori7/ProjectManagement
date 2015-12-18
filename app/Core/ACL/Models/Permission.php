@@ -4,7 +4,7 @@ namespace App\Core\ACL\Models;
 
 use App\Auth\Models\Role;
 use App\Auth\Models\User;
-use App\Core\Models\BaseEntity;
+use App\Core\Models\BaseModel;
 
 /**
  * Class Permission.
@@ -18,7 +18,7 @@ use App\Core\Models\BaseEntity;
  * @method static \Illuminate\Database\Query\Builder|\App\Core\ACL\Models\Permission wherePattern($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Core\ACL\Models\Permission whereName($value)
  */
-class Permission extends BaseEntity
+class Permission extends BaseModel
 {
     public $timestamps = false;
 

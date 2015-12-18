@@ -3,7 +3,7 @@
 namespace App\Auth\Models;
 
 use App\Core\ACL\Models\Permission;
-use App\Core\Models\BaseEntity;
+use App\Core\Models\BaseModel;
 use App\Core\ACL\Traits\HasPermissions;
 use App\Contracts\ACL\HasPermissions as HasPermissionsContract;
 
@@ -17,7 +17,7 @@ use App\Contracts\ACL\HasPermissions as HasPermissionsContract;
  * @method static \Illuminate\Database\Query\Builder|\App\Auth\Models\Role whereId($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Auth\Models\Role whereName($value)
  */
-class Role extends BaseEntity implements HasPermissionsContract
+class Role extends BaseModel implements HasPermissionsContract
 {
     use HasPermissions;
 
