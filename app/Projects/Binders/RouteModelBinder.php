@@ -11,6 +11,7 @@ use App\Projects\Models\Invitation;
 use App\Projects\Models\Project;
 use App\Projects\Models\Task;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Route;
 
 class RouteModelBinder
 {

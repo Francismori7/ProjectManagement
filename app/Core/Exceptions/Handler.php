@@ -2,6 +2,7 @@
 
 namespace App\Core\Exceptions;
 
+use App\Projects\Exceptions\UserNotInProject;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Validation\ValidationException;
@@ -12,6 +13,24 @@ use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
 {
+    /**
+     * An array of all possible error codes.
+     *
+     * @var array
+     */
+    public static $errorCodes = [
+        UserNotInProject::class => 10001,
+    ];
+
+    /**
+     * And array error messages.
+     *
+     * @var array
+     */
+    public static $errorMessages = [
+        UserNotInProject::class => 'You are not in this project.',
+    ];
+
     /**
      * A list of the exception types that should not be reported.
      *

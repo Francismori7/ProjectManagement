@@ -15,7 +15,7 @@ class CreateProjectUserTable extends Migration
         Schema::create('project_user', function (Blueprint $table) {
             $table->char('project_id', 36);
             $table->char('user_id', 36);
-            $table->string('role', 20);
+            $table->string('role', 20)->nullable();
             $table->timestamps();
 
             $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');

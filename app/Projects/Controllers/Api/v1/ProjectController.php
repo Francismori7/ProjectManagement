@@ -5,6 +5,7 @@ namespace App\Projects\Controllers\Api\v1;
 use App\Auth\Models\User;
 use App\Contracts\Projects\ProjectRepository;
 use App\Core\Controllers\Controller;
+use App\Projects\Exceptions\UserNotInProject;
 use App\Projects\Http\Requests\CreateProjectRequest;
 use App\Projects\Http\Requests\DeleteProjectRequest;
 use App\Projects\Http\Requests\RestoreProjectRequest;
@@ -14,10 +15,10 @@ use App\Projects\Jobs\DeleteProject;
 use App\Projects\Jobs\RestoreProject;
 use App\Projects\Jobs\UpdateProject;
 use App\Projects\Models\Project;
+use Auth;
 
 class ProjectController extends Controller
 {
-
     /**
      * ProjectController constructor.
      */
@@ -53,10 +54,10 @@ class ProjectController extends Controller
     public function show(Project $project)
     {
         /** @var User $user */
-        $user = auth()->user();
+        $user = auth()->user()->load('projects');
 
         if (! $user->projects->contains('id', $project->id)) {
-            return response()->json(['not_in_project'], 403);
+            throw new UserNotInProject();
         }
 
         return $project->load(['users', 'invitations', 'tasks']);
