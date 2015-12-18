@@ -23,13 +23,21 @@ abstract class Module extends ServiceProvider
     protected $subscribe = [];
 
     /**
-     * Binds the route model bindings for the module.
-     *
-     * @param Router $router
+     * Register any container services.
      */
-    public function bindModuleRouteBindings(Router $router)
+    public function register()
     {
+        $this->registerContainerBindings();
+
+        $permissions = $this->app->bound('permissions') ? $this->app->make('permissions') : [];
+
+        $this->app->instance('permissions', array_merge($this->getModulePermissions(), $permissions));
     }
+
+    /**
+     * Register all the bindings on the service container.
+     */
+    abstract public function registerContainerBindings();
 
     /**
      * Return all the permissions this module needs installed.
@@ -40,6 +48,39 @@ abstract class Module extends ServiceProvider
     {
         return [];
     }
+
+    /**
+     * Bootstrap any application services.
+     */
+    public function boot()
+    {
+        $router = $this->app->make(Router::class);
+        $events = $this->app->make(Dispatcher::class);
+
+        $this->bindModuleRouteBindings($router);
+        $this->map($router);
+
+        $this->bootEventDispatcher($events);
+
+        $this->bootModule();
+    }
+
+    /**
+     * Binds the route model bindings for the module.
+     *
+     * @param Router $router
+     */
+    public function bindModuleRouteBindings(Router $router)
+    {
+    }
+
+    /**
+     * Map all the routes needed by this module.
+     *
+     * @param  Router $router
+     * @return void
+     */
+    abstract public function map(Router $router);
 
     /**
      * Boots up the events dispatcher to listen for events.
@@ -60,53 +101,9 @@ abstract class Module extends ServiceProvider
     }
 
     /**
-     * Register any container services.
-     */
-    public function register()
-    {
-        $this->registerContainerBindings();
-    }
-
-    /**
-     * Register all the bindings on the service container.
-     */
-    abstract public function registerContainerBindings();
-
-    /**
-     * Bootstrap any application services.
-     */
-    public function boot()
-    {
-        $router = $this->app->make(Router::class);
-
-        $this->bindModuleRouteBindings($router);
-        $this->map($router);
-
-        $this->bootModule();
-    }
-
-    /**
-     * Map all the routes needed by this module.
-     *
-     * @param  Router $router
-     * @return void
-     */
-    abstract public function map(Router $router);
-
-    /**
      * Bootstrap the module.
      */
     public function bootModule()
     {
-    }
-
-    /**
-     * Get the events and handlers.
-     *
-     * @return array
-     */
-    public function listens()
-    {
-        return $this->listen;
     }
 }

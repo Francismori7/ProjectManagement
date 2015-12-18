@@ -78,7 +78,8 @@ class AuthenticationController extends Controller
          */
         $email = $request->input('email');
         if ($email !== $invitation->email) {
-            return response()->json(['error' => 'wrong_email_for_invitation'], 401);
+            return response()->json(['email' => ['This email was not invited. Make sure you are using the right email address.']],
+                422);
         }
 
         $user = $this->create($request->all(), $invitation);

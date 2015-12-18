@@ -7,6 +7,8 @@ use App\Contracts\ACL\PermissionRepository;
 use App\Contracts\Core\BaseRepository;
 use App\Core\ACL\Repositories\EloquentPermissionRepository;
 use App\Core\Repositories\EloquentBaseRepository;
+use App\Projects\Events\EmailWasInvitedToProject;
+use App\Projects\Listeners\SendInvitationEmail;
 use Auth;
 use DB;
 use Illuminate\Contracts\Events\Dispatcher;
@@ -52,7 +54,6 @@ class CoreModule extends Module
         foreach ($modules as $module) {
             $this->app->register($module);
 
-            $this->bootEventDispatcher(app()->make(Dispatcher::class));
             $this->registerModulePermissions($module);
         }
 
@@ -85,7 +86,7 @@ class CoreModule extends Module
          * where we could figure out N+1 queries, we'll be using the logs for
          * each query.
          */
-        if (env('APP_DEBUG', false)) {
+        if (env('APP_DEBUG', false) && $this instanceof CoreModule) {
             $events->listen(QueryExecuted::class, function (QueryExecuted $event) {
                 Log::info("[{$event->connection->getName()}@{$event->time}] {$event->sql} (" . implode(', ', $event->bindings) . ")");
                 return false;
@@ -96,13 +97,12 @@ class CoreModule extends Module
     /**
      * Register a module's permissions.
      *
-     * @param string $modulename
+     * @param string $moduleName
      */
-    private function registerModulePermissions($modulename)
+    private function registerModulePermissions($moduleName)
     {
-        $key = str_replace('module', '', mb_strtolower($modulename));
-
-        $module = $this->app->resolveProviderClass($modulename);
+        /** @var Module $module */
+        $module = $this->app->resolveProviderClass($moduleName);
 
         $this->permissions = array_merge($module->getModulePermissions(), $this->permissions);
     }

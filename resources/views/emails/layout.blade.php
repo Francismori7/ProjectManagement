@@ -3,7 +3,7 @@
 <head>
     <meta name="viewport" content="width=device-width">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>You were added to a project: {{ $project-&gt;name }}</title>
+    <title>Email title</title>
 
 </head>
 
@@ -22,8 +22,7 @@
             line-height: 2 !important;
             text-decoration: none !important;
         }
-
-        ></style>
+    </style>
 
     <!-- body -->
     <table class="body-wrap" bgcolor="#f6f6f6"
@@ -37,7 +36,7 @@
 
                 @yield('content')
 
-                <!-- /content -->
+                        <!-- /content -->
 
             </td>
             <td style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-size: 100%; line-height: 1.6em; margin: 0; padding: 0;"></td>

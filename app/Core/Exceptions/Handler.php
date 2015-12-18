@@ -40,7 +40,7 @@ class Handler extends ExceptionHandler
      * Render an exception into an HTTP response.
      *
      * @param \Illuminate\Http\Request $request
-     * @param \Exception               $e
+     * @param \Exception $e
      *
      * @return \Illuminate\Http\Response
      */
@@ -48,6 +48,14 @@ class Handler extends ExceptionHandler
     {
         if ($e instanceof ModelNotFoundException) {
             $e = new NotFoundHttpException($e->getMessage(), $e);
+        }
+
+        if (($request->isXmlHttpRequest() || $request->acceptsJson()) && $this->isHttpException($e)) {
+            return response()->json([
+                'error' => $e->getStatusCode(),
+                'code' => $e->getCode(),
+                'message' => $e->getMessage(),
+            ], $e->getStatusCode());
         }
 
         return parent::render($request, $e);

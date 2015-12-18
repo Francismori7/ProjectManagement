@@ -4,6 +4,7 @@ namespace App\Auth\Jobs;
 
 use App\Auth\Models\User;
 use App\Core\Jobs\Job;
+use App\Projects\Models\Invitation;
 use DB;
 
 class HandleInvitationsOnceRegistered extends Job
@@ -12,7 +13,6 @@ class HandleInvitationsOnceRegistered extends Job
      * @var User
      */
     private $user;
-
 
     /**
      * Handle the job.
@@ -27,7 +27,7 @@ class HandleInvitationsOnceRegistered extends Job
         $invitations = [];
 
         foreach (Invitation::query()
-                     ->where('email', $this->invitation->email)
+                     ->where('email', $this->user->email)
                      ->get()
                      ->pluck('project_id') as $invitation) {
             /**

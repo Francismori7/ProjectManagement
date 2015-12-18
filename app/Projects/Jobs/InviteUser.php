@@ -62,9 +62,10 @@ class InviteUser extends Job
         /**
          * User does not exist, let's send an email to allow registration.
          */
-        $invitation = new Invitation;
-        $invitation->host_id = $this->user->id;
-        $invitation->email = $this->email;
+        $invitation = new Invitation([
+            'host_id' => $this->user->id,
+            'email' => $this->email,
+        ]);
 
         $this->project->invitations()->save($invitation);
 
