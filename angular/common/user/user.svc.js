@@ -12,26 +12,22 @@
             getNameFromUser: getNameFromUser
         };
 
-        function getUserFromId(project) {
-            console.log(project);
-            return function(id) {
-                if (id === undefined)
-                    return {};
+        function getUserFromId(id, project) {
+            if (id === undefined)
+                return {};
 
-                var i, users = project.users;
-                console.log(users);
+            var i, users = project.users;
+            
+            for (i = 0; i < users.length; i++) {
+                if (users[i].id === id)
+                    return users[i];
+            }
 
-                for (i = 0; i < users.length; i++) {
-                    if (users[i].id === id)
-                        return users[i];
-                }
-
-                return null;
-            };
+            return null;
         }
 
         function getNameFromUser(user) {
-            if (user.first_name === undefined)
+            if (user === null || user.first_name === undefined)
                 return "Loading...";
 
             return user.first_name + " " + user.last_name;

@@ -4,7 +4,7 @@
             <h2 class="md-title">Project Leader</h2>
         </div>
         <md-card-content class="md-padding">
-            {{ vm.getNameFromUser(vm.getUserFromId(project.created_by)) }}
+            {{ vm.getNameFromUser(vm.getUserFromId(project.created_by, project)) }}
         </md-card-content>
     </md-card>
     <md-card>

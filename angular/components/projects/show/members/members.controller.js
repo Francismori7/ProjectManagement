@@ -6,10 +6,10 @@
         .controller('ProjectMembersCtrl', ProjectMembersCtrl);
 
     /* @ngInject */
-    function ProjectMembersCtrl($scope, $timeout, UserSvc) {
+    function ProjectMembersCtrl(UserSvc) {
         var vm = this;
 
-        vm.getUserFromId = UserSvc.getUserFromId($scope.project);
+        vm.getUserFromId = UserSvc.getUserFromId;
         vm.getNameFromUser = UserSvc.getNameFromUser;
     }
 
