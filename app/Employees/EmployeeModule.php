@@ -23,7 +23,12 @@ class EmployeeModule extends Module
      */
     public function map(Router $router)
     {
-        $router->group(['prefix' => 'api/v1', 'as' => 'api.v1.', 'namespace' => 'App\Employees\Controllers\Api\v1'],
+        $router->group([
+            'prefix' => 'api/v1',
+            'as' => 'api.v1.',
+            'namespace' => 'App\Employees\Controllers\Api\v1',
+            'middleware' => ['api']
+        ],
             function (Router $router) {
                 $router->group(['prefix' => 'employees', 'as' => 'employees.'], function (Router $router) {
                     $router->get('{employee}', ['as' => 'show', 'uses' => 'EmployeeController@show']);

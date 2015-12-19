@@ -31,7 +31,12 @@ class AuthModule extends Module
      */
     public function map(Router $router)
     {
-        $router->group(['prefix' => 'api/v1', 'as' => 'api.v1.', 'namespace' => 'App\Auth\Controllers\Api\v1'],
+        $router->group([
+            'prefix' => 'api/v1',
+            'as' => 'api.v1.',
+            'namespace' => 'App\Auth\Controllers\Api\v1',
+            'middleware' => ['api']
+        ],
             function (Router $router) {
                 $router->group(['prefix' => 'auth', 'as' => 'auth.'], function (Router $router) {
                     $router->post('login', ['as' => 'login', 'uses' => 'AuthenticationController@login']);

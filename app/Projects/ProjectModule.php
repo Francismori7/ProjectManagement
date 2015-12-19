@@ -50,7 +50,12 @@ class ProjectModule extends Module
      */
     public function map(Router $router)
     {
-        $router->group(['prefix' => 'api/v1', 'as' => 'api.v1.', 'namespace' => 'App\Projects\Controllers\Api\v1'],
+        $router->group([
+            'prefix' => 'api/v1',
+            'as' => 'api.v1.',
+            'namespace' => 'App\Projects\Controllers\Api\v1',
+            'middleware' => ['api']
+        ],
             function (Router $router) {
                 $router->group(['prefix' => 'projects', 'as' => 'projects.'], function (Router $router) {
                     $router->get('/', ['as' => 'index', 'uses' => 'ProjectController@index']);

@@ -71,6 +71,19 @@ class CoreModule extends Module
     }
 
     /**
+     * Register a module's permissions.
+     *
+     * @param string $moduleName
+     */
+    private function registerModulePermissions($moduleName)
+    {
+        /** @var Module $module */
+        $module = $this->app->resolveProviderClass($moduleName);
+
+        $this->permissions = array_merge($module->getModulePermissions(), $this->permissions);
+    }
+
+    /**
      * Boots up the events dispatcher to listen for events.
      *
      * @param Dispatcher $events
@@ -88,23 +101,11 @@ class CoreModule extends Module
          */
         if (env('APP_DEBUG', false) && $this instanceof CoreModule) {
             $events->listen(QueryExecuted::class, function (QueryExecuted $event) {
-                Log::info("[{$event->connection->getName()}@{$event->time}] {$event->sql} (" . implode(', ', $event->bindings) . ")");
+                Log::info("[{$event->connection->getName()}@{$event->time}] {$event->sql} (" . implode(', ',
+                        $event->bindings) . ")");
                 return false;
             });
         }
-    }
-
-    /**
-     * Register a module's permissions.
-     *
-     * @param string $moduleName
-     */
-    private function registerModulePermissions($moduleName)
-    {
-        /** @var Module $module */
-        $module = $this->app->resolveProviderClass($moduleName);
-
-        $this->permissions = array_merge($module->getModulePermissions(), $this->permissions);
     }
 
     /**
@@ -114,7 +115,11 @@ class CoreModule extends Module
      */
     public function map(Router $router)
     {
-        $router->group(['as' => 'core.', 'namespace' => 'App\Core\Controllers'], function (Router $router) {
+        $router->group([
+            'as' => 'core.',
+            'namespace' => 'App\Core\Controllers',
+            'middleware' => ['web']
+        ], function (Router $router) {
             $router->get('/', ['as' => 'home', 'uses' => 'IndexController@angular']);
         });
     }
