@@ -1,17 +1,27 @@
-(function() {
+(function(angular) {
     'use strict';
 
     angular
         .module('creaperio.projects')
-        .controller('ShowProjectCtrl', ShowProjectCtrl);
+        .controller('ProjectTaskCtrl', ProjectTaskCtrl);
 
     /* @ngInject */
-    function ShowProjectCtrl($stateParams, ProjectsSvc) {
+    function ProjectTaskCtrl($scope, $mdDialog) {
         var vm = this;
 
-        (function() {
-            vm.project = ProjectsSvc.get($stateParams.projectId);
-        })();
+        vm.addTask = addTask;
+
+        function addTask(ev) {
+            $mdDialog.show({
+                controller: 'AddTaskCtrl',
+                controllerAs: 'vm',
+                templateUrl: '/components/projects/show/tasks/add/addtask.html',
+                targetEvent: ev,
+                locals: {project: $scope.project}
+            }).then(function(task) {
+                $scope.project.tasks.unshift(task);
+            });
+        }
     }
 
-})();
+})(window.angular);

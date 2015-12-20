@@ -1,0 +1,28 @@
+<md-dialog flex="80" layout="column">
+    <md-toolbar class="md-toolbar-tools" flex>
+        <h2>Add Task</h2>
+        <span flex></span>
+        <md-button class="md-icon-button no-right-border" ng-click="vm.cancel()" type="button">
+            <md-icon>close</md-icon>
+        </md-button>
+    </md-toolbar>
+    <form ng-submit="vm.addTask(task)">
+    	<md-dialog-content>
+			<div class="md-padding" layout="column">
+				<md-input-container>
+					<label>Task</label>
+					<input type="text" ng-model="task.task">
+				</md-input-container>
+				<md-datepicker ng-model="task.due_at" md-placeholder="Due Date"></md-datepicker>
+			</div>
+    	</md-dialog-content>
+    	<md-dialog-actions layout="row" layout-align="end center">
+            <md-button type="button" ng-click="vm.cancel()">
+                Cancel
+            </md-button>
+            <md-button class="md-primary md-raised" type="submit" ng-disabled="vm.isLoading">
+                Save
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>
