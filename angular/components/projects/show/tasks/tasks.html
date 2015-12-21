@@ -6,7 +6,7 @@
     </div>
     <md-list>
         <md-list-item ng-repeat="task in project.tasks" class="md-2-line">
-            <md-checkbox ng-model="task.complete"></md-checkbox>
+            <md-checkbox ng-model="task.completed"></md-checkbox>
             <div class="md-list-item-text">
                 <h3>{{ task.task }}</h3>
                 <p>Assignee: {{ vm.getNameFromUser(vm.getUserFromId(project.created_by)) }}</p>
