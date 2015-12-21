@@ -4,7 +4,6 @@
     angular
         .module('creaperio', [
             'ngAnimate',
-            'ngTouch',
             'ngSanitize',
             'ngMessages',
             'ngAria',
