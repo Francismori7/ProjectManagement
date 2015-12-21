@@ -6,13 +6,15 @@
 		.factory('TaskSvc', TaskSvc);
 
 	/* @ngInject */
-	function TaskSvc($q, ApiSvc) {
+	function TaskSvc($q, ApiSvc, moment) {
 		return {
 			addTask: addTask
 		};
 
 		function addTask(project, task) {
 			var deferred = $q.defer();
+
+			console.log(task);
 
 			ApiSvc.post('projects/' + project.id + '/tasks', task)
 				.then(function(response) {
