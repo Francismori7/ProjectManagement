@@ -12,7 +12,7 @@
         return {
             get: getMethod,
             post: postMethod,
-            put: putMethod,
+            patch: patchMethod,
             delete: deleteMethod
         };
 
@@ -26,10 +26,10 @@
             return query('POST', url, opts);
         }
 
-        function putMethod(url, data, opts) {
+        function patchMethod(url, data, opts) {
             opts = opts || {};
             opts.data = angular.merge({
-                _method: 'PUT'
+                _method: 'PATCH'
             }, data);
 
             return query('POST', url, opts);
