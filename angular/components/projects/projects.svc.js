@@ -7,8 +7,6 @@
 
     /* @ngInject */
     function ProjectsSvc($q, ApiSvc) {
-        var projects = [];
-
         return {
             getAll: getAll,
             get: get,
@@ -30,16 +28,11 @@
         }
 
         function get(id) {
-            for (var i = 0; i < projects.length; i++) {
-                if (projects[i].id == id) {
-                    return $q.resolve(projects[i]);
-                }
-            }
-
             var deferred = $q.defer();
 
             ApiSvc.get('projects/' + id)
                 .then(function(response) {
+                    console.log(response.data);
                     deferred.resolve(response.data);
                 })
                 .catch(function(response) {
@@ -54,7 +47,6 @@
 
             ApiSvc.post('projects', project || {})
                 .then(function(response) {
-                    projects.unshift(response.data);
                     deferred.resolve(response.data);
                 })
                 .catch(function(response) {

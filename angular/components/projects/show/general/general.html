@@ -1,15 +1,15 @@
 <div layout="column">
     <div layout="row">
         <md-card class="quick-stat">
-            <md-card-content layout="row" layout-align="center center">
+            <md-card-content layout="column" layout-align="center center">
                 <md-icon>person</md-icon>
                 <h4 class="quick-stat-info">5 Assigned Users</h4>
             </md-card-content>
         </md-card>
         <md-card class="quick-stat">
-            <md-card-content layout="row" layout-align="start center">
-                <md-progress-circular md-mode="determinate" md-diameter="40" value="60"></md-progress-circular>
-                <h4 class="quick-stat-info">60% complete</h4>
+            <md-card-content layout="column" layout-align="start center">
+                <md-progress-circular md-mode="determinate" md-diameter="50" value="{{ vm.getCompletePercentage(project) }}"></md-progress-circular>
+                <h4 class="quick-stat-info">{{ vm.getCompletePercentage(project) }}% complete</h4>
             </md-card-content>
         </md-card>
     </div>

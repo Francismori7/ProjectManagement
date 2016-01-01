@@ -9,6 +9,7 @@
     function projectGeneral() {
         return {
         	controller: 'GeneralProjectDetailCtrl',
+            controllerAs: 'vm',
         	scope: {
         		project: '='
         	},

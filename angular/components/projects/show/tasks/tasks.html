@@ -9,7 +9,8 @@
             <md-checkbox ng-model="task.completed"></md-checkbox>
             <div class="md-list-item-text">
                 <h3>{{ task.task }}</h3>
-                <p>Assignee: {{ vm.getNameFromUser(vm.getUserFromId(project.created_by)) }}</p>
+                <p ng-if="!!task.employee_id">Assignee: {{ vm.getNameFromUser(vm.getUserFromId(task.employee_id)) }}</p>
+                <p ng-if="!task.employee_id">No Assignee</p>
             </div>
         </md-list-item>
     </md-list>

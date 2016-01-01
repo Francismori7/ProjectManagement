@@ -6,12 +6,8 @@ md-card {
 
         .md-title {
             margin: 0;
-        }
-
-        .md-icon-button, .md-button {
-            height: 24px;
-            min-height: 24px;
-            line-height: 24px;
+            display: flex;
+            align-items: center;
         }
     }
 
