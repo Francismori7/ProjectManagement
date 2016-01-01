@@ -10,6 +10,7 @@
         var vm = this;
 
         vm.addTask = addTask;
+        vm.openTaskDialog = openTaskDialog;
 
         function addTask(ev) {
             $mdDialog.show({
@@ -20,6 +21,18 @@
                 locals: {project: $scope.project}
             }).then(function(task) {
                 $scope.project.tasks.unshift(task);
+            });
+        }
+
+        function openTaskDialog(ev, task) {
+            $mdDialog.show({
+                controller: 'ShowTaskCtrl',
+                controllerAs: 'vm',
+                templateUrl: '/components/projects/show/tasks/show/showtask.html',
+                targetEvent: ev,
+                locals: {task: task}
+            }).then(function(task) {
+
             });
         }
     }

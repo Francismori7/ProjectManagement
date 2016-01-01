@@ -5,13 +5,13 @@
         <md-button class="md-icon-button" ng-click="vm.addTask($event)"><md-icon>add</md-icon></md-button>
     </div>
     <md-list>
-        <md-list-item ng-repeat="task in project.tasks" class="md-2-line">
-            <md-checkbox ng-model="task.completed"></md-checkbox>
+        <md-list-item ng-repeat="task in project.tasks" class="md-2-line" ng-click="vm.openTaskDialog($event, task)">
             <div class="md-list-item-text">
                 <h3>{{ task.task }}</h3>
                 <p ng-if="!!task.employee_id">Assignee: {{ vm.getNameFromUser(vm.getUserFromId(task.employee_id)) }}</p>
                 <p ng-if="!task.employee_id">No Assignee</p>
             </div>
+            <md-checkbox ng-model="task.completed" class="md-secondary"></md-checkbox>
         </md-list-item>
     </md-list>
 </md-card>
