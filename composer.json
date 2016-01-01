@@ -6,9 +6,9 @@
     "type": "project",
     "require": {
         "php": ">=7.0.0",
-        "laravel/framework": "5.2.x-dev@dev",
-        "barryvdh/laravel-debugbar": "2.2.x-dev@dev",
-        "barryvdh/laravel-ide-helper": "2.1.x-dev@dev",
+        "laravel/framework": "^5.2",
+        "barryvdh/laravel-debugbar": "^2.1",
+        "barryvdh/laravel-ide-helper": "^2.1",
         "tymon/jwt-auth": "0.5.*",
         "webpatser/laravel-uuid": "2.*",
         "doctrine/dbal": "~2.3",
