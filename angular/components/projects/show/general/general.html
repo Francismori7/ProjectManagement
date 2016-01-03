@@ -3,7 +3,7 @@
         <md-card class="quick-stat">
             <md-card-content layout="column" layout-align="center center">
                 <md-icon>person</md-icon>
-                <h4 class="quick-stat-info">5 Assigned Users</h4>
+                <h4 class="quick-stat-info">{{ vm.getNumAssignedUsers(project) }} Assigned User<span ng-if="vm.getNumAssignedUsers(project) !== 1">s</span></h4>
             </md-card-content>
         </md-card>
         <md-card class="quick-stat">
