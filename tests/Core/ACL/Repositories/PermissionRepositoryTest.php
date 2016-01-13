@@ -5,12 +5,12 @@ namespace Tests\Core\ACL\Repositories;
 use App\Contracts\ACL\PermissionRepository;
 use App\Core\ACL\Models\Permission;
 use DB;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
 
 class PermissionRepositoryTest extends TestCase
 {
-    use DatabaseTransactions;
+    use DatabaseMigrations;
 
     /**
      * @var array

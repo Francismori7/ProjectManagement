@@ -7,12 +7,12 @@ use App\Contracts\Projects\TaskRepository;
 use App\Projects\Models\Project;
 use App\Projects\Models\Task;
 use DB;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
 
 class TaskRepositoryTest extends TestCase
 {
-    use DatabaseTransactions;
+    use DatabaseMigrations;
 
     /**
      * @var array

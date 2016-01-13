@@ -5,13 +5,13 @@ namespace Tests\Auth\Repositories;
 use App\Auth\Models\Role;
 use App\Contracts\Auth\RoleRepository;
 use DB;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
 use Uuid;
 
 class RoleRepositoryTest extends TestCase
 {
-    use DatabaseTransactions;
+    use DatabaseMigrations;
 
     /**
      * @var array

@@ -5,12 +5,12 @@ namespace Tests\Projects\Repositories;
 use App\Contracts\Projects\ProjectRepository;
 use App\Projects\Models\Project;
 use DB;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
 
 class ProjectRepositoryTest extends TestCase
 {
-    use DatabaseTransactions;
+    use DatabaseMigrations;
 
     /**
      * @var array

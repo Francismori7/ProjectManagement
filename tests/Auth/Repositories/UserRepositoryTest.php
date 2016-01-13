@@ -6,12 +6,12 @@ use App\Auth\Models\User;
 use App\Contracts\Auth\UserRepository;
 use DB;
 use Faker\Factory;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
 
 class UserRepositoryTest extends TestCase
 {
-    use DatabaseTransactions;
+    use DatabaseMigrations;
 
     /**
      * @var array
