@@ -9,15 +9,6 @@ use Illuminate\Contracts\Console\Kernel;
 
 class TestCase extends BaseTestCase
 {
-    use DatabaseMigrations;
-
-    /**
-     * The base URL to use while testing the application.
-     *
-     * @var string
-     */
-    protected $baseUrl = 'http://localhost';
-
     /**
      * Creates the application.
      *
