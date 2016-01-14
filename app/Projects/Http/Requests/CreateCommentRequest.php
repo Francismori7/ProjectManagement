@@ -5,7 +5,7 @@ namespace App\Projects\Http\Requests;
 use App\Contracts\Projects\ProjectRepository;
 use App\Core\Requests\Request;
 
-class CreateTaskRequest extends Request
+class CreateCommentRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -18,7 +18,7 @@ class CreateTaskRequest extends Request
             return false;
         }
 
-        if (!$this->user()->hasPermission('projects.task.create')) {
+        if (!$this->user()->hasPermission('projects.comment.create')) {
             return false;
         }
 
@@ -32,7 +32,7 @@ class CreateTaskRequest extends Request
         }
 
         /*
-         * Can the user create a task? (ie: is he part of the group?)
+         * Can the user create a comment? (ie: is he part of the group?)
          */
         if (!$project->users->contains('id', $this->user()->id)) {
             return false;
@@ -49,10 +49,7 @@ class CreateTaskRequest extends Request
     public function rules()
     {
         return [
-            'task' => 'required|min:3',
-            'due_at' => 'date',
-            'employee_id' => 'exists:users,id',
-            'completed' => 'boolean',
+            'body' => 'required|min:10',
         ];
     }
 }
