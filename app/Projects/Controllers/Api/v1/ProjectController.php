@@ -60,7 +60,7 @@ class ProjectController extends Controller
             throw new UserNotInProjectException();
         }
 
-        return $project->load(['users', 'invitations', 'tasks']);
+        return $project->load(['users', 'invitations', 'tasks', 'comments']);
     }
 
     /**

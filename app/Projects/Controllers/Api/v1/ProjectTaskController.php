@@ -5,6 +5,7 @@ namespace App\Projects\Controllers\Api\v1;
 use App\Contracts\Projects\ProjectRepository;
 use App\Contracts\Projects\TaskRepository;
 use App\Core\Controllers\Controller;
+use App\Projects\Exceptions\UserNotInProjectException;
 use App\Projects\Http\Requests\CompleteTaskRequest;
 use App\Projects\Http\Requests\CreateTaskRequest;
 use App\Projects\Http\Requests\DeleteTaskRequest;
@@ -62,6 +63,24 @@ class ProjectTaskController extends Controller
             'completedTasks' => $project->completedTasks,
             'tasks' => $project->tasks,
         ];
+    }
+
+    /**
+     * Returns the task's data.
+     *
+     * GET /api/v1/projects/{project}/tasks/{task}
+     *
+     * @param Project $project
+     * @param Task $task
+     * @return Task|null
+     */
+    public function show(Project $project, Task $task)
+    {
+        if (! auth()->user()->projects->contains('id', $project->id)) {
+            throw new UserNotInProjectException();
+        }
+
+        return $task->load(['employee', 'host', 'project']);
     }
 
     /**

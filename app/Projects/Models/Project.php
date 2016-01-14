@@ -56,6 +56,16 @@ class Project extends UUIDBaseModel
     }
 
     /**
+     * A Project can have many comments.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    /**
      * Returns a list of completed tasks.
      *
      * @return mixed
