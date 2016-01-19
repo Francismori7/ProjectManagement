@@ -7,10 +7,13 @@ use App\Contracts\Projects\ProjectRepository;
 use App\Projects\Models\Project;
 use App\Projects\Models\Invitation;
 use DB;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
 
 class InvitationRepositoryTest extends TestCase
 {
+    use DatabaseMigrations;
+
     /**
      * @var array
      */

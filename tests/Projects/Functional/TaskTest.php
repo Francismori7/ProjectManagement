@@ -5,13 +5,13 @@ namespace Test\Projects\Functional;
 use App\Auth\Models\User;
 use App\Projects\Models\Project;
 use App\Projects\Models\Task;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Tests\TestCase;
 
 class TaskTest extends TestCase
 {
-    use DatabaseTransactions, WithoutMiddleware;
+    use DatabaseMigrations, WithoutMiddleware;
 
     /**
      * @test

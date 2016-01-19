@@ -15,6 +15,7 @@
 use App\Auth\Models\Role;
 use App\Auth\Models\User;
 use App\Core\ACL\Models\Permission;
+use App\Projects\Models\Comment;
 use App\Projects\Models\Invitation;
 use App\Projects\Models\Project;
 use App\Projects\Models\Task;
@@ -75,5 +76,16 @@ $factory->define(Task::class, function (Generator $faker) {
         'host_id' => $host->id,
         'completed' => $faker->boolean(),
         'due_at' => $faker->dateTimeBetween('+1 day', '+ 1 month'),
+    ];
+});
+
+$factory->define(Comment::class, function (Generator $faker) {
+    $project = factory(Project::class)->create();
+    $user = factory(User::class)->create();
+
+    return [
+        'body' => $faker->paragraphs(2, true),
+        'project_id' => $project->id,
+        'user_id' => $user->id,
     ];
 });

@@ -2,6 +2,7 @@
 
 namespace App\Projects;
 
+use App\Contracts\Projects\CommentRepository;
 use App\Contracts\Projects\InvitationRepository;
 use App\Contracts\Projects\TaskRepository;
 use App\Core\Module;
@@ -9,6 +10,7 @@ use App\Projects\Events\EmailWasInvitedToProject;
 use App\Projects\Events\UserWasAddedToProject;
 use App\Projects\Listeners\SendInvitationEmail;
 use App\Projects\Listeners\SendUserAddedToProjectEmail;
+use App\Projects\Repositories\EloquentCommentRepository;
 use App\Projects\Repositories\EloquentInvitationRepository;
 use App\Projects\Repositories\EloquentProjectRepository;
 use App\Projects\Repositories\EloquentTaskRepository;
@@ -37,6 +39,7 @@ class ProjectModule extends Module
      */
     public function registerContainerBindings()
     {
+        $this->app->bind(CommentRepository::class, EloquentCommentRepository::class);
         $this->app->bind(InvitationRepository::class, EloquentInvitationRepository::class);
         $this->app->bind(ProjectRepository::class, EloquentProjectRepository::class);
         $this->app->bind(TaskRepository::class, EloquentTaskRepository::class);
@@ -75,6 +78,7 @@ class ProjectModule extends Module
 
                     $router->group(['prefix' => '{project}/tasks', 'as' => 'tasks.'], function (Router $router) {
                         $router->get('/', ['as' => 'index', 'uses' => 'ProjectTaskController@index']);
+                        $router->get('{task}', ['as' => 'show', 'uses' => 'ProjectTaskController@show']);
                         $router->post('/', ['as' => 'store', 'uses' => 'ProjectTaskController@store']);
                         $router->patch('{task}', ['as' => 'update', 'uses' => 'ProjectTaskController@update']);
                         $router->patch('{task}/complete',
@@ -84,13 +88,15 @@ class ProjectModule extends Module
                             ['as' => 'restore', 'uses' => 'ProjectTaskController@restore']);
                     });
 
-//                    TODO: Add comments
-//                    $router->group(['prefix' =>'{project}/comments', 'as' => 'comments.'], function (Router $router) {
-//                        $router->get('/', ['as' => 'index', 'uses' => 'ProjectCommentController@index']);
-//                        $router->get('{comment}', ['as' => 'show', 'uses' => 'ProjectCommentController@show']);
-//                        $router->post('/', ['as' => 'store', 'uses' => 'ProjectCommentController@store']);
-//                        $router->patch('{comment}', ['as' => 'update', 'uses' => 'ProjectCommentController@update']);
-//                    });
+                    $router->group(['prefix' =>'{project}/comments', 'as' => 'comments.'], function (Router $router) {
+                        $router->get('/', ['as' => 'index', 'uses' => 'ProjectCommentController@index']);
+                        $router->get('{comment}', ['as' => 'show', 'uses' => 'ProjectCommentController@show']);
+                        $router->post('/', ['as' => 'store', 'uses' => 'ProjectCommentController@store']);
+                        $router->patch('{comment}', ['as' => 'update', 'uses' => 'ProjectCommentController@update']);
+                        $router->delete('{comment}', ['as' => 'destroy', 'uses' => 'ProjectCommentController@destroy']);
+                        $router->patch('{comment}/restore',
+                            ['as' => 'restore', 'uses' => 'ProjectCommentController@restore']);
+                    });
                 });
             });
     }
@@ -117,6 +123,11 @@ class ProjectModule extends Module
             'projects.task.destroy' => 'Remove tasks',
             'projects.task.restore' => 'Restore tasks',
             'projects.task.assign' => 'Assign tasks',
+
+            'projects.comment.create' => 'Create comments',
+            'projects.comment.update' => 'Update comments',
+            'projects.comment.destroy' => 'Remove comments',
+            'projects.comment.restore' => 'Restore comments',
         ];
     }
 

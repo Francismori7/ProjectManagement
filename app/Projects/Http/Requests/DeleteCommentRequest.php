@@ -3,9 +3,10 @@
 namespace App\Projects\Http\Requests;
 
 use App\Contracts\Projects\ProjectRepository;
+use App\Contracts\Projects\TaskRepository;
 use App\Core\Requests\Request;
 
-class CreateTaskRequest extends Request
+class DeleteCommentRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -18,7 +19,7 @@ class CreateTaskRequest extends Request
             return false;
         }
 
-        if (!$this->user()->hasPermission('projects.task.create')) {
+        if (!$this->user()->hasPermission('projects.comment.destroy')) {
             return false;
         }
 
@@ -32,13 +33,22 @@ class CreateTaskRequest extends Request
         }
 
         /*
-         * Can the user create a task? (ie: is he part of the group?)
+         * Can the user delete the comment? (is he the creator of the task?)
          */
-        if (!$project->users->contains('id', $this->user()->id)) {
-            return false;
+        $comment = $this->route('comment');
+
+        if ($comment->user_id === $this->user()->id) {
+            return true;
         }
 
-        return true;
+        /*
+         * Can the user delete the task (is he a leader of the project?)
+         */
+        if ($project->leaders->contains('id', $this->user()->id)) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -48,11 +58,6 @@ class CreateTaskRequest extends Request
      */
     public function rules()
     {
-        return [
-            'task' => 'required|min:3',
-            'due_at' => 'date',
-            'employee_id' => 'exists:users,id',
-            'completed' => 'boolean',
-        ];
+        return [];
     }
 }

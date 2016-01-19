@@ -6,7 +6,7 @@ use App\Auth\Models\User;
 use App\Core\Exceptions\Handler;
 use App\Projects\Exceptions\UserNotInProjectException;
 use App\Projects\Models\Project;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Tests\TestCase;
 
@@ -14,7 +14,7 @@ class ProjectTest extends TestCase
 {
     protected $overrides;
 
-    use DatabaseTransactions, WithoutMiddleware;
+    use DatabaseMigrations, WithoutMiddleware;
 
     /**
      * Set up or tests' data.

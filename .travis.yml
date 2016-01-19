@@ -11,13 +11,13 @@ cache:
 before_script:
   - composer install
 # - mysql -e 'create database creaperio_test;'
-  - touch storage/database.sqlite
+# - touch storage/database.sqlite
   - php artisan key:generate
   - php artisan jwt:generate
-  - php artisan migrate --force
+# - php artisan migrate --force
 
 script:
-  - vendor/bin/phpunit --debug
+  - vendor/bin/phpunit
 
 matrix:
   fast_finish: true

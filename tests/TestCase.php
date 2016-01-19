@@ -3,21 +3,12 @@
 namespace Tests;
 
 use App\Auth\Models\User;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Contracts\Console\Kernel;
 
 class TestCase extends BaseTestCase
 {
-    use DatabaseTransactions;
-
-    /**
-     * The base URL to use while testing the application.
-     *
-     * @var string
-     */
-    protected $baseUrl = 'http://localhost';
-
     /**
      * Creates the application.
      *

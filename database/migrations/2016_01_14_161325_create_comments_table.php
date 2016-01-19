@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTasksTable extends Migration
+class CreateCommentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,26 +12,20 @@ class CreateTasksTable extends Migration
      */
     public function up()
     {
-        Schema::create('tasks', function (Blueprint $table) {
+        Schema::create('comments', function (Blueprint $table) {
             $table->char('id', 36);
-            $table->text('task');
+            $table->text('body');
             $table->char('project_id', 36);
-            $table->char('employee_id', 36)->nullable();
-            $table->char('host_id', 36)->nullable();
-            $table->boolean('completed')->default(0);
-            $table->timestamp('due_at')->nullable();
-
+            $table->char('user_id', 36)->nullable();
             $table->timestamps();
             $table->softDeletes();
 
             $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
-            $table->foreign('employee_id')->references('id')->on('users')->onDelete('set null');
-            $table->foreign('host_id')->references('id')->on('users')->onDelete('set null');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
 
             $table->primary('id');
             $table->index('project_id');
-            $table->index('employee_id');
-            $table->index('host_id');
+            $table->index('user_id');
         });
     }
 
@@ -42,6 +36,6 @@ class CreateTasksTable extends Migration
      */
     public function down()
     {
-        Schema::drop('tasks');
+        Schema::drop('comments');
     }
 }
