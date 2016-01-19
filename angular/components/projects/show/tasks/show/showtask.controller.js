@@ -6,11 +6,12 @@
         .controller('ShowTaskCtrl', ShowTaskCtrl);
 
     /* @ngInject */
-    function ShowTaskCtrl($mdDialog, task) {
-        console.log(task);
+    function ShowTaskCtrl($mdDialog, task, employees, moment) {
         var vm = this;
 
+        task.due_at = moment(task.due_at).toDate();
         vm.task = task;
+        vm.employees = employees;
         vm.cancel = cancel;
         vm.isLoading = false;
 

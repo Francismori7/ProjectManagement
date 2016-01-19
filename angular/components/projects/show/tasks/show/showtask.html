@@ -7,6 +7,18 @@
         </md-button>
     </md-toolbar>
 	<md-dialog-content>
-
+        <md-content layout-padding>
+            <div layout="row" layout-align="start center">
+                <md-input-container class="md-block">
+                    <label>Assigned Employee</label>
+                    <md-select ng-model="vm.task.employee_id" aria-label="The assigned employee">
+                        <md-option ng-repeat="employee in vm.employees" value="employee.id">
+                            {{ employee.first_name }} {{ employee.last_name }}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+                <md-datepicker ng-model="vm.task.due_at" md-placeholder="Due Date"></md-datepicker>
+            </div>
+        </md-content>
     </md-dialog-content>
 </md-dialog>

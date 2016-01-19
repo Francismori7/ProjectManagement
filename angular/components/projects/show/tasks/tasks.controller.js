@@ -30,7 +30,7 @@
                 controllerAs: 'vm',
                 templateUrl: '/components/projects/show/tasks/show/showtask.html',
                 targetEvent: ev,
-                locals: {task: task}
+                locals: {task: task, employees: $scope.project.users}
             }).then(function(task) {
 
             });
